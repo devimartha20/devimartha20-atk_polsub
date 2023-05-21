@@ -1,0 +1,36 @@
+<!-- Modal -->
+<div class="modal fade" id="addIsiModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="addModalLabel">Tambah Data ATK</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" action="{% url 'add-isi-pengajuan' pengajuan.id %}">
+            {{ msg }}
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="atk">Pilih Barang</label>
+              {{ isiPengajuanForm.atk }}
+            </div>
+            <div class="mb-3">                
+              <label for="jumlah">Jumlah Diajukan</label>
+              {{ isiPengajuanForm.jumlah }}
+            </div>
+            <div class="mb-3">    
+              <label for="keterangan">Keterangan</label>            
+              {{ isiPengajuanForm.keterangan }}
+            </div>
+            <div class="text-center">
+              
+            </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+        <button type="submit" class="btn btn-primary" value="submit"> + Tambah</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>

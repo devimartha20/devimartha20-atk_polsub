@@ -1,0 +1,170 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+     <div class="col-12">
+
+      {% if pengajuan is None %}
+
+      <div class="card mb-4">
+        <div class="card-header pb-0">
+          <h6>Formulir Tambah Pengajuan</h6>
+        </div>
+        <div class="card-body">
+          <form method="POST" action="{% url 'add-pengajuan' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="no_surat" class="form-label">Nomor Surat</label>
+              <input type="text" class="form-control"  placeholder="Nomor Surat" name="no_surat" required>
+            </div>
+            <div class="mb-3">
+              <label for="no_surat" class="form-label">Keterangan</label>
+              <input type="text" class="form-control"  placeholder="Keterangan" name="keterangan" required>
+            </div>
+            <input type="submit" class="btn btn-primary" value="Buat Pengajuan">
+          </form>
+        </div>
+            
+      </div>
+
+      {% elif pengajuan.progress == 'D' or pengajuan.progress == 'P' %}
+
+        <div class="card mb-4">
+          <div class="card-header pb-0">
+            <div class="row">
+              <div class="col-9">
+                <h6>Data Pengajuan</h6>
+              </div>
+              <div class="col-3">
+                 <!-- Button trigger modal -->
+                <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#editModal{{ pengajuan.id }}">
+                  Edit
+                </button>
+                <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ pengajuan.id }}">
+                  Hapus
+                </button>
+                {% include 'atk/adminunit/pengajuan/editdeletemodal.html' %}
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-control-label">Nomor Surat</label>
+                  <div class="form-control">{{ pengajuan.no_surat }} 
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-control-label">Status</label>
+                    <div class="form-control">
+                        {% if pengajuan.progress  == 'D' %}
+                            DIRANCANG
+                        {% elif pengajuan.progress  == 'K' %}
+                            MENUNGGU KONFIRMASI PIMPINAN UNIT
+                        {% elif pengajuan.progress  == 'A' %}
+                            DIAJUKAN
+                        {% elif pengajuan.progress  == 'P' %}
+                            PERBAIKAN
+                        {% elif pengajuan.progress  == 'S' %}
+                            SELESAI
+                        {% endif %}
+                    </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-control-label">Periode</label>
+                  <div class="form-control">{{ pengajuan.jadwal.tahun }} </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="example-text-input" class="form-control-label">Dibuat</label>
+                  <div class="form-control">{{ pengajuan.created }} </div>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="example-text-input" class="form-control-label">Keterangan</label>
+                  <div class="form-control">{{ pengajuan.keterangan }} </div>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+          
+        <div class="col-12">
+          <div class="card mb-4">
+            <div class="card-header pb-0">
+               <!-- Button trigger modal -->
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addIsiModal">
+                Tambah Data
+              </button>
+              {% include 'atk/adminunit/pengajuan/addisimodal.html' %}
+              {% comment %} {% if pengajuan.progress == 'D' %}
+                  <h6>Rancangan Pengajuan Sementara</h6>
+                  <div>
+                    <a href="{% url 'ajukan' pengajuan.id %} " class="badge badge bg-success" data-toggle="tooltip" data-original-title="ajukan">Ajukan</a>
+                  </div>  
+              {% else %}
+                  <h6>Rancangan Pengajuan</h6>
+              {% endif %}   {% endcomment %}
+            </div>
+            <div class="card-body px-5 pt-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0" id ="tabelpengajuan">
+                  <thead>
+                    <tr>
+                      <th>No</th>
+                      <th>Alat Tulis</th>
+                      <th>Jumlah</th>
+                      <th>Satuan</th>
+                      <th>Keterangan</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for isi in isi_pengajuan %}
+                        <tr class="text-center">
+                          <td>
+                              <h6 class="mb-0 text-sm">{{  forloop.counter }}</h6>
+                          </td>
+                          <td>
+                                <h6 class="mb-0 text-sm">{{ isi.atk }}</h6>
+                          </td>
+                          <td>
+                            <h6 class="mb-0 text-sm">{{ isi.jumlah }}</h6>
+                          </td>
+                          <td>
+                            <h6 class="mb-0 text-sm">{{ isi.atk.satuan }}</h6>
+                          </td>
+                          <td>
+                            <h6 class="mb-0 text-sm">{{ isi.keterangan }}</h6>
+                          </td>
+                          <td>
+                            <button type="button" class="badge badge-sm bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#editIsiModal{{ isi.id }}">
+                              Edit
+                            </button>
+                            <button type="button" class="badge badge-sm bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteIsiModal{{ isi.id }}">
+                              Hapus
+                            </button>
+                          </td>
+                        </tr>
+                        {% include 'atk/adminunit/pengajuan/editdeleteisimodal.html' %}
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      {% endif %}
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,6 @@
+[
+  {
+    "caller": "HTTP server requests->GET /assets/img/logos/mastercard.png",
+    "callee": "<templates>/UnknownSource#render"
+  }
+]

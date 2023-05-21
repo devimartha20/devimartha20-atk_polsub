@@ -1,0 +1,6 @@
+appmap_dir: tmp\appmap
+language: python
+name: atk_polsub
+packages:
+- path: atk_polsub
+- path: atk

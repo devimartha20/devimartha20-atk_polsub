@@ -1,0 +1,23 @@
+  <!-- Modal -->
+  <div class="modal fade" id="editJadwalModal" tabindex="-1" aria-labelledby="jadwalModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="editJadwalModalLabel">Buat Jadwal</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div>
+              <form method="POST" role="form" action="{% url 'edit-jadwal' %}">
+                  {% csrf_token %}
+                  {{ editjadwalForm.as_p }}
+              </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+        <input type="submit" value="Submit" class="btn btn-primary">
+      </div>
+  </form>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,59 @@
+<!-- Modal -->
+<div class="modal fade" id="editIsiModal{{ isi.id }}" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="editModalLabel">Edit Data Pengajuan ATK</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form role="form" method="POST" action="{% url 'edit-isi-pengajuan' isi.id %}">
+
+              {% csrf_token %}
+              <div class="mb-3">
+                <label for="atk">Pilih Barang</label>
+                <select name="atk" class="form-select" placeholder="Pilih ATK" id="id_atk">
+                    {% for atk in atk %}
+                        <option value="{{ atk.id }}" {% if atk.id == isi.atk.id %} selected {% endif %} >{{ atk }} </option>
+                    {% endfor %}
+                </select>
+              </div>
+              <div class="mb-3">                
+                <label for="jumlah">Jumlah Diajukan</label>
+                <input value="{{ isi.jumlah }}" type="number" min="1" name="jumlah" class="form-control form-control-lg" placeholder="Jumlah" required="" id="id_jumla">
+              </div>
+              <div class="mb-3">    
+                <label for="keterangan">Keterangan</label>            
+                <input value="{{ isi.keterangan }}" type="text" name="keterangan" class="form-control form-control-lg" placeholder="Keterangan" required="" id="id_keterangan">
+              </div>
+              <div class="text-center">
+                
+              </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+          <button type="submit" class="btn btn-primary" value="submit">Simpan Perubahan</button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteIsiModal{{ isi.id }}" tabindex="-1" aria-labelledby="deletModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="deleteModalLabel">Hapus Data Pengajuan ATK</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+         <p class="text-dark"> Apakah Anda yakin menghapus pengajuan {{ isi.atk }} sejumlah {{ isi.jumlah }} {{ isi.atk.satuan }}?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+        <a href="{% url 'delete-isi-pengajuan' isi.id %}" class="btn btn-danger" >Ya</a>
+      </div>
+    </div>
+  </div>
+</div>

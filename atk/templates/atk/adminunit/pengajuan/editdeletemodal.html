@@ -1,0 +1,48 @@
+<!-- Modal -->
+<div class="modal fade" id="editModal{{ pengajuan.id }}" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="editModalLabel">Edit Data Pengajuan ATK</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form role="form" method="POST" action="{% url 'edit-pengajuan' pengajuan.id %}">
+              {% csrf_token %}
+              <div class="mb-3">                
+                <label for="no_surat">Nomor Surat</label>
+                <input value="{{ pengajuan.no_surat }}" required type="text" name="no_surat" class="form-control form-control-lg" placeholder="Nomor Surat" required="" id="no_surat">
+              </div>
+              <div class="mb-3">                
+                <label for="no_surat">Keterangan</label>
+                <input value="{{ pengajuan.keterangan }}" type="text" required name="keterangan" class="form-control form-control-lg" placeholder="Keterangna" required="" id="keterangan">
+              </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+          <button type="submit" class="btn btn-primary" value="submit">Simpan Perubahan</button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal{{ pengajuan.id }}" tabindex="-1" aria-labelledby="deletModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="deleteModalLabel">Hapus Data Pengajuan ATK</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+         <p class="text-danger"> Apakah Anda yakin mengahapus pengajuan dengan nomor surat {{ pengajuan.no_surat }}?</p>
+         <p>Seluruh data rancangan pengajuan akan terhapus</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+        <a href="{% url 'delete-pengajuan' pengajuan.id %}" class="btn btn-danger" >Ya</a>
+      </div>
+    </div>
+  </div>
+</div>
