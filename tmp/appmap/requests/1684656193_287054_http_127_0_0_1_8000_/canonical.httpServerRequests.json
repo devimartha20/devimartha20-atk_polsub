@@ -1,0 +1,7 @@
+[
+  {
+    "route": "POST /",
+    "parameters": "(csrfmiddlewaretoken,username,password)",
+    "status": 302
+  }
+]

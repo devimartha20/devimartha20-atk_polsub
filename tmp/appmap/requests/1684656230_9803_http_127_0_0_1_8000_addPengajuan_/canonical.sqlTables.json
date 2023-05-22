@@ -1,0 +1,10 @@
+[
+  "atk_barang_atk",
+  "atk_isi_pengajuan",
+  "atk_jadwal",
+  "atk_pengajuan",
+  "atk_satuanatk",
+  "atk_unit",
+  "atk_user",
+  "django_session"
+]

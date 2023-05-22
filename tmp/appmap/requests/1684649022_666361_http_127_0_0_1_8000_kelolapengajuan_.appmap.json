@@ -1,1 +1,1344 @@
-{"version": "1.9", "metadata": {"language": {"name": "python", "engine": "CPython", "version": "3.10.5"}, "client": {"name": "appmap", "url": "https://github.com/applandinc/appmap-python"}, "git": {"repository": "https://github.com/devimartha20/https---github.com-devimartha20-atk_polsub.git", "branch": "master", "commit": "0613200799df93501531a1ecefe9744295ea241b", "status": ["M atk/__pycache__/admin.cpython-310.pyc", "M atk/__pycache__/models.cpython-310.pyc", "M atk/__pycache__/urls.cpython-310.pyc", "M atk/__pycache__/views.cpython-310.pyc", "M atk/admin.py", "M atk/models.py", "M atk/templates/atk/home.html", "M atk/templates/atk/login.html", "M atk/urls.py", "M atk/views.py", "M atk_polsub/__pycache__/settings.cpython-310.pyc", "M atk_polsub/__pycache__/urls.cpython-310.pyc", "M atk_polsub/settings.py", "M db.sqlite3", "M templates/main.html", "M templates/navbar.html", "M templates/sidenav.html", "?? __pycache__/", "?? appmap.yml", "?? atk/__pycache__/forms.cpython-310.pyc", "?? atk/forms.py", "?? atk/migrations/0001_initial.py", "?? atk/migrations/0002_barang_atk_jadwal_kategoriatk_kategoriunit_satuanatk_and_more.py", "?? atk/migrations/0003_jadwal_keterangan.py", "?? atk/migrations/0004_barang_atk_jumlah_per_satuan_alter_jadwal_keterangan_and_more.py", "?? atk/migrations/0005_isi_pengajuan_unique_atk_pengajuan_and_more.py", "?? atk/migrations/0006_remove_jadwal_periode_mulai_and_more.py", "?? atk/migrations/0007_alter_jadwal_tahun.py", "?? atk/migrations/0008_alter_jadwal_tahun.py", "?? atk/migrations/0009_alter_jadwal_status.py", "?? atk/migrations/0010_alter_isi_pengajuan_rekomendasi_and_more.py", "?? atk/migrations/0011_alter_pengajuan_no_surat.py", "?? atk/migrations/0012_isi_pengajuan_perbaikan_alter_pengajuan_hasil.py", "?? atk/migrations/0013_alter_pengajuan_progress.py", "?? atk/migrations/__pycache__/0001_initial.cpython-310.pyc", "?? atk/migrations/__pycache__/0002_barang_atk_jadwal_kategoriatk_kategoriunit_satuanatk_and_more.cpython-310.pyc", "?? atk/migrations/__pycache__/0003_jadwal_keterangan.cpython-310.pyc", "?? atk/migrations/__pycache__/0004_barang_atk_jumlah_per_satuan_alter_jadwal_keterangan_and_more.cpython-310.pyc", "?? atk/migrations/__pycache__/0005_isi_pengajuan_unique_atk_pengajuan_and_more.cpython-310.pyc", "?? atk/migrations/__pycache__/0006_remove_jadwal_periode_mulai_and_more.cpython-310.pyc", "?? atk/migrations/__pycache__/0007_alter_jadwal_tahun.cpython-310.pyc", "?? atk/migrations/__pycache__/0008_alter_jadwal_tahun.cpython-310.pyc", "?? atk/migrations/__pycache__/0009_alter_jadwal_status.cpython-310.pyc", "?? atk/migrations/__pycache__/0010_alter_isi_pengajuan_rekomendasi_and_more.cpython-310.pyc", "?? atk/migrations/__pycache__/0011_alter_pengajuan_no_surat.cpython-310.pyc", "?? atk/migrations/__pycache__/0012_isi_pengajuan_perbaikan_alter_pengajuan_hasil.cpython-310.pyc", "?? atk/migrations/__pycache__/0013_alter_pengajuan_progress.cpython-310.pyc", "?? atk/templates/atk/admin/", "?? atk/templates/atk/adminunit/", "?? atk/templates/atk/detailpengajuan.html", "?? atk/templates/atk/logoutmodal.html", "?? atk/templates/atk/pimpinanunit/", "?? atk/templates/atk/wadir/", "?? atk_polsub.dot", "?? tmp/"]}, "frameworks": [{"name": "Django", "version": "4.2"}], "name": "GET /kelolapengajuan/ (200) - 13:03:42.666", "timestamp": 1684649022.666361, "recorder": {"name": "record_requests"}}, "events": [{"http_server_request": {"request_method": "GET", "protocol": "HTTP/1.1", "path_info": "/kelolapengajuan/", "normalized_path_info": "/kelolapengajuan/", "mime_type": "text/plain", "headers": {"Content-Length": "", "Content-Type": "text/plain", "Host": "127.0.0.1:8000", "Connection": "keep-alive", "Cache-Control": "max-age=0", "Sec-Ch-Ua": "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\"", "Sec-Ch-Ua-Mobile": "?0", "Sec-Ch-Ua-Platform": "\"Windows\"", "Upgrade-Insecure-Requests": "1", "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36", "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7", "Sec-Fetch-Site": "cross-site", "Sec-Fetch-Mode": "navigate", "Sec-Fetch-User": "?1", "Sec-Fetch-Dest": "document", "Referer": "http://127.0.0.1:8000/kelolapengajuan/", "Accept-Encoding": "gzip, deflate, br", "Accept-Language": "en-US,en;q=0.9,id-ID;q=0.8,id;q=0.7", "Cookie": "csrftoken=HXhs0phZlHdbSQFK6O9JzjLyNE9kUtJ7; sessionid=y6d779lu864vyf4rrbqkftfui08xne0m"}}, "message": [], "id": 811, "event": "call", "thread_id": 10}, {"static": true, "parameters": [{"kind": "req", "object_id": 2770079767024, "value": "<WSGIRequest: GET '/kelolapengajuan/'>", "name": "request", "class": "django.core.handlers.wsgi.WSGIRequest"}], "id": 812, "event": "call", "thread_id": 10, "defined_class": "atk.views", "method_id": "kelolaPengajuan", "path": "C:\\xampp\\htdocs\\atk_polsub\\atk\\views.py", "lineno": 86}, {"sql_query": {"sql": "SELECT \"django_session\".\"session_key\", \"django_session\".\"session_data\", \"django_session\".\"expire_date\" FROM \"django_session\" WHERE (\"django_session\".\"expire_date\" > '2023-05-21 06:03:42.316097' AND \"django_session\".\"session_key\" = 'y6d779lu864vyf4rrbqkftfui08xne0m') LIMIT 21", "database_type": "sqlite", "server_version": "3.37.2"}, "id": 813, "event": "call", "thread_id": 10}, {"parent_id": 813, "elapsed": 0.01600000000325963, "id": 814, "event": "return", "thread_id": 10}, {"sql_query": {"sql": "SELECT \"atk_user\".\"id\", \"atk_user\".\"password\", \"atk_user\".\"last_login\", \"atk_user\".\"is_superuser\", \"atk_user\".\"username\", \"atk_user\".\"first_name\", \"atk_user\".\"last_name\", \"atk_user\".\"email\", \"atk_user\".\"is_staff\", \"atk_user\".\"is_active\", \"atk_user\".\"date_joined\", \"atk_user\".\"is_admin\", \"atk_user\".\"is_wadir\", \"atk_user\".\"is_pimpinanunit\", \"atk_user\".\"is_adminunit\", \"atk_user\".\"unit_id\" FROM \"atk_user\" WHERE \"atk_user\".\"id\" = 4 LIMIT 21", "database_type": "sqlite", "server_version": "3.37.2"}, "id": 815, "event": "call", "thread_id": 10}, {"parent_id": 815, "elapsed": 0.014999999984866008, "id": 816, "event": "return", "thread_id": 10}, {"static": false, "receiver": {"kind": "req", "object_id": 2770079775568, "value": "<django.contrib.auth.backends.ModelBackend object at 0x00000284F59EFB50>", "name": "self", "class": "django.contrib.auth.backends.ModelBackend"}, "parameters": [{"kind": "req", "object_id": 2770079636576, "value": "<User: wadir>", "name": "user", "class": "atk.models.User"}], "id": 817, "event": "call", "thread_id": 10, "defined_class": "django.contrib.auth.backends.ModelBackend", "method_id": "user_can_authenticate", "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\contrib\\auth\\backends.py", "lineno": 55}, {"return_value": {"object_id": 140716591598440, "value": "True", "class": "builtins.bool"}, "parent_id": 817, "elapsed": 0.0, "id": 818, "event": "return", "thread_id": 10}, {"sql_query": {"sql": "SELECT \"atk_jadwal\".\"id\", \"atk_jadwal\".\"tahun\", \"atk_jadwal\".\"pengajuan_mulai\", \"atk_jadwal\".\"pengajuan_selesai\", \"atk_jadwal\".\"status\", \"atk_jadwal\".\"keterangan\", \"atk_jadwal\".\"updated\", \"atk_jadwal\".\"created\" FROM \"atk_jadwal\" WHERE \"atk_jadwal\".\"tahun\" = 2023 ORDER BY \"atk_jadwal\".\"updated\" DESC, \"atk_jadwal\".\"created\" DESC LIMIT 1", "database_type": "sqlite", "server_version": "3.37.2"}, "id": 819, "event": "call", "thread_id": 10}, {"parent_id": 819, "elapsed": 0.0, "id": 820, "event": "return", "thread_id": 10}, {"receiver": {"object_id": 2770080081968, "value": "<Template template_string=\"{% extends 'main.htm...\">", "class": "django.template.base.Template"}, "path": "C:\\xampp\\htdocs\\atk_polsub\\atk\\templates\\atk\\wadir\\pengajuan.html", "id": 821, "event": "call", "thread_id": 10, "defined_class": "<templates>.CXamppHtdocsAtk_PolsubAtkTemplatesAtkWadirPengajuanHtml", "method_id": "render", "static": false}, {"receiver": {"object_id": 2770079976848, "value": "<Template template_string=\"{% load static %}{%...\">", "class": "django.template.base.Template"}, "path": "C:\\xampp\\htdocs\\atk_polsub\\templates\\sidenav.html", "id": 822, "event": "call", "thread_id": 10, "defined_class": "<templates>.CXamppHtdocsAtk_PolsubTemplatesSidenavHtml", "method_id": "render", "static": false}, {"parent_id": 822, "elapsed": 0.01600000000325963, "id": 823, "event": "return", "thread_id": 10}, {"receiver": {"object_id": 2770079552256, "value": "<Template template_string=\"{% load static %}<...\">", "class": "django.template.base.Template"}, "path": "C:\\xampp\\htdocs\\atk_polsub\\templates\\navbar.html", "id": 824, "event": "call", "thread_id": 10, "defined_class": "<templates>.CXamppHtdocsAtk_PolsubTemplatesNavbarHtml", "method_id": "render", "static": false}, {"parent_id": 824, "elapsed": 0.0, "id": 825, "event": "return", "thread_id": 10}, {"receiver": {"object_id": 2770073727520, "value": "<Template template_string=\"  <!-- Modal --><di...\">", "class": "django.template.base.Template"}, "path": "C:\\xampp\\htdocs\\atk_polsub\\atk\\templates\\atk\\wadir\\jadwal\\addJadwalmodal.html", "id": 826, "event": "call", "thread_id": 10, "defined_class": "<templates>.CXamppHtdocsAtk_PolsubAtkTemplatesAtkWadirJadwalAddjadwalmodalHtml", "method_id": "render", "static": false}, {"receiver": {"object_id": 2770074188528, "value": "<Template template_string=\"{% include \"django/f...\">", "class": "django.template.base.Template"}, "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\errors\\list\\default.html", "id": 827, "event": "call", "thread_id": 10, "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsErrorsListDefaultHtml", "method_id": "render", "static": false}, {"receiver": {"object_id": 2770074616496, "value": "<Template template_string=\"{% if errors %}<ul c...\">", "class": "django.template.base.Template"}, "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\errors\\list\\ul.html", "id": 828, "event": "call", "thread_id": 10, "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsErrorsListUlHtml", "method_id": "render", "static": false}, {"parent_id": 828, "elapsed": 0.015000000013969839, "id": 829, "event": "return", "thread_id": 10}, {"parent_id": 827, "elapsed": 0.015000000013969839, "id": 830, "event": "return", "thread_id": 10}, {"receiver": {"object_id": 2770074188528, "value": "<Template template_string=\"{% include \"django/f...\">", "class": "django.template.base.Template"}, "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\errors\\list\\default.html", "id": 831, "event": "call", "thread_id": 10, "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsErrorsListDefaultHtml", "method_id": "render", "static": false}, {"receiver": {"object_id": 2770074616496, "value": "<Template template_string=\"{% if errors %}<ul c...\">", "class": "django.template.base.Template"}, "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\errors\\list\\ul.html", "id": 832, "event": "call", "thread_id": 10, "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsErrorsListUlHtml", "method_id": "render", "static": false}, {"parent_id": 832, "elapsed": 0.0, "id": 833, "event": "return", "thread_id": 10}, {"parent_id": 831, "elapsed": 0.0, "id": 834, "event": "return", "thread_id": 10}, {"receiver": {"object_id": 2770074188528, "value": "<Template template_string=\"{% include \"django/f...\">", "class": "django.template.base.Template"}, "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\errors\\list\\default.html", "id": 835, "event": "call", "thread_id": 10, "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsErrorsListDefaultHtml", "method_id": "render", "static": false}, {"receiver": {"object_id": 2770074616496, "value": "<Template template_string=\"{% if errors %}<ul c...\">", "class": "django.template.base.Template"}, "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\errors\\list\\ul.html", "id": 836, "event": "call", "thread_id": 10, "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsErrorsListUlHtml", "method_id": "render", "static": false}, {"parent_id": 836, "elapsed": 0.0, "id": 837, "event": "return", "thread_id": 10}, {"parent_id": 835, "elapsed": 0.0, "id": 838, "event": "return", "thread_id": 10}, {"receiver": {"object_id": 2770074188528, "value": "<Template template_string=\"{% include \"django/f...\">", "class": "django.template.base.Template"}, "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\errors\\list\\default.html", "id": 839, "event": "call", "thread_id": 10, "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsErrorsListDefaultHtml", "method_id": "render", "static": false}, {"receiver": {"object_id": 2770074616496, "value": "<Template template_string=\"{% if errors %}<ul c...\">", "class": "django.template.base.Template"}, "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\errors\\list\\ul.html", "id": 840, "event": "call", "thread_id": 10, "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsErrorsListUlHtml", "method_id": "render", "static": false}, {"parent_id": 840, "elapsed": 0.0, "id": 841, "event": "return", "thread_id": 10}, {"parent_id": 839, "elapsed": 0.0, "id": 842, "event": "return", "thread_id": 10}, {"receiver": {"object_id": 2770074188144, "value": "<Template template_string=\"{{ errors }}{% if e...\">", "class": "django.template.base.Template"}, "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\p.html", "id": 843, "event": "call", "thread_id": 10, "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsPHtml", "method_id": "render", "static": false}, {"receiver": {"object_id": 2770074188528, "value": "<Template template_string=\"{% include \"django/f...\">", "class": "django.template.base.Template"}, "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\errors\\list\\default.html", "id": 844, "event": "call", "thread_id": 10, "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsErrorsListDefaultHtml", "method_id": "render", "static": false}, {"receiver": {"object_id": 2770074616496, "value": "<Template template_string=\"{% if errors %}<ul c...\">", "class": "django.template.base.Template"}, "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\errors\\list\\ul.html", "id": 845, "event": "call", "thread_id": 10, "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsErrorsListUlHtml", "method_id": "render", "static": false}, {"parent_id": 845, "elapsed": 0.0, "id": 846, "event": "return", "thread_id": 10}, {"parent_id": 844, "elapsed": 0.0, "id": 847, "event": "return", "thread_id": 10}, {"receiver": {"object_id": 2770074630032, "value": "<Template template_string=\"{% if use_tag %}<{{ ...\">", "class": "django.template.base.Template"}, "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\label.html", "id": 848, "event": "call", "thread_id": 10, "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsLabelHtml", "method_id": "render", "static": false}, {"receiver": {"object_id": 2770074715376, "value": "<Template template_string=\"{% for name, value i...\">", "class": "django.template.base.Template"}, "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\attrs.html", "id": 849, "event": "call", "thread_id": 10, "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsAttrsHtml", "method_id": "render", "static": false}, {"parent_id": 849, "elapsed": 0.0, "id": 850, "event": "return", "thread_id": 10}, {"parent_id": 848, "elapsed": 0.0, "id": 851, "event": "return", "thread_id": 10}, {"receiver": {"object_id": 2770074631376, "value": "<Template template_string=\"<select name=\"{{ wid...\">", "class": "django.template.base.Template"}, "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\widgets\\select.html", "id": 852, "event": "call", "thread_id": 10, "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsSelectHtml", "method_id": "render", "static": false}, {"receiver": {"object_id": 2770074721760, "value": "<Template template_string=\"{% for name, value i...\">", "class": "django.template.base.Template"}, "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\widgets\\attrs.html", "id": 853, "event": "call", "thread_id": 10, "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsAttrsHtml", "method_id": "render", "static": false}, {"parent_id": 853, "elapsed": 0.0, "id": 854, "event": "return", "thread_id": 10}, {"receiver": {"object_id": 2770074725072, "value": "<Template template_string=\"<option value=\"{{ wi...\">", "class": "django.template.base.Template"}, "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\widgets\\select_option.html", "id": 855, "event": "call", "thread_id": 10, "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsSelect_OptionHtml", "method_id": "render", "static": false}, {"receiver": {"object_id": 2770074721760, "value": "<Template template_string=\"{% for name, value i...\">", "class": "django.template.base.Template"}, "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\widgets\\attrs.html", "id": 856, "event": "call", "thread_id": 10, "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsAttrsHtml", "method_id": "render", "static": false}, {"parent_id": 856, "elapsed": 0.0, "id": 857, "event": "return", "thread_id": 10}, {"parent_id": 855, "elapsed": 0.0, "id": 858, "event": "return", "thread_id": 10}, {"receiver": {"object_id": 2770074725072, "value": "<Template template_string=\"<option value=\"{{ wi...\">", "class": "django.template.base.Template"}, "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\widgets\\select_option.html", "id": 859, "event": "call", "thread_id": 10, "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsSelect_OptionHtml", "method_id": "render", "static": false}, {"receiver": {"object_id": 2770074721760, "value": "<Template template_string=\"{% for name, value i...\">", "class": "django.template.base.Template"}, "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\widgets\\attrs.html", "id": 860, "event": "call", "thread_id": 10, "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsAttrsHtml", "method_id": "render", "static": false}, {"parent_id": 860, "elapsed": 0.0, "id": 861, "event": "return", "thread_id": 10}, {"parent_id": 859, "elapsed": 0.0, "id": 862, "event": "return", "thread_id": 10}, {"parent_id": 852, "elapsed": 0.0, "id": 863, "event": "return", "thread_id": 10}, {"receiver": {"object_id": 2770074630032, "value": "<Template template_string=\"{% if use_tag %}<{{ ...\">", "class": "django.template.base.Template"}, "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\label.html", "id": 864, "event": "call", "thread_id": 10, "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsLabelHtml", "method_id": "render", "static": false}, {"receiver": {"object_id": 2770074715376, "value": "<Template template_string=\"{% for name, value i...\">", "class": "django.template.base.Template"}, "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\attrs.html", "id": 865, "event": "call", "thread_id": 10, "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsAttrsHtml", "method_id": "render", "static": false}, {"parent_id": 865, "elapsed": 0.0, "id": 866, "event": "return", "thread_id": 10}, {"parent_id": 864, "elapsed": 0.0, "id": 867, "event": "return", "thread_id": 10}, {"receiver": {"object_id": 2770074616256, "value": "<Template template_string=\"{% include \"django/f...\">", "class": "django.template.base.Template"}, "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\widgets\\date.html", "id": 868, "event": "call", "thread_id": 10, "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsDateHtml", "method_id": "render", "static": false}, {"receiver": {"object_id": 2770074729104, "value": "<Template template_string=\"<input type=\"{{ widg...\">", "class": "django.template.base.Template"}, "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\widgets\\input.html", "id": 869, "event": "call", "thread_id": 10, "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsInputHtml", "method_id": "render", "static": false}, {"receiver": {"object_id": 2770074721760, "value": "<Template template_string=\"{% for name, value i...\">", "class": "django.template.base.Template"}, "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\widgets\\attrs.html", "id": 870, "event": "call", "thread_id": 10, "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsAttrsHtml", "method_id": "render", "static": false}, {"parent_id": 870, "elapsed": 0.0, "id": 871, "event": "return", "thread_id": 10}, {"parent_id": 869, "elapsed": 0.0, "id": 872, "event": "return", "thread_id": 10}, {"parent_id": 868, "elapsed": 0.0159999999741558, "id": 873, "event": "return", "thread_id": 10}, {"receiver": {"object_id": 2770074630032, "value": "<Template template_string=\"{% if use_tag %}<{{ ...\">", "class": "django.template.base.Template"}, "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\label.html", "id": 874, "event": "call", "thread_id": 10, "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsLabelHtml", "method_id": "render", "static": false}, {"receiver": {"object_id": 2770074715376, "value": "<Template template_string=\"{% for name, value i...\">", "class": "django.template.base.Template"}, "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\attrs.html", "id": 875, "event": "call", "thread_id": 10, "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsAttrsHtml", "method_id": "render", "static": false}, {"parent_id": 875, "elapsed": 0.0, "id": 876, "event": "return", "thread_id": 10}, {"parent_id": 874, "elapsed": 0.0, "id": 877, "event": "return", "thread_id": 10}, {"receiver": {"object_id": 2770074616256, "value": "<Template template_string=\"{% include \"django/f...\">", "class": "django.template.base.Template"}, "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\widgets\\date.html", "id": 878, "event": "call", "thread_id": 10, "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsDateHtml", "method_id": "render", "static": false}, {"receiver": {"object_id": 2770074729104, "value": "<Template template_string=\"<input type=\"{{ widg...\">", "class": "django.template.base.Template"}, "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\widgets\\input.html", "id": 879, "event": "call", "thread_id": 10, "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsInputHtml", "method_id": "render", "static": false}, {"receiver": {"object_id": 2770074721760, "value": "<Template template_string=\"{% for name, value i...\">", "class": "django.template.base.Template"}, "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\widgets\\attrs.html", "id": 880, "event": "call", "thread_id": 10, "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsAttrsHtml", "method_id": "render", "static": false}, {"parent_id": 880, "elapsed": 0.0, "id": 881, "event": "return", "thread_id": 10}, {"parent_id": 879, "elapsed": 0.0, "id": 882, "event": "return", "thread_id": 10}, {"parent_id": 878, "elapsed": 0.0, "id": 883, "event": "return", "thread_id": 10}, {"receiver": {"object_id": 2770074630032, "value": "<Template template_string=\"{% if use_tag %}<{{ ...\">", "class": "django.template.base.Template"}, "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\label.html", "id": 884, "event": "call", "thread_id": 10, "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsLabelHtml", "method_id": "render", "static": false}, {"receiver": {"object_id": 2770074715376, "value": "<Template template_string=\"{% for name, value i...\">", "class": "django.template.base.Template"}, "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\attrs.html", "id": 885, "event": "call", "thread_id": 10, "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsAttrsHtml", "method_id": "render", "static": false}, {"parent_id": 885, "elapsed": 0.0, "id": 886, "event": "return", "thread_id": 10}, {"parent_id": 884, "elapsed": 0.0, "id": 887, "event": "return", "thread_id": 10}, {"receiver": {"object_id": 2770074715808, "value": "<Template template_string=\"{% include \"django/f...\">", "class": "django.template.base.Template"}, "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\widgets\\text.html", "id": 888, "event": "call", "thread_id": 10, "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsTextHtml", "method_id": "render", "static": false}, {"receiver": {"object_id": 2770074729104, "value": "<Template template_string=\"<input type=\"{{ widg...\">", "class": "django.template.base.Template"}, "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\widgets\\input.html", "id": 889, "event": "call", "thread_id": 10, "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsInputHtml", "method_id": "render", "static": false}, {"receiver": {"object_id": 2770074721760, "value": "<Template template_string=\"{% for name, value i...\">", "class": "django.template.base.Template"}, "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\widgets\\attrs.html", "id": 890, "event": "call", "thread_id": 10, "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsAttrsHtml", "method_id": "render", "static": false}, {"parent_id": 890, "elapsed": 0.0, "id": 891, "event": "return", "thread_id": 10}, {"parent_id": 889, "elapsed": 0.0, "id": 892, "event": "return", "thread_id": 10}, {"parent_id": 888, "elapsed": 0.0, "id": 893, "event": "return", "thread_id": 10}, {"parent_id": 843, "elapsed": 0.0159999999741558, "id": 894, "event": "return", "thread_id": 10}, {"parent_id": 826, "elapsed": 0.030999999988125637, "id": 895, "event": "return", "thread_id": 10}, {"receiver": {"object_id": 2770079401248, "value": "<Template template_string=\"<!-- Modal --><div ...\">", "class": "django.template.base.Template"}, "path": "C:\\xampp\\htdocs\\atk_polsub\\atk\\templates\\atk\\logoutmodal.html", "id": 896, "event": "call", "thread_id": 10, "defined_class": "<templates>.CXamppHtdocsAtk_PolsubAtkTemplatesAtkLogoutmodalHtml", "method_id": "render", "static": false}, {"parent_id": 896, "elapsed": 0.0, "id": 897, "event": "return", "thread_id": 10}, {"parent_id": 821, "elapsed": 0.0629999999946449, "id": 898, "event": "return", "thread_id": 10}, {"return_value": {"object_id": 2770079629760, "value": "<HttpResponse status_code=200, \"text/html; charset=utf-8\">", "class": "django.http.response.HttpResponse"}, "parent_id": 812, "elapsed": 0.34926629066467285, "id": 899, "event": "return", "thread_id": 10}, {"http_server_response": {"status_code": 200, "mime_type": "text/html; charset=utf-8", "headers": {"Content-Type": "text/html; charset=utf-8", "X-Frame-Options": "DENY", "Vary": "Cookie", "Content-Length": "31523", "X-Content-Type-Options": "nosniff", "Referrer-Policy": "same-origin", "Cross-Origin-Opener-Policy": "same-origin"}}, "parent_id": 811, "elapsed": 0.35899999999674037, "id": 900, "event": "return", "thread_id": 10}], "classMap": [{"name": "atk", "type": "package", "children": [{"name": "views", "type": "class", "children": [{"name": "kelolaPengajuan", "type": "function", "location": "C:\\xampp\\htdocs\\atk_polsub\\atk\\views.py:86", "static": true}]}]}, {"name": "django", "type": "package", "children": [{"name": "contrib", "type": "package", "children": [{"name": "auth", "type": "package", "children": [{"name": "backends", "type": "package", "children": [{"name": "ModelBackend", "type": "class", "children": [{"name": "user_can_authenticate", "type": "function", "location": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\contrib\\auth\\backends.py:55", "static": false, "labels": ["security.authorization"], "comment": "Reject users with is_active=False. Custom user models that don't have\nthat attribute are allowed."}]}]}]}]}]}]}
+{
+  "events": [
+    {
+      "http_server_request": {
+        "request_method": "GET",
+        "protocol": "HTTP/1.1",
+        "path_info": "/kelolapengajuan/",
+        "normalized_path_info": "/kelolapengajuan/",
+        "mime_type": "text/plain",
+        "headers": {
+          "Content-Length": "",
+          "Content-Type": "text/plain",
+          "Host": "127.0.0.1:8000",
+          "Connection": "keep-alive",
+          "Cache-Control": "max-age=0",
+          "Sec-Ch-Ua": "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\"",
+          "Sec-Ch-Ua-Mobile": "?0",
+          "Sec-Ch-Ua-Platform": "\"Windows\"",
+          "Upgrade-Insecure-Requests": "1",
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36",
+          "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+          "Sec-Fetch-Site": "cross-site",
+          "Sec-Fetch-Mode": "navigate",
+          "Sec-Fetch-User": "?1",
+          "Sec-Fetch-Dest": "document",
+          "Referer": "http://127.0.0.1:8000/kelolapengajuan/",
+          "Accept-Encoding": "gzip, deflate, br",
+          "Accept-Language": "en-US,en;q=0.9,id-ID;q=0.8,id;q=0.7",
+          "Cookie": "csrftoken=HXhs0phZlHdbSQFK6O9JzjLyNE9kUtJ7; sessionid=y6d779lu864vyf4rrbqkftfui08xne0m"
+        }
+      },
+      "id": 1,
+      "event": "call",
+      "thread_id": 10
+    },
+    {
+      "static": true,
+      "parameters": [
+        {
+          "kind": "req",
+          "object_id": 2770079767024,
+          "value": "<WSGIRequest: GET '/kelolapengajuan/'>",
+          "name": "request",
+          "class": "django.core.handlers.wsgi.WSGIRequest"
+        }
+      ],
+      "id": 2,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "atk.views",
+      "method_id": "kelolaPengajuan",
+      "path": "C:\\xampp\\htdocs\\atk_polsub\\atk\\views.py",
+      "lineno": 86
+    },
+    {
+      "sql_query": {
+        "sql": "SELECT \"django_session\".\"session_key\", \"django_session\".\"session_data\", \"django_session\".\"expire_date\" FROM \"django_session\" WHERE (\"django_session\".\"expire_date\" > '2023-05-21 06:03:42.316097' AND \"django_session\".\"session_key\" = 'y6d779lu864vyf4rrbqkftfui08xne0m') LIMIT 21",
+        "database_type": "sqlite",
+        "server_version": "3.37.2"
+      },
+      "id": 3,
+      "event": "call",
+      "thread_id": 10
+    },
+    {
+      "parent_id": 3,
+      "elapsed": 0.01600000000325963,
+      "id": 4,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "sql_query": {
+        "sql": "SELECT \"atk_user\".\"id\", \"atk_user\".\"password\", \"atk_user\".\"last_login\", \"atk_user\".\"is_superuser\", \"atk_user\".\"username\", \"atk_user\".\"first_name\", \"atk_user\".\"last_name\", \"atk_user\".\"email\", \"atk_user\".\"is_staff\", \"atk_user\".\"is_active\", \"atk_user\".\"date_joined\", \"atk_user\".\"is_admin\", \"atk_user\".\"is_wadir\", \"atk_user\".\"is_pimpinanunit\", \"atk_user\".\"is_adminunit\", \"atk_user\".\"unit_id\" FROM \"atk_user\" WHERE \"atk_user\".\"id\" = 4 LIMIT 21",
+        "database_type": "sqlite",
+        "server_version": "3.37.2"
+      },
+      "id": 5,
+      "event": "call",
+      "thread_id": 10
+    },
+    {
+      "parent_id": 5,
+      "elapsed": 0.014999999984866008,
+      "id": 6,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "static": false,
+      "receiver": {
+        "kind": "req",
+        "object_id": 2770079775568,
+        "value": "<django.contrib.auth.backends.ModelBackend object at 0x00000284F59EFB50>",
+        "name": "self",
+        "class": "django.contrib.auth.backends.ModelBackend"
+      },
+      "parameters": [
+        {
+          "kind": "req",
+          "object_id": 2770079636576,
+          "value": "<User: wadir>",
+          "name": "user",
+          "class": "atk.models.User"
+        }
+      ],
+      "id": 7,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "django.contrib.auth.backends.ModelBackend",
+      "method_id": "user_can_authenticate",
+      "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\contrib\\auth\\backends.py",
+      "lineno": 55
+    },
+    {
+      "return_value": {
+        "object_id": 140716591598440,
+        "value": "True",
+        "class": "builtins.bool"
+      },
+      "parent_id": 7,
+      "elapsed": 0,
+      "id": 8,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "sql_query": {
+        "sql": "SELECT \"atk_jadwal\".\"id\", \"atk_jadwal\".\"tahun\", \"atk_jadwal\".\"pengajuan_mulai\", \"atk_jadwal\".\"pengajuan_selesai\", \"atk_jadwal\".\"status\", \"atk_jadwal\".\"keterangan\", \"atk_jadwal\".\"updated\", \"atk_jadwal\".\"created\" FROM \"atk_jadwal\" WHERE \"atk_jadwal\".\"tahun\" = 2023 ORDER BY \"atk_jadwal\".\"updated\" DESC, \"atk_jadwal\".\"created\" DESC LIMIT 1",
+        "database_type": "sqlite",
+        "server_version": "3.37.2"
+      },
+      "id": 9,
+      "event": "call",
+      "thread_id": 10
+    },
+    {
+      "parent_id": 9,
+      "elapsed": 0,
+      "id": 10,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "receiver": {
+        "object_id": 2770080081968,
+        "value": "<Template template_string=\"{% extends 'main.htm...\">",
+        "class": "django.template.base.Template"
+      },
+      "path": "C:\\xampp\\htdocs\\atk_polsub\\atk\\templates\\atk\\wadir\\pengajuan.html",
+      "id": 11,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "<templates>.CXamppHtdocsAtk_PolsubAtkTemplatesAtkWadirPengajuanHtml",
+      "method_id": "render",
+      "static": false
+    },
+    {
+      "receiver": {
+        "object_id": 2770079976848,
+        "value": "<Template template_string=\"{% load static %}{%...\">",
+        "class": "django.template.base.Template"
+      },
+      "path": "C:\\xampp\\htdocs\\atk_polsub\\templates\\sidenav.html",
+      "id": 12,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "<templates>.CXamppHtdocsAtk_PolsubTemplatesSidenavHtml",
+      "method_id": "render",
+      "static": false
+    },
+    {
+      "parent_id": 12,
+      "elapsed": 0.01600000000325963,
+      "id": 13,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "receiver": {
+        "object_id": 2770079552256,
+        "value": "<Template template_string=\"{% load static %}<...\">",
+        "class": "django.template.base.Template"
+      },
+      "path": "C:\\xampp\\htdocs\\atk_polsub\\templates\\navbar.html",
+      "id": 14,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "<templates>.CXamppHtdocsAtk_PolsubTemplatesNavbarHtml",
+      "method_id": "render",
+      "static": false
+    },
+    {
+      "parent_id": 14,
+      "elapsed": 0,
+      "id": 15,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "receiver": {
+        "object_id": 2770073727520,
+        "value": "<Template template_string=\"  <!-- Modal --><di...\">",
+        "class": "django.template.base.Template"
+      },
+      "path": "C:\\xampp\\htdocs\\atk_polsub\\atk\\templates\\atk\\wadir\\jadwal\\addJadwalmodal.html",
+      "id": 16,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "<templates>.CXamppHtdocsAtk_PolsubAtkTemplatesAtkWadirJadwalAddjadwalmodalHtml",
+      "method_id": "render",
+      "static": false
+    },
+    {
+      "receiver": {
+        "object_id": 2770074188528,
+        "value": "<Template template_string=\"{% include \"django/f...\">",
+        "class": "django.template.base.Template"
+      },
+      "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\errors\\list\\default.html",
+      "id": 17,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsErrorsListDefaultHtml",
+      "method_id": "render",
+      "static": false
+    },
+    {
+      "receiver": {
+        "object_id": 2770074616496,
+        "value": "<Template template_string=\"{% if errors %}<ul c...\">",
+        "class": "django.template.base.Template"
+      },
+      "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\errors\\list\\ul.html",
+      "id": 18,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsErrorsListUlHtml",
+      "method_id": "render",
+      "static": false
+    },
+    {
+      "parent_id": 18,
+      "elapsed": 0.015000000013969839,
+      "id": 19,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "parent_id": 17,
+      "elapsed": 0.015000000013969839,
+      "id": 20,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "receiver": {
+        "object_id": 2770074188528,
+        "value": "<Template template_string=\"{% include \"django/f...\">",
+        "class": "django.template.base.Template"
+      },
+      "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\errors\\list\\default.html",
+      "id": 21,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsErrorsListDefaultHtml",
+      "method_id": "render",
+      "static": false
+    },
+    {
+      "receiver": {
+        "object_id": 2770074616496,
+        "value": "<Template template_string=\"{% if errors %}<ul c...\">",
+        "class": "django.template.base.Template"
+      },
+      "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\errors\\list\\ul.html",
+      "id": 22,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsErrorsListUlHtml",
+      "method_id": "render",
+      "static": false
+    },
+    {
+      "parent_id": 22,
+      "elapsed": 0,
+      "id": 23,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "parent_id": 21,
+      "elapsed": 0,
+      "id": 24,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "receiver": {
+        "object_id": 2770074188528,
+        "value": "<Template template_string=\"{% include \"django/f...\">",
+        "class": "django.template.base.Template"
+      },
+      "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\errors\\list\\default.html",
+      "id": 25,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsErrorsListDefaultHtml",
+      "method_id": "render",
+      "static": false
+    },
+    {
+      "receiver": {
+        "object_id": 2770074616496,
+        "value": "<Template template_string=\"{% if errors %}<ul c...\">",
+        "class": "django.template.base.Template"
+      },
+      "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\errors\\list\\ul.html",
+      "id": 26,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsErrorsListUlHtml",
+      "method_id": "render",
+      "static": false
+    },
+    {
+      "parent_id": 26,
+      "elapsed": 0,
+      "id": 27,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "parent_id": 25,
+      "elapsed": 0,
+      "id": 28,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "receiver": {
+        "object_id": 2770074188528,
+        "value": "<Template template_string=\"{% include \"django/f...\">",
+        "class": "django.template.base.Template"
+      },
+      "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\errors\\list\\default.html",
+      "id": 29,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsErrorsListDefaultHtml",
+      "method_id": "render",
+      "static": false
+    },
+    {
+      "receiver": {
+        "object_id": 2770074616496,
+        "value": "<Template template_string=\"{% if errors %}<ul c...\">",
+        "class": "django.template.base.Template"
+      },
+      "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\errors\\list\\ul.html",
+      "id": 30,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsErrorsListUlHtml",
+      "method_id": "render",
+      "static": false
+    },
+    {
+      "parent_id": 30,
+      "elapsed": 0,
+      "id": 31,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "parent_id": 29,
+      "elapsed": 0,
+      "id": 32,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "receiver": {
+        "object_id": 2770074188144,
+        "value": "<Template template_string=\"{{ errors }}{% if e...\">",
+        "class": "django.template.base.Template"
+      },
+      "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\p.html",
+      "id": 33,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsPHtml",
+      "method_id": "render",
+      "static": false
+    },
+    {
+      "receiver": {
+        "object_id": 2770074188528,
+        "value": "<Template template_string=\"{% include \"django/f...\">",
+        "class": "django.template.base.Template"
+      },
+      "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\errors\\list\\default.html",
+      "id": 34,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsErrorsListDefaultHtml",
+      "method_id": "render",
+      "static": false
+    },
+    {
+      "receiver": {
+        "object_id": 2770074616496,
+        "value": "<Template template_string=\"{% if errors %}<ul c...\">",
+        "class": "django.template.base.Template"
+      },
+      "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\errors\\list\\ul.html",
+      "id": 35,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsErrorsListUlHtml",
+      "method_id": "render",
+      "static": false
+    },
+    {
+      "parent_id": 35,
+      "elapsed": 0,
+      "id": 36,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "parent_id": 34,
+      "elapsed": 0,
+      "id": 37,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "receiver": {
+        "object_id": 2770074630032,
+        "value": "<Template template_string=\"{% if use_tag %}<{{ ...\">",
+        "class": "django.template.base.Template"
+      },
+      "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\label.html",
+      "id": 38,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsLabelHtml",
+      "method_id": "render",
+      "static": false
+    },
+    {
+      "receiver": {
+        "object_id": 2770074715376,
+        "value": "<Template template_string=\"{% for name, value i...\">",
+        "class": "django.template.base.Template"
+      },
+      "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\attrs.html",
+      "id": 39,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsAttrsHtml",
+      "method_id": "render",
+      "static": false
+    },
+    {
+      "parent_id": 39,
+      "elapsed": 0,
+      "id": 40,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "parent_id": 38,
+      "elapsed": 0,
+      "id": 41,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "receiver": {
+        "object_id": 2770074631376,
+        "value": "<Template template_string=\"<select name=\"{{ wid...\">",
+        "class": "django.template.base.Template"
+      },
+      "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\widgets\\select.html",
+      "id": 42,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsSelectHtml",
+      "method_id": "render",
+      "static": false
+    },
+    {
+      "receiver": {
+        "object_id": 2770074721760,
+        "value": "<Template template_string=\"{% for name, value i...\">",
+        "class": "django.template.base.Template"
+      },
+      "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\widgets\\attrs.html",
+      "id": 43,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsAttrsHtml",
+      "method_id": "render",
+      "static": false
+    },
+    {
+      "parent_id": 43,
+      "elapsed": 0,
+      "id": 44,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "receiver": {
+        "object_id": 2770074725072,
+        "value": "<Template template_string=\"<option value=\"{{ wi...\">",
+        "class": "django.template.base.Template"
+      },
+      "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\widgets\\select_option.html",
+      "id": 45,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsSelect_OptionHtml",
+      "method_id": "render",
+      "static": false
+    },
+    {
+      "receiver": {
+        "object_id": 2770074721760,
+        "value": "<Template template_string=\"{% for name, value i...\">",
+        "class": "django.template.base.Template"
+      },
+      "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\widgets\\attrs.html",
+      "id": 46,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsAttrsHtml",
+      "method_id": "render",
+      "static": false
+    },
+    {
+      "parent_id": 46,
+      "elapsed": 0,
+      "id": 47,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "parent_id": 45,
+      "elapsed": 0,
+      "id": 48,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "receiver": {
+        "object_id": 2770074725072,
+        "value": "<Template template_string=\"<option value=\"{{ wi...\">",
+        "class": "django.template.base.Template"
+      },
+      "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\widgets\\select_option.html",
+      "id": 49,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsSelect_OptionHtml",
+      "method_id": "render",
+      "static": false
+    },
+    {
+      "receiver": {
+        "object_id": 2770074721760,
+        "value": "<Template template_string=\"{% for name, value i...\">",
+        "class": "django.template.base.Template"
+      },
+      "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\widgets\\attrs.html",
+      "id": 50,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsAttrsHtml",
+      "method_id": "render",
+      "static": false
+    },
+    {
+      "parent_id": 50,
+      "elapsed": 0,
+      "id": 51,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "parent_id": 49,
+      "elapsed": 0,
+      "id": 52,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "parent_id": 42,
+      "elapsed": 0,
+      "id": 53,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "receiver": {
+        "object_id": 2770074630032,
+        "value": "<Template template_string=\"{% if use_tag %}<{{ ...\">",
+        "class": "django.template.base.Template"
+      },
+      "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\label.html",
+      "id": 54,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsLabelHtml",
+      "method_id": "render",
+      "static": false
+    },
+    {
+      "receiver": {
+        "object_id": 2770074715376,
+        "value": "<Template template_string=\"{% for name, value i...\">",
+        "class": "django.template.base.Template"
+      },
+      "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\attrs.html",
+      "id": 55,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsAttrsHtml",
+      "method_id": "render",
+      "static": false
+    },
+    {
+      "parent_id": 55,
+      "elapsed": 0,
+      "id": 56,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "parent_id": 54,
+      "elapsed": 0,
+      "id": 57,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "receiver": {
+        "object_id": 2770074616256,
+        "value": "<Template template_string=\"{% include \"django/f...\">",
+        "class": "django.template.base.Template"
+      },
+      "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\widgets\\date.html",
+      "id": 58,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsDateHtml",
+      "method_id": "render",
+      "static": false
+    },
+    {
+      "receiver": {
+        "object_id": 2770074729104,
+        "value": "<Template template_string=\"<input type=\"{{ widg...\">",
+        "class": "django.template.base.Template"
+      },
+      "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\widgets\\input.html",
+      "id": 59,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsInputHtml",
+      "method_id": "render",
+      "static": false
+    },
+    {
+      "receiver": {
+        "object_id": 2770074721760,
+        "value": "<Template template_string=\"{% for name, value i...\">",
+        "class": "django.template.base.Template"
+      },
+      "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\widgets\\attrs.html",
+      "id": 60,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsAttrsHtml",
+      "method_id": "render",
+      "static": false
+    },
+    {
+      "parent_id": 60,
+      "elapsed": 0,
+      "id": 61,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "parent_id": 59,
+      "elapsed": 0,
+      "id": 62,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "parent_id": 58,
+      "elapsed": 0.0159999999741558,
+      "id": 63,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "receiver": {
+        "object_id": 2770074630032,
+        "value": "<Template template_string=\"{% if use_tag %}<{{ ...\">",
+        "class": "django.template.base.Template"
+      },
+      "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\label.html",
+      "id": 64,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsLabelHtml",
+      "method_id": "render",
+      "static": false
+    },
+    {
+      "receiver": {
+        "object_id": 2770074715376,
+        "value": "<Template template_string=\"{% for name, value i...\">",
+        "class": "django.template.base.Template"
+      },
+      "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\attrs.html",
+      "id": 65,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsAttrsHtml",
+      "method_id": "render",
+      "static": false
+    },
+    {
+      "parent_id": 65,
+      "elapsed": 0,
+      "id": 66,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "parent_id": 64,
+      "elapsed": 0,
+      "id": 67,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "receiver": {
+        "object_id": 2770074616256,
+        "value": "<Template template_string=\"{% include \"django/f...\">",
+        "class": "django.template.base.Template"
+      },
+      "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\widgets\\date.html",
+      "id": 68,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsDateHtml",
+      "method_id": "render",
+      "static": false
+    },
+    {
+      "receiver": {
+        "object_id": 2770074729104,
+        "value": "<Template template_string=\"<input type=\"{{ widg...\">",
+        "class": "django.template.base.Template"
+      },
+      "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\widgets\\input.html",
+      "id": 69,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsInputHtml",
+      "method_id": "render",
+      "static": false
+    },
+    {
+      "receiver": {
+        "object_id": 2770074721760,
+        "value": "<Template template_string=\"{% for name, value i...\">",
+        "class": "django.template.base.Template"
+      },
+      "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\widgets\\attrs.html",
+      "id": 70,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsAttrsHtml",
+      "method_id": "render",
+      "static": false
+    },
+    {
+      "parent_id": 70,
+      "elapsed": 0,
+      "id": 71,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "parent_id": 69,
+      "elapsed": 0,
+      "id": 72,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "parent_id": 68,
+      "elapsed": 0,
+      "id": 73,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "receiver": {
+        "object_id": 2770074630032,
+        "value": "<Template template_string=\"{% if use_tag %}<{{ ...\">",
+        "class": "django.template.base.Template"
+      },
+      "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\label.html",
+      "id": 74,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsLabelHtml",
+      "method_id": "render",
+      "static": false
+    },
+    {
+      "receiver": {
+        "object_id": 2770074715376,
+        "value": "<Template template_string=\"{% for name, value i...\">",
+        "class": "django.template.base.Template"
+      },
+      "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\attrs.html",
+      "id": 75,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsAttrsHtml",
+      "method_id": "render",
+      "static": false
+    },
+    {
+      "parent_id": 75,
+      "elapsed": 0,
+      "id": 76,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "parent_id": 74,
+      "elapsed": 0,
+      "id": 77,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "receiver": {
+        "object_id": 2770074715808,
+        "value": "<Template template_string=\"{% include \"django/f...\">",
+        "class": "django.template.base.Template"
+      },
+      "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\widgets\\text.html",
+      "id": 78,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsTextHtml",
+      "method_id": "render",
+      "static": false
+    },
+    {
+      "receiver": {
+        "object_id": 2770074729104,
+        "value": "<Template template_string=\"<input type=\"{{ widg...\">",
+        "class": "django.template.base.Template"
+      },
+      "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\widgets\\input.html",
+      "id": 79,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsInputHtml",
+      "method_id": "render",
+      "static": false
+    },
+    {
+      "receiver": {
+        "object_id": 2770074721760,
+        "value": "<Template template_string=\"{% for name, value i...\">",
+        "class": "django.template.base.Template"
+      },
+      "path": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\forms\\templates\\django\\forms\\widgets\\attrs.html",
+      "id": 80,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "<templates>.CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsAttrsHtml",
+      "method_id": "render",
+      "static": false
+    },
+    {
+      "parent_id": 80,
+      "elapsed": 0,
+      "id": 81,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "parent_id": 79,
+      "elapsed": 0,
+      "id": 82,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "parent_id": 78,
+      "elapsed": 0,
+      "id": 83,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "parent_id": 33,
+      "elapsed": 0.0159999999741558,
+      "id": 84,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "parent_id": 16,
+      "elapsed": 0.030999999988125637,
+      "id": 85,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "receiver": {
+        "object_id": 2770079401248,
+        "value": "<Template template_string=\"<!-- Modal --><div ...\">",
+        "class": "django.template.base.Template"
+      },
+      "path": "C:\\xampp\\htdocs\\atk_polsub\\atk\\templates\\atk\\logoutmodal.html",
+      "id": 86,
+      "event": "call",
+      "thread_id": 10,
+      "defined_class": "<templates>.CXamppHtdocsAtk_PolsubAtkTemplatesAtkLogoutmodalHtml",
+      "method_id": "render",
+      "static": false
+    },
+    {
+      "parent_id": 86,
+      "elapsed": 0,
+      "id": 87,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "parent_id": 11,
+      "elapsed": 0.0629999999946449,
+      "id": 88,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "return_value": {
+        "object_id": 2770079629760,
+        "value": "<HttpResponse status_code=200, \"text/html; charset=utf-8\">",
+        "class": "django.http.response.HttpResponse"
+      },
+      "parent_id": 2,
+      "elapsed": 0.34926629066467285,
+      "id": 89,
+      "event": "return",
+      "thread_id": 10
+    },
+    {
+      "http_server_response": {
+        "status_code": 200,
+        "mime_type": "text/html; charset=utf-8",
+        "headers": {
+          "Content-Type": "text/html; charset=utf-8",
+          "X-Frame-Options": "DENY",
+          "Vary": "Cookie",
+          "Content-Length": "31523",
+          "X-Content-Type-Options": "nosniff",
+          "Referrer-Policy": "same-origin",
+          "Cross-Origin-Opener-Policy": "same-origin"
+        }
+      },
+      "parent_id": 1,
+      "elapsed": 0.35899999999674037,
+      "id": 90,
+      "event": "return",
+      "thread_id": 10
+    }
+  ],
+  "version": "1.9",
+  "metadata": {
+    "language": {
+      "name": "python",
+      "engine": "CPython",
+      "version": "3.10.5"
+    },
+    "client": {
+      "name": "appmap",
+      "url": "https://github.com/applandinc/appmap-python"
+    },
+    "git": {
+      "repository": "https://github.com/devimartha20/https---github.com-devimartha20-atk_polsub.git",
+      "branch": "master",
+      "commit": "0613200799df93501531a1ecefe9744295ea241b",
+      "status": [
+        "M atk/__pycache__/admin.cpython-310.pyc",
+        "M atk/__pycache__/models.cpython-310.pyc",
+        "M atk/__pycache__/urls.cpython-310.pyc",
+        "M atk/__pycache__/views.cpython-310.pyc",
+        "M atk/admin.py",
+        "M atk/models.py",
+        "M atk/templates/atk/home.html",
+        "M atk/templates/atk/login.html",
+        "M atk/urls.py",
+        "M atk/views.py",
+        "M atk_polsub/__pycache__/settings.cpython-310.pyc",
+        "M atk_polsub/__pycache__/urls.cpython-310.pyc",
+        "M atk_polsub/settings.py",
+        "M db.sqlite3",
+        "M templates/main.html",
+        "M templates/navbar.html",
+        "M templates/sidenav.html",
+        "?? __pycache__/",
+        "?? appmap.yml",
+        "?? atk/__pycache__/forms.cpython-310.pyc",
+        "?? atk/forms.py",
+        "?? atk/migrations/0001_initial.py",
+        "?? atk/migrations/0002_barang_atk_jadwal_kategoriatk_kategoriunit_satuanatk_and_more.py",
+        "?? atk/migrations/0003_jadwal_keterangan.py",
+        "?? atk/migrations/0004_barang_atk_jumlah_per_satuan_alter_jadwal_keterangan_and_more.py",
+        "?? atk/migrations/0005_isi_pengajuan_unique_atk_pengajuan_and_more.py",
+        "?? atk/migrations/0006_remove_jadwal_periode_mulai_and_more.py",
+        "?? atk/migrations/0007_alter_jadwal_tahun.py",
+        "?? atk/migrations/0008_alter_jadwal_tahun.py",
+        "?? atk/migrations/0009_alter_jadwal_status.py",
+        "?? atk/migrations/0010_alter_isi_pengajuan_rekomendasi_and_more.py",
+        "?? atk/migrations/0011_alter_pengajuan_no_surat.py",
+        "?? atk/migrations/0012_isi_pengajuan_perbaikan_alter_pengajuan_hasil.py",
+        "?? atk/migrations/0013_alter_pengajuan_progress.py",
+        "?? atk/migrations/__pycache__/0001_initial.cpython-310.pyc",
+        "?? atk/migrations/__pycache__/0002_barang_atk_jadwal_kategoriatk_kategoriunit_satuanatk_and_more.cpython-310.pyc",
+        "?? atk/migrations/__pycache__/0003_jadwal_keterangan.cpython-310.pyc",
+        "?? atk/migrations/__pycache__/0004_barang_atk_jumlah_per_satuan_alter_jadwal_keterangan_and_more.cpython-310.pyc",
+        "?? atk/migrations/__pycache__/0005_isi_pengajuan_unique_atk_pengajuan_and_more.cpython-310.pyc",
+        "?? atk/migrations/__pycache__/0006_remove_jadwal_periode_mulai_and_more.cpython-310.pyc",
+        "?? atk/migrations/__pycache__/0007_alter_jadwal_tahun.cpython-310.pyc",
+        "?? atk/migrations/__pycache__/0008_alter_jadwal_tahun.cpython-310.pyc",
+        "?? atk/migrations/__pycache__/0009_alter_jadwal_status.cpython-310.pyc",
+        "?? atk/migrations/__pycache__/0010_alter_isi_pengajuan_rekomendasi_and_more.cpython-310.pyc",
+        "?? atk/migrations/__pycache__/0011_alter_pengajuan_no_surat.cpython-310.pyc",
+        "?? atk/migrations/__pycache__/0012_isi_pengajuan_perbaikan_alter_pengajuan_hasil.cpython-310.pyc",
+        "?? atk/migrations/__pycache__/0013_alter_pengajuan_progress.cpython-310.pyc",
+        "?? atk/templates/atk/admin/",
+        "?? atk/templates/atk/adminunit/",
+        "?? atk/templates/atk/detailpengajuan.html",
+        "?? atk/templates/atk/logoutmodal.html",
+        "?? atk/templates/atk/pimpinanunit/",
+        "?? atk/templates/atk/wadir/",
+        "?? atk_polsub.dot",
+        "?? tmp/"
+      ]
+    },
+    "frameworks": [
+      {
+        "name": "Django",
+        "version": "4.2"
+      }
+    ],
+    "name": "GET /kelolapengajuan/ (200) - 13:03:42.666",
+    "timestamp": 1684649022.666361,
+    "recorder": {
+      "name": "record_requests"
+    }
+  },
+  "classMap": [
+    {
+      "name": "atk",
+      "type": "package",
+      "children": [
+        {
+          "name": "views",
+          "type": "class",
+          "children": [
+            {
+              "name": "kelolaPengajuan",
+              "type": "function",
+              "static": true,
+              "location": "C:\\xampp\\htdocs\\atk_polsub\\atk\\views.py:86"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "django",
+      "type": "package",
+      "children": [
+        {
+          "name": "contrib",
+          "type": "package",
+          "children": [
+            {
+              "name": "auth",
+              "type": "package",
+              "children": [
+                {
+                  "name": "backends",
+                  "type": "package",
+                  "children": [
+                    {
+                      "name": "ModelBackend",
+                      "type": "class",
+                      "children": [
+                        {
+                          "name": "user_can_authenticate",
+                          "type": "function",
+                          "labels": [
+                            "security.authorization"
+                          ],
+                          "static": false,
+                          "location": "C:\\Users\\DeviMartha\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\django\\contrib\\auth\\backends.py:55"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "http",
+      "name": "HTTP server requests",
+      "children": [
+        {
+          "type": "route",
+          "name": "GET /kelolapengajuan/"
+        }
+      ]
+    },
+    {
+      "type": "database",
+      "name": "Database",
+      "children": [
+        {
+          "type": "query",
+          "name": "SELECT \"django_session\".\"session_key\", \"django_session\".\"session_data\", \"django_session\".\"expire_date\" FROM \"django_session\" WHERE (\"django_session\".\"expire_date\" > '2023-05-21 06:03:42.316097' AND \"django_session\".\"session_key\" = 'y6d779lu864vyf4rrbqkftfui08xne0m') LIMIT 21"
+        },
+        {
+          "type": "query",
+          "name": "SELECT \"atk_user\".\"id\", \"atk_user\".\"password\", \"atk_user\".\"last_login\", \"atk_user\".\"is_superuser\", \"atk_user\".\"username\", \"atk_user\".\"first_name\", \"atk_user\".\"last_name\", \"atk_user\".\"email\", \"atk_user\".\"is_staff\", \"atk_user\".\"is_active\", \"atk_user\".\"date_joined\", \"atk_user\".\"is_admin\", \"atk_user\".\"is_wadir\", \"atk_user\".\"is_pimpinanunit\", \"atk_user\".\"is_adminunit\", \"atk_user\".\"unit_id\" FROM \"atk_user\" WHERE \"atk_user\".\"id\" = 4 LIMIT 21"
+        },
+        {
+          "type": "query",
+          "name": "SELECT \"atk_jadwal\".\"id\", \"atk_jadwal\".\"tahun\", \"atk_jadwal\".\"pengajuan_mulai\", \"atk_jadwal\".\"pengajuan_selesai\", \"atk_jadwal\".\"status\", \"atk_jadwal\".\"keterangan\", \"atk_jadwal\".\"updated\", \"atk_jadwal\".\"created\" FROM \"atk_jadwal\" WHERE \"atk_jadwal\".\"tahun\" = 2023 ORDER BY \"atk_jadwal\".\"updated\" DESC, \"atk_jadwal\".\"created\" DESC LIMIT 1"
+        }
+      ]
+    },
+    {
+      "type": "class",
+      "name": "<templates>/CXamppHtdocsAtk_PolsubAtkTemplatesAtkWadirPengajuanHtml",
+      "children": [
+        {
+          "type": "function",
+          "name": "render",
+          "static": false
+        }
+      ]
+    },
+    {
+      "type": "class",
+      "name": "<templates>/CXamppHtdocsAtk_PolsubTemplatesSidenavHtml",
+      "children": [
+        {
+          "type": "function",
+          "name": "render",
+          "static": false
+        }
+      ]
+    },
+    {
+      "type": "class",
+      "name": "<templates>/CXamppHtdocsAtk_PolsubTemplatesNavbarHtml",
+      "children": [
+        {
+          "type": "function",
+          "name": "render",
+          "static": false
+        }
+      ]
+    },
+    {
+      "type": "class",
+      "name": "<templates>/CXamppHtdocsAtk_PolsubAtkTemplatesAtkWadirJadwalAddjadwalmodalHtml",
+      "children": [
+        {
+          "type": "function",
+          "name": "render",
+          "static": false
+        }
+      ]
+    },
+    {
+      "type": "class",
+      "name": "<templates>/CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsErrorsListDefaultHtml",
+      "children": [
+        {
+          "type": "function",
+          "name": "render",
+          "static": false
+        }
+      ]
+    },
+    {
+      "type": "class",
+      "name": "<templates>/CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsErrorsListUlHtml",
+      "children": [
+        {
+          "type": "function",
+          "name": "render",
+          "static": false
+        }
+      ]
+    },
+    {
+      "type": "class",
+      "name": "<templates>/CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsPHtml",
+      "children": [
+        {
+          "type": "function",
+          "name": "render",
+          "static": false
+        }
+      ]
+    },
+    {
+      "type": "class",
+      "name": "<templates>/CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsLabelHtml",
+      "children": [
+        {
+          "type": "function",
+          "name": "render",
+          "static": false
+        }
+      ]
+    },
+    {
+      "type": "class",
+      "name": "<templates>/CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsAttrsHtml",
+      "children": [
+        {
+          "type": "function",
+          "name": "render",
+          "static": false
+        }
+      ]
+    },
+    {
+      "type": "class",
+      "name": "<templates>/CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsSelectHtml",
+      "children": [
+        {
+          "type": "function",
+          "name": "render",
+          "static": false
+        }
+      ]
+    },
+    {
+      "type": "class",
+      "name": "<templates>/CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsAttrsHtml",
+      "children": [
+        {
+          "type": "function",
+          "name": "render",
+          "static": false
+        }
+      ]
+    },
+    {
+      "type": "class",
+      "name": "<templates>/CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsSelect_OptionHtml",
+      "children": [
+        {
+          "type": "function",
+          "name": "render",
+          "static": false
+        }
+      ]
+    },
+    {
+      "type": "class",
+      "name": "<templates>/CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsDateHtml",
+      "children": [
+        {
+          "type": "function",
+          "name": "render",
+          "static": false
+        }
+      ]
+    },
+    {
+      "type": "class",
+      "name": "<templates>/CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsInputHtml",
+      "children": [
+        {
+          "type": "function",
+          "name": "render",
+          "static": false
+        }
+      ]
+    },
+    {
+      "type": "class",
+      "name": "<templates>/CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsTextHtml",
+      "children": [
+        {
+          "type": "function",
+          "name": "render",
+          "static": false
+        }
+      ]
+    },
+    {
+      "type": "class",
+      "name": "<templates>/CXamppHtdocsAtk_PolsubAtkTemplatesAtkLogoutmodalHtml",
+      "children": [
+        {
+          "type": "function",
+          "name": "render",
+          "static": false
+        }
+      ]
+    }
+  ]
+}

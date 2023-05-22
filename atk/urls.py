@@ -29,6 +29,9 @@ urlpatterns = [
     
     path('ajukan/<str:pk>', views.ajukan, name='ajukan'),
     
+    path('stok/', views.stok, name='stok'),
+    
+    
     # PIMPINAN UNIT
     path('konfirpengajuan/', views.konfirPengajuan, name='konfir-pengajuan'),
     

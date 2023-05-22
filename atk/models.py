@@ -182,8 +182,66 @@ class Isi_pengajuan(models.Model):
     ]
     ordering=['-updated', '-created']
     
+class StokATK(models.Model):
+  atk=models.ForeignKey(Barang_ATK, on_delete=models.SET_NULL, null=True)
+  jumlah=models.BigIntegerField()
+  unit=models.ForeignKey(Unit, on_delete=models.CASCADE)
+  updated = models.DateTimeField(auto_now=True)
+  created= models.DateTimeField(auto_now_add=True)
+
+  class Meta:
+    constraints = [
+        models.UniqueConstraint(fields=['atk','unit'], name='unique_atk_unit_stok'),
+    ]
+    ordering=['-updated', '-created']
     
-# class RiwayatStok(models.Model):
+class PenggunaanStok(models.Model):
+  atk=models.ForeignKey(Barang_ATK, on_delete=models.SET_NULL, null=True)
+  jumlah=models.BigIntegerField()
+  unit=models.ForeignKey(Unit, on_delete=models.CASCADE)
+  tanggal=models.DateField()
+  updated = models.DateTimeField(auto_now=True)
+  created= models.DateTimeField(auto_now_add=True)
+  
+  class Meta:
+    ordering=['-updated', '-created']
+    
+# class PengambahanStok(models.Model):
 #   pass
-# class StokATK(models.Model):
-#   pass
+    
+class abc_analysis(models.Model):
+  class Prioritas(models.TextChoices):
+      TINGGI = "A", _("Tinggi")  
+      SEDANG = "B", _("Sedang")
+      RENDAH = "C", _("Rendah")
+  
+  atk=models.ForeignKey(Barang_ATK, on_delete=models.SET_NULL, null=True)
+  unit=models.ForeignKey(Unit, on_delete=models.CASCADE)
+  tahun=models.IntegerField()
+  harga=models.FloatField(null=True, blank=True)
+  dana=models.FloatField(null=True, blank=True)
+  presentase_dana=models.FloatField(null=True, blank=True)
+  presentase_kumulatif_dana=models.FloatField(null=True, blank=True)
+  presentase_item=models.FloatField(null=True, blank=True)
+  presentase_kumulatif_item=models.FloatField(null=True, blank=True)
+  prioritas = models.CharField(
+        max_length=20,
+        choices=Prioritas.choices,
+        null=True,
+        blank=True
+    )
+  updated = models.DateTimeField(auto_now=True)
+  created= models.DateTimeField(auto_now_add=True)
+  
+  class Meta:
+    constraints = [
+        models.UniqueConstraint(fields=['atk','unit', 'tahun'], name='unique_atk_unit_tahun_abc'),
+    ]
+    ordering=['-updated', '-created']
+    
+  def __str__(self):
+    return self.prioritas
+  
+# class metode_prediksi(models.Model):
+#   metode=models.CharField(max_length=200, unique=True)
+  

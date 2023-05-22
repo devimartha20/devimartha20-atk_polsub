@@ -1,0 +1,10 @@
+[
+  "<templates>/CXamppHtdocsAtk_PolsubAtkTemplatesAtkWadirJadwalAddjadwalmodalHtml",
+  "<templates>/CXamppHtdocsAtk_PolsubAtkTemplatesAtkWadirJadwalEdithapusjadwalmodalHtml",
+  "<templates>/CXamppHtdocsAtk_PolsubAtkTemplatesAtkWadirPengajuanHtml",
+  "<templates>/CXamppHtdocsAtk_PolsubTemplatesNavbarHtml",
+  "<templates>/CXamppHtdocsAtk_PolsubTemplatesSidenavHtml",
+  "<templates>/UnknownSource",
+  "atk/views",
+  "django/contrib/auth/backends/ModelBackend"
+]

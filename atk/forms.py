@@ -74,45 +74,7 @@ class formJadwal(forms.ModelForm):
     
     YEAR_CHOICES = []
     for r in range(2023, (datetime.datetime.now().year+2)):
-        YEAR_CHOICES.append((r,r))
-    
-    tahun = forms.ChoiceField(choices=YEAR_CHOICES,
-        widget=forms.Select(
-            attrs={
-                "class": "form-control form-control-lg",
-                "placeholder": "Pilih ATK",
-
-            }
-        )
-    )
-    
-    pengajuan_mulai = forms.CharField(
-        widget=forms.DateInput(
-            attrs={
-                "class": "form-control form-control-lg",
-                "type": "date"
-            }
-        )
-    )
-    
-    pengajuan_selesai = forms.CharField(
-        widget=forms.DateInput(
-            attrs={
-                "class": "form-control form-control-lg",
-                "type": "date"
-            }
-        )
-    )
-    
-    keterangan=forms.CharField(
-        widget=forms.TextInput(
-            attrs={
-                "class": "form-control form-control-lg",
-                "type": "text"
-            }
-        )
-    )
-    
+        YEAR_CHOICES.append((r,r)) 
     class Meta:
         model = Jadwal
         fields = '__all__'
@@ -121,6 +83,19 @@ class formJadwal(forms.ModelForm):
                   'pengajuan_mulai': 'Tanggal Dibuka',
                   'pengajuan_selesai': 'Tanggal Ditutup'
                 }
+        widgets = {
+            'tahun': forms.Select(attrs={"class": "form-control form-control-lg",
+                                                 "type": "text"}),
+            'pengajuan_mulai': forms.DateInput(attrs={"class": "form-control form-control-lg",
+                                                 "type": "date"}),
+            'pengajuan_selesai': forms.DateInput(attrs={"class": "form-control form-control-lg",
+                                                 "type": "date"}),
+            'keterangan': forms.TextInput(attrs={"class": "form-control form-control-lg",
+                                                 "type": "text"})
+        }
+        input_formats = {
+            'pengajuan_mulai': ['%d/%m/%Y']
+        }
         
 class formPengumpulanPengajuan(forms.ModelForm):
     class Meta:
@@ -167,4 +142,7 @@ class formIsiPengajuan(forms.ModelForm):
                   'keterangan': 'Keterangan'
                 }
 
-   
+class formStokKeluar(forms.ModelForm):
+    class Meta:
+        model=PenggunaanStok
+        fields = '__all__'

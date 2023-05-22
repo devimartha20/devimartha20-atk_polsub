@@ -90,7 +90,7 @@ def kelolaPengajuan(request):
         
         jadwalSekarang = Jadwal.objects.filter(
             tahun = datetime.datetime.now().year
-        ).get()
+        ).first()
         
         addjadwalForm = formJadwal()
         editjadwalForm = formJadwal(instance=jadwalSekarang)
@@ -109,6 +109,9 @@ def addJadwal(request):
             periode = jadwal.tahun
             messages.success(request, f'Jadwal Pengajuan Periode {periode} Berhasil Dibuat!')
             return redirect('kelola-pengajuan')
+        else:
+            messages.error(request, f'Terjadi Kesalahan')
+            return redirect('kelola-pengajuan')
     else:
         raise Http404
 
@@ -116,7 +119,16 @@ def addJadwal(request):
 @login_required(login_url='login')
 def editJadwal(request, pk):
     if request.user.is_wadir:
-        return HttpResponse('edit jadwal')
+        id = int(pk)
+        instance = Jadwal.objects.get(id=id)
+        jadwalForm = formJadwal(request.POST or None, instance=instance)
+        if jadwalForm.is_valid():
+            jadwalForm = jadwalForm.save()
+            messages.success(request, f'Jadwal Pengajuan Berhasil Diubah!')
+            return redirect('kelola-pengajuan')
+        else:
+            messages.error(request, f'Terjadi Kesalahan')
+            return redirect('kelola-pengajuan')
     else:
         raise Http404
     
@@ -282,6 +294,15 @@ def ajukan(request, pk):
         id = int(pk)
         pengajuan = Pengajuan.objects.filter(id=id).update(progress='K')
         return redirect('add-pengajuan')
+    else:
+        raise Http404
+    
+#stok
+@login_required(login_url='login')
+def stok(request):
+    if request.user.is_adminunit:
+        context = {}
+        return render(request, 'atk/adminunit/stok/stok.html', context)
     else:
         raise Http404
 

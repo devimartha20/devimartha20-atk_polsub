@@ -1,0 +1,38 @@
+[
+  {
+    "caller": "<templates>/CXamppHtdocsAtk_PolsubAtkTemplatesAtkWadirPengajuanHtml",
+    "callee": "<templates>/CXamppHtdocsAtk_PolsubAtkTemplatesAtkLogoutmodalHtml"
+  },
+  {
+    "caller": "<templates>/CXamppHtdocsAtk_PolsubAtkTemplatesAtkWadirPengajuanHtml",
+    "callee": "<templates>/CXamppHtdocsAtk_PolsubAtkTemplatesAtkWadirJadwalAddjadwalmodalHtml"
+  },
+  {
+    "caller": "<templates>/CXamppHtdocsAtk_PolsubAtkTemplatesAtkWadirPengajuanHtml",
+    "callee": "<templates>/CXamppHtdocsAtk_PolsubAtkTemplatesAtkWadirJadwalEdithapusjadwalmodalHtml"
+  },
+  {
+    "caller": "<templates>/CXamppHtdocsAtk_PolsubAtkTemplatesAtkWadirPengajuanHtml",
+    "callee": "<templates>/CXamppHtdocsAtk_PolsubTemplatesNavbarHtml"
+  },
+  {
+    "caller": "<templates>/CXamppHtdocsAtk_PolsubAtkTemplatesAtkWadirPengajuanHtml",
+    "callee": "<templates>/CXamppHtdocsAtk_PolsubTemplatesSidenavHtml"
+  },
+  {
+    "caller": "HTTP server requests",
+    "callee": "atk"
+  },
+  {
+    "caller": "atk",
+    "callee": "<templates>/CXamppHtdocsAtk_PolsubAtkTemplatesAtkWadirPengajuanHtml"
+  },
+  {
+    "caller": "atk",
+    "callee": "Database"
+  },
+  {
+    "caller": "atk",
+    "callee": "django"
+  }
+]

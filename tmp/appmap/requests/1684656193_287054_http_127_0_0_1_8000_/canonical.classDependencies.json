@@ -1,0 +1,38 @@
+[
+  {
+    "caller": "HTTP server requests->POST /",
+    "callee": "Database->BEGIN"
+  },
+  {
+    "caller": "HTTP server requests->POST /",
+    "callee": "Database->UPDATE \"django_session\" SET \"session_data\" = '.eJxVjEEOwiAQRe_C2pAB2kJduu8ZyAwMUjWQlHZlvLsh6UK3_73338LjsWd_NN78GsVVKHH53QjDk0sH8YHlXmWoZd9Wkl2RJ21yqZFft9P9O8jYcq8nDcpGigZwVDS7EQbUziWwwBNHUgZsMIYBwhyS5cEwJmJNnBywFp8v2fY4SQ:1q0e25:x3_m1ZElf062N9S1yw9uDSkBv7x4H3hzj-ocIP87THA', \"expire_date\" = '2023-06-04 08:03:13.271058' WHERE \"django_session\".\"session_key\" = 'zja7la65vvlscjug67qzgsaw341ihn7p'"
+  },
+  {
+    "caller": "HTTP server requests->POST /",
+    "callee": "atk/views"
+  },
+  {
+    "caller": "atk/views",
+    "callee": "Database->BEGIN"
+  },
+  {
+    "caller": "atk/views",
+    "callee": "Database->INSERT INTO \"django_session\" (\"session_key\", \"session_data\", \"expire_date\") VALUES ('zja7la65vvlscjug67qzgsaw341ihn7p', 'e30:1q0e25:eSwVJ8WAtDCUvIa9nrUwvCAQd6pyhVkBIZgY7jRimUo', '2023-06-04 08:03:13.223058')"
+  },
+  {
+    "caller": "atk/views",
+    "callee": "Database->SELECT 1 AS \"a\" FROM \"django_session\" WHERE \"django_session\".\"session_key\" = 'zja7la65vvlscjug67qzgsaw341ihn7p' LIMIT 1"
+  },
+  {
+    "caller": "atk/views",
+    "callee": "Database->UPDATE \"atk_user\" SET \"last_login\" = '2023-05-21 08:03:13.247061' WHERE \"atk_user\".\"id\" = 1"
+  },
+  {
+    "caller": "atk/views",
+    "callee": "django/contrib"
+  },
+  {
+    "caller": "django/contrib",
+    "callee": "Database->SELECT \"atk_user\".\"id\", \"atk_user\".\"password\", \"atk_user\".\"last_login\", \"atk_user\".\"is_superuser\", \"atk_user\".\"username\", \"atk_user\".\"first_name\", \"atk_user\".\"last_name\", \"atk_user\".\"email\", \"atk_user\".\"is_staff\", \"atk_user\".\"is_active\", \"atk_user\".\"date_joined\", \"atk_user\".\"is_admin\", \"atk_user\".\"is_wadir\", \"atk_user\".\"is_pimpinanunit\", \"atk_user\".\"is_adminunit\", \"atk_user\".\"unit_id\" FROM \"atk_user\" WHERE \"atk_user\".\"username\" = 'devimartha' LIMIT 21"
+  }
+]

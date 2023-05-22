@@ -1,0 +1,7 @@
+[
+  {
+    "route": "GET /dashboard/",
+    "parameters": "()",
+    "status": 200
+  }
+]

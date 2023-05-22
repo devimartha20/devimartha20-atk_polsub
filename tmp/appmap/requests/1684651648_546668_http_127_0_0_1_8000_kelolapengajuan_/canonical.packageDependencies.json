@@ -1,0 +1,98 @@
+[
+  {
+    "caller": "<templates>/CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsErrorsListDefaultHtml",
+    "callee": "<templates>/CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsErrorsListUlHtml"
+  },
+  {
+    "caller": "<templates>/CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsLabelHtml",
+    "callee": "<templates>/CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsAttrsHtml"
+  },
+  {
+    "caller": "<templates>/CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsPHtml",
+    "callee": "<templates>/CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsErrorsListDefaultHtml"
+  },
+  {
+    "caller": "<templates>/CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsPHtml",
+    "callee": "<templates>/CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsLabelHtml"
+  },
+  {
+    "caller": "<templates>/CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsPHtml",
+    "callee": "<templates>/CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsDateHtml"
+  },
+  {
+    "caller": "<templates>/CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsPHtml",
+    "callee": "<templates>/CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsSelectHtml"
+  },
+  {
+    "caller": "<templates>/CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsPHtml",
+    "callee": "<templates>/CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsTextareaHtml"
+  },
+  {
+    "caller": "<templates>/CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsDateHtml",
+    "callee": "<templates>/CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsInputHtml"
+  },
+  {
+    "caller": "<templates>/CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsInputHtml",
+    "callee": "<templates>/CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsAttrsHtml"
+  },
+  {
+    "caller": "<templates>/CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsSelectHtml",
+    "callee": "<templates>/CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsAttrsHtml"
+  },
+  {
+    "caller": "<templates>/CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsSelectHtml",
+    "callee": "<templates>/CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsSelect_OptionHtml"
+  },
+  {
+    "caller": "<templates>/CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsSelect_OptionHtml",
+    "callee": "<templates>/CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsAttrsHtml"
+  },
+  {
+    "caller": "<templates>/CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsTextareaHtml",
+    "callee": "<templates>/CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsWidgetsAttrsHtml"
+  },
+  {
+    "caller": "<templates>/CXamppHtdocsAtk_PolsubAtkTemplatesAtkWadirJadwalEdithapusjadwalmodalHtml",
+    "callee": "<templates>/CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsErrorsListDefaultHtml"
+  },
+  {
+    "caller": "<templates>/CXamppHtdocsAtk_PolsubAtkTemplatesAtkWadirJadwalEdithapusjadwalmodalHtml",
+    "callee": "<templates>/CUsersDevimarthaAppdataLocalProgramsPythonPython310LibSitePackagesDjangoFormsTemplatesDjangoFormsPHtml"
+  },
+  {
+    "caller": "<templates>/CXamppHtdocsAtk_PolsubAtkTemplatesAtkWadirPengajuanHtml",
+    "callee": "<templates>/CXamppHtdocsAtk_PolsubAtkTemplatesAtkLogoutmodalHtml"
+  },
+  {
+    "caller": "<templates>/CXamppHtdocsAtk_PolsubAtkTemplatesAtkWadirPengajuanHtml",
+    "callee": "<templates>/CXamppHtdocsAtk_PolsubAtkTemplatesAtkWadirJadwalAddjadwalmodalHtml"
+  },
+  {
+    "caller": "<templates>/CXamppHtdocsAtk_PolsubAtkTemplatesAtkWadirPengajuanHtml",
+    "callee": "<templates>/CXamppHtdocsAtk_PolsubAtkTemplatesAtkWadirJadwalEdithapusjadwalmodalHtml"
+  },
+  {
+    "caller": "<templates>/CXamppHtdocsAtk_PolsubAtkTemplatesAtkWadirPengajuanHtml",
+    "callee": "<templates>/CXamppHtdocsAtk_PolsubTemplatesNavbarHtml"
+  },
+  {
+    "caller": "<templates>/CXamppHtdocsAtk_PolsubAtkTemplatesAtkWadirPengajuanHtml",
+    "callee": "<templates>/CXamppHtdocsAtk_PolsubTemplatesSidenavHtml"
+  },
+  {
+    "caller": "HTTP server requests",
+    "callee": "atk"
+  },
+  {
+    "caller": "atk",
+    "callee": "<templates>/CXamppHtdocsAtk_PolsubAtkTemplatesAtkWadirPengajuanHtml"
+  },
+  {
+    "caller": "atk",
+    "callee": "Database"
+  },
+  {
+    "caller": "atk",
+    "callee": "django"
+  }
+]
