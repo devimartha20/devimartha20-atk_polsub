@@ -1,6 +1,0 @@
-[
-  {
-    "caller": "HTTP server requests->GET /assets/js/argon-dashboard.min.js",
-    "callee": "<templates>/UnknownSource#render"
-  }
-]

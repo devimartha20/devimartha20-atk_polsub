@@ -1,7 +1,0 @@
-[
-  {
-    "route": "GET /pengajuan/",
-    "parameters": "()",
-    "status": 200
-  }
-]

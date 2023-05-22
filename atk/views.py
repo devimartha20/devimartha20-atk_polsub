@@ -301,10 +301,17 @@ def ajukan(request, pk):
 @login_required(login_url='login')
 def stok(request):
     if request.user.is_adminunit:
-        context = {}
+        stok = StokATK.objects.filter(
+            unit = request.user.unit
+        )
+        context = {'stok': stok}
         return render(request, 'atk/adminunit/stok/stok.html', context)
     else:
         raise Http404
+
+@login_required(login_url='login')
+def addPenggunaanStok(request):
+    pass
 
 #PIMPINAN UNIT
 @login_required(login_url='login')

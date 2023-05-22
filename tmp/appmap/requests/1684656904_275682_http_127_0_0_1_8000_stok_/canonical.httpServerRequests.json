@@ -1,7 +1,0 @@
-[
-  {
-    "route": "GET /stok/",
-    "parameters": "()",
-    "status": 302
-  }
-]

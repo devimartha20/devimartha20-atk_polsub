@@ -1,6 +1,0 @@
-[
-  {
-    "caller": "HTTP server requests->GET /assets/img/logos/visa.png",
-    "callee": "<templates>/UnknownSource#render"
-  }
-]

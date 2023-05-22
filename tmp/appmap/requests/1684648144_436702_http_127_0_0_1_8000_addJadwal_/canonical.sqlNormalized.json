@@ -1,7 +1,0 @@
-[
-  "INSERT INTO \"atk_jadwal\" (\"tahun\", \"pengajuan_mulai\", \"pengajuan_selesai\", \"status\", \"keterangan\", \"updated\", \"created\") VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING \"atk_jadwal\".\"id\"",
-  "SELECT ? AS \"a\" FROM \"atk_jadwal\" WHERE \"atk_jadwal\".\"pengajuan_mulai\" = ? LIMIT ?",
-  "SELECT ? AS \"a\" FROM \"atk_jadwal\" WHERE \"atk_jadwal\".\"pengajuan_selesai\" = ? LIMIT ?",
-  "SELECT \"atk_user\".\"id\", \"atk_user\".\"password\", \"atk_user\".\"last_login\", \"atk_user\".\"is_superuser\", \"atk_user\".\"username\", \"atk_user\".\"first_name\", \"atk_user\".\"last_name\", \"atk_user\".\"email\", \"atk_user\".\"is_staff\", \"atk_user\".\"is_active\", \"atk_user\".\"date_joined\", \"atk_user\".\"is_admin\", \"atk_user\".\"is_wadir\", \"atk_user\".\"is_pimpinanunit\", \"atk_user\".\"is_adminunit\", \"atk_user\".\"unit_id\" FROM \"atk_user\" WHERE \"atk_user\".\"id\" = ? LIMIT ?",
-  "SELECT \"django_session\".\"session_key\", \"django_session\".\"session_data\", \"django_session\".\"expire_date\" FROM \"django_session\" WHERE (\"django_session\".\"expire_date\" > ? AND \"django_session\".\"session_key\" = ?) LIMIT ?"
-]

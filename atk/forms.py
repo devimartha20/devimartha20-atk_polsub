@@ -146,3 +146,14 @@ class formStokKeluar(forms.ModelForm):
     class Meta:
         model=PenggunaanStok
         fields = '__all__'
+        exclude = ['unit']
+        widgets = {
+            'atk': forms.Select(attrs={"class": "form-control form-control-lg",
+                                                 "type": "text"}),
+            'tanggal': forms.DateInput(attrs={"class": "form-control form-control-lg",
+                                                 "type": "date"}),
+            'jumlah': forms.NumberInput(attrs={"class": "form-control form-control-lg",
+                                                 "type": "number",
+                                                 "min": "1"
+                                                 })
+        }

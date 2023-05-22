@@ -1,8 +1,0 @@
-[
-  "<templates>/CXamppHtdocsAtk_PolsubAtkTemplatesAtkLogoutmodalHtml",
-  "<templates>/CXamppHtdocsAtk_PolsubAtkTemplatesAtkWadirDashboardHtml",
-  "<templates>/CXamppHtdocsAtk_PolsubTemplatesNavbarHtml",
-  "<templates>/CXamppHtdocsAtk_PolsubTemplatesSidenavHtml",
-  "atk/views",
-  "django/contrib/auth/backends/ModelBackend"
-]

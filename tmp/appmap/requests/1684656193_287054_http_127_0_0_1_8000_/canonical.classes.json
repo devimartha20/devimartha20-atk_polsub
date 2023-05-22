@@ -1,5 +1,0 @@
-[
-  "atk/views",
-  "django/contrib/auth",
-  "django/contrib/auth::backends/ModelBackend"
-]

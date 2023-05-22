@@ -1,7 +1,0 @@
-[
-  {
-    "route": "POST /jadwal/edit/{pk}",
-    "parameters": "(csrfmiddlewaretoken,tahun,pengajuan_mulai,pengajuan_selesai,keterangan,pk)",
-    "status": 302
-  }
-]

@@ -1,7 +1,0 @@
-[
-  {
-    "route": "GET /logout/",
-    "parameters": "()",
-    "status": 302
-  }
-]

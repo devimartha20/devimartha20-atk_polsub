@@ -30,6 +30,9 @@ urlpatterns = [
     path('ajukan/<str:pk>', views.ajukan, name='ajukan'),
     
     path('stok/', views.stok, name='stok'),
+    path('addPenggunaanStok/', views.addPenggunaanStok, name='add-penggunaan-stok'),
+    path('editPenggunaanStok/<str:pk>', views.editPenggunaanStok, name='edit-penggunaan-stok'),
+    path('deletePenggunaanStok/<str:pk>', views.deletePenggunaanStok, name='delete-penggunaan-stok'),
     
     
     # PIMPINAN UNIT
