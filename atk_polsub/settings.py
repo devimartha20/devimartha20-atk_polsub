@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     'django_extensions',
+    
+    
     'abc_analysis',
     
     'active_link',

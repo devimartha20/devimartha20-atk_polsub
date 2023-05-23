@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 import datetime
+from django.utils import timezone
 # Create your models here.
 
 class KategoriUnit(models.Model):
@@ -169,8 +170,8 @@ class Pengajuan(models.Model):
 class Isi_pengajuan(models.Model):
   pengajuan=models.ForeignKey(Pengajuan, on_delete=models.CASCADE)
   atk=models.ForeignKey(Barang_ATK, on_delete=models.SET_NULL, null=True)
-  jumlah=models.BigIntegerField()
-  rekomendasi=models.BigIntegerField(null=True, blank=True)
+  jumlah=models.IntegerField()
+  rekomendasi=models.IntegerField(null=True, blank=True)
   keterangan=models.TextField(max_length=200)
   perbaikan=models.TextField(max_length=200, null=True, blank=True)
   updated = models.DateTimeField(auto_now=True)
@@ -184,7 +185,7 @@ class Isi_pengajuan(models.Model):
     
 class StokATK(models.Model):
   atk=models.ForeignKey(Barang_ATK, on_delete=models.SET_NULL, null=True)
-  jumlah=models.BigIntegerField()
+  jumlah=models.IntegerField()
   unit=models.ForeignKey(Unit, on_delete=models.CASCADE)
   updated = models.DateTimeField(auto_now=True)
   created= models.DateTimeField(auto_now_add=True)
@@ -195,19 +196,44 @@ class StokATK(models.Model):
     ]
     ordering=['-updated', '-created']
     
+  def __str__(self):
+    return self.atk.atk
+    
 class PenggunaanStok(models.Model):
-  atk=models.ForeignKey(Barang_ATK, on_delete=models.SET_NULL, null=True)
-  jumlah=models.BigIntegerField()
+  class Penerima(models.TextChoices):
+    MAHASISWA = 'M', _("Mahasiswa")
+    DOSEN = 'D', _("Dosen")
+    STAFF = 'S', _("Staff")
+    LAINNYA = 'L', _("Lainnya")
+  
+  atk=models.ForeignKey(StokATK, on_delete=models.SET_NULL, null=True)
+  jumlah=models.IntegerField()
   unit=models.ForeignKey(Unit, on_delete=models.CASCADE)
-  tanggal=models.DateField()
+  penerima = models.CharField(
+        max_length=20,
+        choices=Penerima.choices,
+        default=Penerima.MAHASISWA
+    )
+  kegunaan=models.CharField(max_length=200, null=True)
+  keterangan=models.CharField(max_length=200, null=True, blank=True)
+  tanggal=models.DateField(default=timezone.now(), blank=True)
   updated = models.DateTimeField(auto_now=True)
   created= models.DateTimeField(auto_now_add=True)
   
   class Meta:
     ordering=['-updated', '-created']
     
-# class PengambahanStok(models.Model):
-#   pass
+class PenambahanStok(models.Model):
+  atk=models.ForeignKey(Barang_ATK, on_delete=models.SET_NULL, null=True)
+  jumlah=models.IntegerField()
+  tanggal=models.DateField()
+  unit=models.ForeignKey(Unit, on_delete=models.CASCADE)
+  keterangan=models.CharField(max_length=200, null=True, blank=True)
+  updated = models.DateTimeField(auto_now=True)
+  created= models.DateTimeField(auto_now_add=True)
+  
+  class Meta:
+    ordering=['-updated', '-created']
     
 class abc_analysis(models.Model):
   class Prioritas(models.TextChoices):
@@ -244,4 +270,14 @@ class abc_analysis(models.Model):
   
 # class metode_prediksi(models.Model):
 #   metode=models.CharField(max_length=200, unique=True)
+
+class pengajuanABCCek(models.Model):
+  atk=models.CharField(max_length=50)
+  jumlah=models.IntegerField()
+  harga=models.IntegerField()
+  total_harga=models.IntegerField()
+  updated = models.DateTimeField(auto_now=True)
+  created= models.DateTimeField(auto_now_add=True)
   
+  class Meta:
+    ordering=['-updated', '-created']

@@ -30,9 +30,14 @@ urlpatterns = [
     path('ajukan/<str:pk>', views.ajukan, name='ajukan'),
     
     path('stok/', views.stok, name='stok'),
+    
     path('addPenggunaanStok/', views.addPenggunaanStok, name='add-penggunaan-stok'),
     path('editPenggunaanStok/<str:pk>', views.editPenggunaanStok, name='edit-penggunaan-stok'),
     path('deletePenggunaanStok/<str:pk>', views.deletePenggunaanStok, name='delete-penggunaan-stok'),
+    
+    path('addPenambahanStok/', views.addPenambahanStok, name='add-penambahan-stok'),
+    path('editPenambahanStok/<str:pk>', views.editPenambahanStok, name='edit-penambahan-stok'),
+    path('deletePenambahanStok/<str:pk>', views.deletePenambahanStok, name='delete-penambahan-stok'),
     
     
     # PIMPINAN UNIT
@@ -46,5 +51,11 @@ urlpatterns = [
     path('jadwal/edit/<str:pk>', views.editJadwal, name='edit-jadwal'),
     path('jadwal/delete/<str:pk>', views.deleteJadwal, name='delete-jadwal'),
     
-    path('', views.loginUser, name='login')
+    path('', views.loginUser, name='login'),
+    
+    # METODE
+    # ABC Analysis
+    path('abc', views.atk_abc_analysis, name='abc'),
+    
+    path('import', views.importcsv, name='import-csv')
 ]

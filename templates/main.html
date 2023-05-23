@@ -123,30 +123,31 @@
       </div>
     </div>
 
-    {% include 'atk/logoutmodal.html' %}
+        {% include 'atk/logoutmodal.html' %}
 
-    {% for msg in messages %}
+        {% for msg in messages %}
 
-    {% if msg.tags == 'success' %}
-      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-      <script>
-        var m = "{{ msg }}";
-        Swal.fire({
-          icon: 'success',
-          title: 'Sukses',
-          text: m,
-        })
-      </script>
-    {% else %}
-      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-      <script>
-        Swal.fire({
-          icon: 'error',
-          title: 'Terjadi kesalahan1',
-        })
-    {% endif %}
-  
-  {% endfor %}
+        {% if msg.tags == 'success' %}
+          <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+          <script>
+            var m = "{{ msg }}";
+            Swal.fire({
+              icon: 'success',
+              title: 'Sukses',
+              text: m,
+            })
+          </script>
+        {% else %}
+          <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+          <script>
+            Swal.fire({
+              icon: 'error',
+              title: 'Terjadi kesalahan1',
+            })
+          </script>
+        {% endif %}
+      
+      {% endfor %}
   </div>
   <!--   Core JS Files   -->
   <script src="{% static 'js/core/popper.min.js' %}"></script>
@@ -271,7 +272,17 @@
         bSort: true,
       });
   </script>
-
+  <script>
+    $('#tabelstok').DataTable({
+      paging: true,
+      pageLength: 10,
+      lengthChange: true,
+      autoWidth: true,
+      searching: true,
+      bInfo: true,
+      bSort: true,
+    });
+</script>
   
 
 </body>

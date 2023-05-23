@@ -1,14 +1,21 @@
 from django.shortcuts import render, redirect
-from .forms import loginForm, addUserForm
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import cache_control
-from django.http import Http404
+from django.core.management import BaseCommand
+import csv
+from decimal import *
+
 from django.contrib import messages
 from .forms import *
 from .models import *
 import datetime
+
+from abc_analysis import abc_analysis
+import pandas as pd
+import numpy as np
+from darts import TimeSeries
 
 # Create your views here.
 
@@ -304,14 +311,135 @@ def stok(request):
         stok = StokATK.objects.filter(
             unit = request.user.unit
         )
-        context = {'stok': stok}
+        stokMasuk = PenambahanStok.objects.filter(unit=request.user.unit)
+        stokKeluar = PenggunaanStok.objects.filter(unit=request.user.unit)
+        stokKeluarForm = formStokKeluar()
+        stokMasukForm = formStokMasuk()
+        context = {'stok': stok, 'stokMasuk': stokMasuk, 'stokKeluar': stokKeluar,'stokKeluarForm': stokKeluarForm, 'stokMasukForm': stokMasukForm}
         return render(request, 'atk/adminunit/stok/stok.html', context)
     else:
         raise Http404
 
 @login_required(login_url='login')
 def addPenggunaanStok(request):
-    pass
+    if request.user.is_adminunit:
+        stokKeluarForm = formStokKeluar(request.POST)
+        if stokKeluarForm.is_valid():
+            
+            atk=stokKeluarForm.data.get('atk')
+            jumlah=stokKeluarForm.cleaned_data.get('jumlah')
+            
+            stok = StokATK.objects.filter(id=atk).first()
+            print(atk, request.user.unit)
+            stok.jumlah = stok.jumlah-jumlah
+            stok.save(update_fields=['jumlah'])
+            
+            stokKeluar = stokKeluarForm.save(commit=False)
+            stokKeluar.unit = request.user.unit
+            stokKeluar.save()
+            messages.success(request, "Data berhasil ditambahkan!")
+            return redirect('stok')
+        else:
+            messages.error(request, 'Terjadi kesalahan!')
+            return redirect('stok')
+    else:
+        raise Http404
+    
+@login_required(login_url='login')
+def editPenggunaanStok(request, pk):
+    if request.user.is_adminunit:
+        id = int(pk)
+        stok = PenggunaanStok.objects.get(id=id)
+        stokKeluarForm = formStokKeluar(request.POST, instance=stok)
+        if stokKeluarForm.is_valid():
+            stokKeluarForm.save()
+            messages.success(request, "Data berhasil diubah!")
+            return redirect('stok')
+        else:
+            messages.error(request, 'Terjadi kesalahan!')
+            return redirect('stok')
+    else:
+        raise Http404
+    
+@login_required(login_url='login')
+def deletePenggunaanStok(request, pk):
+    if request.user.is_adminunit:
+        id = int(pk)
+        stok = PenggunaanStok.objects.filter(id=id).first()
+        if stok is not None:
+            stok.delete()
+            messages.success(request, "Data berhasil dihapus!")
+            return redirect('stok')
+        else:
+            messages.error(request, 'Terjadi kesalahan!')
+            return redirect('stok')
+    else:
+        raise Http404
+    
+@login_required(login_url='login')
+def addPenambahanStok(request):
+    if request.user.is_adminunit:
+        stokMasukForm = formStokMasuk(request.POST)
+        if stokMasukForm.is_valid():
+            
+            atk=stokMasukForm.cleaned_data.get('atk')
+            jumlah=stokMasukForm.cleaned_data.get('jumlah')
+            
+            stok = StokATK.objects.filter(unit=request.user.unit, atk=atk).first()
+            
+            if stok is None:
+                stok = StokATK.objects.create(
+                    atk=atk,
+                    jumlah=jumlah,
+                    unit=request.user.unit
+                )
+            else:
+                stok.jumlah = stok.jumlah + jumlah
+                stok.save(
+                    update_fields=['jumlah']
+                )
+            
+            tambahStok = stokMasukForm.save(commit=False)
+            tambahStok.unit = request.user.unit
+            tambahStok.save()
+            messages.success(request, "Data berhasil ditambahkan!")
+            return redirect('stok')
+        else:
+            messages.error(request, 'Terjadi kesalahan!')
+            return redirect('stok')
+    else:
+        raise Http404
+    
+@login_required(login_url='login')
+def editPenambahanStok(request, pk):
+    if request.user.is_adminunit:
+        id = int(pk)
+        stok = PenambahanStok.objects.get(id=id)
+        stokMasukForm = formStokMasuk(request.POST, instance=stok)
+        if stokMasukForm.is_valid():
+            stokMasukForm.save()
+            messages.success(request, "Data berhasil diubah!")
+            return redirect('stok')
+        else:
+            messages.error(request, 'Terjadi kesalahan!')
+            return redirect('stok')
+    else:
+        raise Http404
+    
+@login_required(login_url='login')
+def deletePenambahanStok(request, pk):
+    if request.user.is_adminunit:
+        id = int(pk)
+        stok = PenambahanStok.objects.filter(id=id).first()
+        if stok is not None:
+            stok.delete()
+            messages.success(request, "Data berhasil dihapus!")
+            return redirect('stok')
+        else:
+            messages.error(request, 'Terjadi kesalahan!')
+            return redirect('stok')
+    else:
+        raise Http404
 
 #PIMPINAN UNIT
 @login_required(login_url='login')
@@ -352,3 +480,35 @@ def detailPengajuan(request, pk):
         return render(request, 'atk/detailpengajuan.html', context)
     else:
         raise Http404
+    
+# METODE
+# ABC analisis
+@login_required(login_url='login')
+def atk_abc_analysis(request):  
+    
+    
+    context = {}
+    return render(request, 'atk/adminunit/metode/abc_analysis.html', context)
+    
+    cek = pengajuanABCCek.objects.all().order_by('id')
+    list_total_harga = []
+    print(cek.count())
+    for cek in cek:
+        list_total_harga.append(cek.total_harga)
+    print(list_total_harga)
+    abc = abc_analysis(list_total_harga)
+    print(abc)
+    return HttpResponse(abc)
+# Peramalan
+
+def importcsv(request):
+    df=pd.read_csv('atkjmi.csv', engine='python', header=0, sep=';')
+    for i, row in df.iterrows():
+        pengajuanABCCek.objects.create(
+            atk = str(row['atk']),
+            jumlah = int(row['jumlah']),
+            harga = int(row['harga']),
+            total_harga = int(row['total_harga']),
+        )
+    print (df.iterrows())
+    return HttpResponse(df.iterrows())

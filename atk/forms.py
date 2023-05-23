@@ -85,7 +85,7 @@ class formJadwal(forms.ModelForm):
                 }
         widgets = {
             'tahun': forms.Select(attrs={"class": "form-control form-control-lg",
-                                                 "type": "text"}),
+                                                 "type": "number"}),
             'pengajuan_mulai': forms.DateInput(attrs={"class": "form-control form-control-lg",
                                                  "type": "date"}),
             'pengajuan_selesai': forms.DateInput(attrs={"class": "form-control form-control-lg",
@@ -150,10 +150,40 @@ class formStokKeluar(forms.ModelForm):
         widgets = {
             'atk': forms.Select(attrs={"class": "form-control form-control-lg",
                                                  "type": "text"}),
-            'tanggal': forms.DateInput(attrs={"class": "form-control form-control-lg",
-                                                 "type": "date"}),
+            
             'jumlah': forms.NumberInput(attrs={"class": "form-control form-control-lg",
                                                  "type": "number",
-                                                 "min": "1"
-                                                 })
+                                                 "min": 1
+                                                 }),
+            'penerima': forms.Select(attrs={"class": "form-control form-control-lg",
+                                                 "type": "text",
+                                                 }),
+            'kegunaan': forms.TextInput(attrs={"class": "form-control form-control-lg",
+                                                 "type": "text"
+                                                 }),
+            'keterangan': forms.TextInput(attrs={"class": "form-control form-control-lg",
+                                                 "type": "text"
+                                                 }),
+            'tanggal': forms.DateInput(attrs={"class": "form-control form-control-lg",
+                                                 "type": "date"}),
+        }
+        
+class formStokMasuk(forms.ModelForm):
+    class Meta:
+        model=PenambahanStok
+        fields = '__all__'
+        exclude = ['unit']
+        widgets = {
+            'atk': forms.Select(attrs={"class": "form-control form-control-lg",
+                                                 "type": "text"}),
+            
+            'jumlah': forms.NumberInput(attrs={"class": "form-control form-control-lg",
+                                                 "type": "number",
+                                                 
+                                                 }),
+            'keterangan': forms.TextInput(attrs={"class": "form-control form-control-lg",
+                                                 "type": "text"
+                                                 }),
+            'tanggal': forms.DateInput(attrs={"class": "form-control form-control-lg",
+                                                 "type": "date"}),
         }
