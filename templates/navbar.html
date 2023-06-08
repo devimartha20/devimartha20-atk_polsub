@@ -14,9 +14,9 @@
           {% elif request.user.is_wadir %}
             WAKIL DIREKTUR 2
           {% elif request.user.is_adminunit %}
-            ADMIN UNIT
+            ADMIN UNIT {{request.user.unit}}
           {% elif request.user.is_pimpinanunit %}
-            PIMPINAN UNIT
+            PIMPINAN UNIT {{request.user.unit}}
           {% endif %}
         </h6>
       </nav>

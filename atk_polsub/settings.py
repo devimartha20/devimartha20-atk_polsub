@@ -40,13 +40,17 @@ INSTALLED_APPS = [
     
     'django_extensions',
     
-    
+    'django_plotly_dash.apps.DjangoPlotlyDashConfig',
     'abc_analysis',
+    
     
     'active_link',
     
-    'atk.apps.AtkConfig'
+    'atk.apps.AtkConfig',
+    'puml_generator',
 ]
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -74,6 +78,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries': {
+            'custom_tags':'atk.template_tags.custom_tags'
+            }
         },
     },
 ]
@@ -125,6 +132,8 @@ USE_I18N = True
 USE_TZ = True
 
 DATE_FORMAT = 'd.m.Y'
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/

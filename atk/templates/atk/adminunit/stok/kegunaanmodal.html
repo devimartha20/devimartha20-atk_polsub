@@ -1,0 +1,49 @@
+<div class="modal fade" id="kegunaanModal" tabindex="-1" aria-labelledby="kegunaanModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="kegunaanModal">List Kegunaan</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#addGunaModal">
+                Tambah Kegunaan
+              </button>
+            {% for kegunaan in kegunaan %}
+            <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
+              <div class="d-flex align-items-center">
+                <div class="d-flex flex-column">
+                  <h6 class="mb-1 text-dark text-sm">{{ kegunaan.kegunaan }}</h6>
+                </div>
+              </div>
+              <div class="d-flex align-items-center">
+                <a class="btn btn-sm btn-primary" href="{% url 'detail-guna' kegunaan.id %}">Detail</a>
+              </div>
+            </li>
+            {% endfor %}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+        </div>
+      </div>
+  </div>
+</div>
+<div class="modal fade" id="addGunaModal" tabindex="-1" aria-labelledby="addGunaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="addGunaModal">Tambah Kegunaan</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form method='POST' action="{% url 'add-guna' %}">
+                {% csrf_token %}
+                {{ gunaForm.as_p }}
+        </div>
+        <div class="modal-footer">
+          <input type="submit" class="btn btn-secondary">
+        </div>
+    </form>
+      </div>
+  </div>
+</div>

@@ -8,11 +8,11 @@
         </div>
         <div class="modal-body">
            <p> Apakah Anda yakin untuk mengirim pengajuan ini?</p>
-           <small class="text-danger">Seluruh data tidak akan bisa diubah setelah diajukan</small>
+           <small class="text-danger">Pengajuan akan ditinjau oleh pimpinan {{ request.user.unit }} dan seluruh data tidak akan bisa diubah setelah diajukan.</small>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-          <a href="" class="btn btn-success" >Ya</a>
+          <a href="{% url 'ajukan' pengajuan.id %}" class="btn btn-success" >Ya</a>
         </div>
       </div>
     </div>

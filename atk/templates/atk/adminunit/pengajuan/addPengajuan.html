@@ -35,7 +35,7 @@
             <div class="row">
               <div class="col-9">
                 <h6>Data Pengajuan</h6>
-              </div>
+              </div> 
               <div class="col-3">
                  <!-- Button trigger modal -->
                 <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#editModal{{ pengajuan.id }}">
@@ -106,14 +106,17 @@
                 Tambah Data
               </button>
               {% include 'atk/adminunit/pengajuan/addisimodal.html' %}
-              {% comment %} {% if pengajuan.progress == 'D' %}
+              {% include 'atk/adminunit/pengajuan/ajukanmodal.html' %}
+              {% if pengajuan.progress == 'D' or pengajuan.progress == 'P'%}
+                {% if isi_pengajuan is not None %}
                   <h6>Rancangan Pengajuan Sementara</h6>
                   <div>
-                    <a href="{% url 'ajukan' pengajuan.id %} " class="badge badge bg-success" data-toggle="tooltip" data-original-title="ajukan">Ajukan</a>
-                  </div>  
+                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#ajukan{{ pengajuan.id }}">Ajukan</button>
+                  </div> 
+                {% endif %}
               {% else %}
                   <h6>Rancangan Pengajuan</h6>
-              {% endif %}   {% endcomment %}
+              {% endif %}
             </div>
             <div class="card-body px-5 pt-0 pb-2">
               <div class="table-responsive p-0">

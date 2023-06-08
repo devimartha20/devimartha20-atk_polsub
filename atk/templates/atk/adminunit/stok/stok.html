@@ -1,4 +1,5 @@
 {% extends 'main.html' %}
+{% load custom_tags %}
 
 {% block content %}
 <div class="container-fluid py-4">
@@ -6,18 +7,27 @@
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header pb-0">
-                   <!-- Button trigger modal -->
-                   <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addStokKeluarModal">
-                    Catat Stok Keluar
-                  </button>
-                  <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#addStokMasukModal">
-                    Catat Stok Masuk
-                  </button>
-                  
-                  {% comment %} {% include 'atk/adminunit/pengajuan/addisimodal.html' %} {% endcomment %}
+                  <div class="row">
+                    <div class="col-9">
+                      <!-- Button trigger modal -->
+                      <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addStokKeluarModal">
+                        Catat Stok Keluar
+                      </button>
+                      <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#addStokMasukModal">
+                        Catat Stok Masuk
+                      </button>
+                    </div>
+                    <div class="col-3">
+                      <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#kegunaanModal">
+                        List Kegunaan
+                      </button>
+                    </div>
+                  </div>
+                    {% comment %} {% include 'atk/adminunit/pengajuan/addisimodal.html' %} {% endcomment %}
                 </div>
                 {% include 'atk/adminunit/stok/addstokmasukmodal.html' %}
                 {% include 'atk/adminunit/stok/addstokkeluarmodal.html' %}
+                {% include 'atk/adminunit/stok/kegunaanmodal.html' %}
                 <div class="card-body px-5 pt-0 pb-2">
                   <div class="table-responsive p-0">
                     <table class="table align-items-center mb-0" id ="tabelstok">
@@ -41,10 +51,10 @@
                                     <h6 class="mb-0 text-sm">{{ stok.atk }}</h6>
                               </td>
                               <td>
-                                <h6 class="mb-0 text-sm">masuk</h6>
+                                <h6 class="mb-0 text-sm">{{ masuk|get_item:stok.atk.id|default_if_none:0 }}</h6>
                               </td>
                               <td>
-                                <h6 class="mb-0 text-sm">keluar</h6>
+                                <h6 class="mb-0 text-sm">{{ keluar|get_item:stok.atk.id|default_if_none:0 }}</h6>
                               </td>
                               <td>
                                 <h6 class="mb-0 text-sm">{{ stok.jumlah }}</h6>
@@ -61,6 +71,76 @@
                 </div>
               </div>
         </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 mt-4">
+        <div class="card h-100 mb-4">
+          <div class="card-header pb-0 px-3">
+            <div class="row">
+              <div class="col-md-6">
+                <h6 class="mb-0">Stok Keluar</h6>
+              </div>
+              <div class="col-md-6 d-flex justify-content-end align-items-center">
+                <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#listStokKeluarModal">Lihat Semua</button>
+              </div>
+              {% include 'atk/adminunit/stok/liststokkeluarmodal.html' %}
+            </div>
+          </div>
+          <div class="card-body pt-4 p-3">
+            <h6 class="text-uppercase text-body text-xs font-weight-bolder mb-3">Terbaru</h6>
+            <ul class="list-group">
+            {% for stokKeluar in stokKeluar %}
+            <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
+              <div class="d-flex align-items-center">
+                <button class="btn btn-icon-only btn-rounded btn-outline-danger mb-0 me-3 btn-sm d-flex align-items-center justify-content-center"><i class="fas fa-arrow-down"></i></button>
+                <div class="d-flex flex-column">
+                  <h6 class="mb-1 text-dark text-sm">{{ stokKeluar.atk }} sejumlah {{ stokKeluar.jumlah }} {{ stokKeluar.atk.atk.satuan  }}</h6>
+                  <span class="text-xs">Pada {{ stokKeluar.tanggal }} untuk {{ stokKeluar.kegunaan }}</span>
+                </div>
+              </div>
+              <div class="d-flex align-items-center">
+                <a class="btn btn-sm btn-primary" href="{% url 'detail-stok-keluar' stokKeluar.id %}">Detail</a>
+              </div>
+            </li>
+            {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 mt-4">
+        <div class="card h-100 mb-4">
+          <div class="card-header pb-0 px-3">
+            <div class="row">
+              <div class="col-md-6">
+                <h6 class="mb-0">Stok Masuk</h6>
+              </div>
+              <div class="col-md-6 d-flex justify-content-end align-items-center">
+                <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#listStokMasukModal">Lihat Semua</button>
+              </div>
+              {% include 'atk/adminunit/stok/liststokmasukmodal.html' %}
+            </div>
+          </div>
+          <div class="card-body pt-4 p-3">
+            <h6 class="text-uppercase text-body text-xs font-weight-bolder mb-3">Terbaru</h6>
+            <ul class="list-group">
+            {% for stokMasuk in stokMasuk %}
+            <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
+              <div class="d-flex align-items-center">
+                <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-3 btn-sm d-flex align-items-center justify-content-center"><i class="fas fa-arrow-up"></i></button>
+                <div class="d-flex flex-column">
+                  <h6 class="mb-1 text-dark text-sm">{{ stokMasuk.atk }} sejumlah {{ stokMasuk.jumlah }} {{ stokMasuk.atk.satuan  }}</h6>
+                  <span class="text-xs">Pada {{ stokMasuk.tanggal }}</span>
+                </div>
+              </div>
+              <div class="d-flex align-items-center">
+                <a class="btn btn-sm btn-primary" href="{% url 'detail-stok-masuk' stokMasuk.id %}">Detail</a>
+              </div>
+            </li>
+            {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
 </div>
 {% endblock content %}

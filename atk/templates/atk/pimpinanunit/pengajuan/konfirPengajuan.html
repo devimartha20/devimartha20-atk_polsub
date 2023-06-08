@@ -1,0 +1,146 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+              <div class="card-header pb-0">
+                
+                <div class="row">
+                    <div class="col-7">
+                    <h6 class="mb-0">Detail Pengajuan</h6>
+                    </div>
+
+                    <div class="col-5">
+                        <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#kirimModal">
+                        Kirim Pengajuan
+                    </button>
+                    <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#addPerbaikanModal">
+                        Perintah Revisi
+                    </button>
+                    {% include 'atk/pimpinanunit/pengajuan/addPerbaikanmodal.html' %}
+                    {% include 'atk/pimpinanunit/pengajuan/kirimmodal.html' %}
+                    </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <p class="text-uppercase text-sm">Informasi Pengajuan {{ pengajuan.unit.unit }} </p>
+                <div class="row">
+                  
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="form-control-label">Nomor Surat</label>
+                      <div class="form-control">{{ pengajuan.no_surat }} </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-control-label">Status</label>
+                        <div class="form-control">
+                            {% if pengajuan.progress  == 'D' %}
+                                DIRANCANG
+                            {% elif pengajuan.progress  == 'K' %}
+                                MENUNGGU KONFIRMASI PIMPINAN UNIT
+                            {% elif pengajuan.progress  == 'A' %}
+                                DIAJUKAN
+                            {% elif pengajuan.progress  == 'P' %}
+                                PERBAIKAN
+                            {% elif pengajuan.progress  == 'S' %}
+                                SELESAI
+                            {% endif %}
+                            
+                        </div>
+                      </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-control-label">Jumlah Barang Diajukan</label>
+                        <div class="form-control"> </div>
+                      </div>
+                  </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-control-label">Unit</label>
+                        <div class="form-control">{{ pengajuan.unit.unit }} </div>
+                      </div>
+                </div>
+                <hr class="horizontal dark">
+                <p class="text-uppercase text-sm">Informasi Lainnya</p>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="form-control-label">Periode</div>
+                      <div class="form-control">{{ pengajuan.jadwal.tahun }} </div>
+                    </div>
+                  </div>
+                  {% comment %} <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="example-text-input" class="form-control-label">Hasil</label>
+                      <div class="form-control">{{ pengajuan.hasil }} </div>
+                    </div>
+                  </div> {% endcomment %}
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="example-text-input" class="form-control-label">Dibuat</label>
+                      <div class="form-control">{{ pengajuan.created }} </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="example-text-input" class="form-control-label">Keterangan</label>
+                      <div class="form-control">{{ pengajuan.keterangan }} </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      <div class="col-12">
+        <div class="card mb-4">
+          <div class="card-header pb-0">
+            <h6>Lampiran Isi Pengajuan</h6>
+          </div>
+          <div class="card-body px-5 pt-0 pb-2">
+            <div class="table-responsive p-0">
+                <table id="tabelpengajuan" class="table align-items-center mb-0">
+                    <thead>
+                        <tr >
+                            <th>No</th>
+                            <th>Barang Habis Pakai</th>
+                            <th>Jumlah</th>
+                            <th>Satuan</th>
+                            <th>Keterangan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for isi in isi_pengajuan %}
+                        <tr class="text-center">
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ isi.atk }}</td>
+                            <td>{{ isi.jumlah }}</td>
+                            <td>{{ isi.atk.satuan }}</td>
+                            <td>{{isi.keterangan }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr class="text-center">
+                            <th>No</th>
+                            <th>Barang Habis Pakai</th>
+                            <th>Jumlah</th>
+                            <th>Satuan</th>
+                            <th>Keterangan</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock content %}

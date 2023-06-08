@@ -1,0 +1,19 @@
+<!-- Modal -->
+<div class="modal fade" id="kirimModal" tabindex="-1" aria-labelledby="kirimModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="kirimModalLabel">Kirim Pengajuan</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+           <p> Apakah Anda yakin untuk mengirim pengajuan ini?</p>
+           <small class="text-danger">Pengajuan dengan nomor surat {{ pengajuan.no_surat }} beserta lampiran rancangannya akan dikirim ke wakil direktur II dan seluruh data tidak akan bisa diubah setelah diajukan.</small>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+          <a href="{% url 'kirim-pengajuan' pengajuan.id %}" class="btn btn-success" >Ya</a>
+        </div>
+      </div>
+    </div>
+  </div>

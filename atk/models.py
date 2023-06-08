@@ -40,7 +40,7 @@ class Jadwal(models.Model):
         DITUTUP = "T", _("Ditutup")
   
     YEAR_CHOICES = []
-    for r in range(2023, (datetime.datetime.now().year+5)):
+    for r in range(2022, (datetime.datetime.now().year+5)):
         YEAR_CHOICES.append((r,r))
 
     tahun = models.IntegerField(('year'), choices=YEAR_CHOICES, default=datetime.datetime.now().year)
@@ -55,6 +55,10 @@ class Jadwal(models.Model):
     updated = models.DateTimeField(auto_now=True)
     created= models.DateTimeField(auto_now_add=True)
     
+    @property
+    def pengajuan(self):
+        return Pengajuan.objects.filter(jadwal=self)
+
     class Meta:
       ordering=['-updated', '-created']
       
@@ -115,7 +119,7 @@ class Barang_ATK(models.Model):
   def __str__(self):
     return self.atk
 class Harga(models.Model):
-  harga=models.DecimalField(max_digits=6, decimal_places=5, default=0)
+  harga=models.IntegerField()
   atk=models.ForeignKey(Barang_ATK, on_delete=models.SET_NULL, null=True, blank=True)
   periode_mulai=models.DateField()
   periode_selesai=models.DateField(null=True, blank=True)
@@ -134,11 +138,6 @@ class Pengajuan(models.Model):
     KONFIR_UNIT = "K", _("Konfirmasi Unit")
     DIAJUKAN = "A", _("Diajukan")
     PERBAIKAN = "P", _("Perbaikan")
-    SELESAI = "S", _("Selesai") 
-    
-  class HasilPengajuan(models.TextChoices):
-    DITERIMA = "Y", _("Diterima")
-    DITOLAK = "N", _("Ditolak")
   
   jadwal=models.ForeignKey(Jadwal, on_delete=models.CASCADE, null=True)
   unit=models.ForeignKey(Unit, on_delete=models.CASCADE)
@@ -149,15 +148,10 @@ class Pengajuan(models.Model):
         choices=ProgressPengajuan.choices,
         default=ProgressPengajuan.DIRANCANG,
     )
-  hasil = models.CharField(
-        max_length=20,
-        choices=HasilPengajuan.choices,
-        null=True,
-        blank=True
-    )
   perbaikan = models.IntegerField(default=0)
   is_terlambat = models.BooleanField('is terlambat', default=False)
   is_aktif = models.BooleanField('is aktif', default=True)
+  tanggal_konfirmasi=models.DateTimeField(null=True, blank=True)
   updated = models.DateTimeField(auto_now=True)
   created= models.DateTimeField(auto_now_add=True)
     
@@ -166,14 +160,78 @@ class Pengajuan(models.Model):
         models.UniqueConstraint(fields=['unit', 'jadwal'], name='unique_unit_jadwal'),
     ]
     ordering=['-updated', '-created']
+    
+# class hasil_prediksi_unit(models.Model):
+#   class metode(models.TextChoices):
+#         EXPONENTIAL_SMOOTHING = "ES", _("EXPONENTIAL_SMOOTHING")
+#         NAIVE = "N", _("NAIVE")
+#         ARIMA = "A", _("ARIMA")
+#   atk=models.ForeignKey(Barang_ATK, on_delete=models.CASCADE)
+#   periode=models.IntegerField()
+#   unit=models.ForeignKey(Unit, on_delete=models.SET_NULL, null=True)
+#   metode=models.CharField(
+#         max_length=50,
+#         choices=metode.choices,
+#   )
+#   pred=models.FloatField()
+#   smap=models.FloatField()
+#   updated = models.DateTimeField(auto_now=True)
+#   created= models.DateTimeField(auto_now_add=True)
+  
+#   class Meta:
+#     constraints = [
+#         models.UniqueConstraint(fields=['atk','periode', 'unit'], name='unique_atk_periode_unit_prediksi'),
+#     ]
+#     ordering=['-updated', '-created']
+    
+# class hasil_prediksi_general(models.Model):
+#   class metode(models.TextChoices):
+#         EXPONENTIAL_SMOOTHING = "ES", _("EXPONENTIAL_SMOOTHING")
+#         NAIVE = "N", _("NAIVE")
+#         ARIMA = "A", _("ARIMA")
+#   atk=models.ForeignKey(Barang_ATK, on_delete=models.CASCADE)
+#   periode=models.IntegerField()
+#   metode=models.CharField(
+#         max_length=50,
+#         choices=metode.choices,
+#   )
+#   pred=models.FloatField()
+#   smap=models.FloatField()
+#   updated = models.DateTimeField(auto_now=True)
+#   created= models.DateTimeField(auto_now_add=True)
+  
+#   class Meta:
+#     constraints = [
+#         models.UniqueConstraint(fields=['atk','periode'], name='unique_atk_periode_prediksi'),
+#     ]
+#     ordering=['-updated', '-created']
+
+class total_pengajuan(models.Model):
+  jadwal = models.ForeignKey(Jadwal, on_delete=models.CASCADE)
+  atk=models.ForeignKey(Barang_ATK, on_delete=models.SET_NULL, null=True)
+  jumlah=models.IntegerField()
+  rekomendasi=models.IntegerField(null=True, blank=True)
+  # rekomendasi=models.ForeignKey(hasil_prediksi_general, on_delete=models.SET_NULL, null=True)
+  harga=models.ForeignKey(Harga, on_delete=models.SET_NULL, null=True)
+  total_dana=models.IntegerField()
+  updated = models.DateTimeField(auto_now=True)
+  created= models.DateTimeField(auto_now_add=True)
+  
+  class Meta:
+    constraints = [
+        models.UniqueConstraint(fields=['atk','jadwal'], name='unique_atk_jadwal'),
+    ]
+    ordering=['-updated', '-created']
+    
+
 
 class Isi_pengajuan(models.Model):
   pengajuan=models.ForeignKey(Pengajuan, on_delete=models.CASCADE)
   atk=models.ForeignKey(Barang_ATK, on_delete=models.SET_NULL, null=True)
   jumlah=models.IntegerField()
-  rekomendasi=models.IntegerField(null=True, blank=True)
+  rekomendasi=models.FloatField
+  # rekomendasi=models.ForeignKey(hasil_prediksi_unit, on_delete=models.SET_NULL, null=True)
   keterangan=models.TextField(max_length=200)
-  perbaikan=models.TextField(max_length=200, null=True, blank=True)
   updated = models.DateTimeField(auto_now=True)
   created= models.DateTimeField(auto_now_add=True)
     
@@ -182,10 +240,35 @@ class Isi_pengajuan(models.Model):
         models.UniqueConstraint(fields=['atk','pengajuan'], name='unique_atk_pengajuan'),
     ]
     ordering=['-updated', '-created']
+
+class PerbaikanPengajuan(models.Model):
+  pengajuan=models.ForeignKey(Pengajuan, on_delete=models.CASCADE)
+  keterangan=models.TextField(max_length=1000)
+  updated = models.DateTimeField(auto_now=True)
+  created= models.DateTimeField(auto_now_add=True)
+  
+  class Meta:
+     ordering=['-updated', '-created']
+     
+     
+class guna(models.Model):
+  kegunaan = models.CharField(max_length=200, unique=True)
+  keterangan=models.TextField(max_length=1000, null=True, blank=True)
+  unit=models.ForeignKey(Unit, on_delete=models.CASCADE)
+  updated = models.DateTimeField(auto_now=True)
+  created= models.DateTimeField(auto_now_add=True)
+  
+  class Meta:
+     ordering=['-updated', '-created']
+     
+  def __str__(self):
+    return self.kegunaan
     
 class StokATK(models.Model):
   atk=models.ForeignKey(Barang_ATK, on_delete=models.SET_NULL, null=True)
   jumlah=models.IntegerField()
+  jml_masuk=models.IntegerField(null=True, blank=True, default=0)
+  jml_keluar=models.IntegerField(null=True, blank=True, default=0)
   unit=models.ForeignKey(Unit, on_delete=models.CASCADE)
   updated = models.DateTimeField(auto_now=True)
   created= models.DateTimeField(auto_now_add=True)
@@ -214,14 +297,14 @@ class PenggunaanStok(models.Model):
         choices=Penerima.choices,
         default=Penerima.MAHASISWA
     )
-  kegunaan=models.CharField(max_length=200, null=True)
+  guna=models.ForeignKey(guna, on_delete=models.SET_NULL, null=True)
   keterangan=models.CharField(max_length=200, null=True, blank=True)
   tanggal=models.DateField(default=timezone.now(), blank=True)
   updated = models.DateTimeField(auto_now=True)
   created= models.DateTimeField(auto_now_add=True)
   
   class Meta:
-    ordering=['-updated', '-created']
+    ordering=['-tanggal', '-updated', '-created']
     
 class PenambahanStok(models.Model):
   atk=models.ForeignKey(Barang_ATK, on_delete=models.SET_NULL, null=True)
@@ -233,9 +316,9 @@ class PenambahanStok(models.Model):
   created= models.DateTimeField(auto_now_add=True)
   
   class Meta:
-    ordering=['-updated', '-created']
+    ordering=['-tanggal', '-updated', '-created']
     
-class abc_analysis(models.Model):
+class abc_analysis_model(models.Model):
   class Prioritas(models.TextChoices):
       TINGGI = "A", _("Tinggi")  
       SEDANG = "B", _("Sedang")
@@ -244,12 +327,13 @@ class abc_analysis(models.Model):
   atk=models.ForeignKey(Barang_ATK, on_delete=models.SET_NULL, null=True)
   unit=models.ForeignKey(Unit, on_delete=models.CASCADE)
   tahun=models.IntegerField()
-  harga=models.FloatField(null=True, blank=True)
-  dana=models.FloatField(null=True, blank=True)
-  presentase_dana=models.FloatField(null=True, blank=True)
-  presentase_kumulatif_dana=models.FloatField(null=True, blank=True)
-  presentase_item=models.FloatField(null=True, blank=True)
-  presentase_kumulatif_item=models.FloatField(null=True, blank=True)
+  jumlah=models.IntegerField(null=True, blank=True)
+  harga=models.IntegerField(null=True, blank=True)
+  dana=models.IntegerField(null=True, blank=True)
+  persentase_item=models.FloatField(null=True, blank=True)
+  persentase_kumulatif_item=models.FloatField(null=True, blank=True)
+  persentase_dana=models.FloatField(null=True, blank=True)
+  persentase_kumulatif_dana=models.FloatField(null=True, blank=True)
   prioritas = models.CharField(
         max_length=20,
         choices=Prioritas.choices,
@@ -268,8 +352,44 @@ class abc_analysis(models.Model):
   def __str__(self):
     return self.prioritas
   
-# class metode_prediksi(models.Model):
-#   metode=models.CharField(max_length=200, unique=True)
+class abc_analysis_model_more(models.Model):
+  pass
+
+class abc_analysis_model_general(models.Model):
+  class Prioritas(models.TextChoices):
+      TINGGI = "A", _("Tinggi")  
+      SEDANG = "B", _("Sedang")
+      RENDAH = "C", _("Rendah")
+  
+  atk=models.ForeignKey(Barang_ATK, on_delete=models.SET_NULL, null=True)
+  tahun=models.IntegerField()
+  jumlah=models.IntegerField(null=True, blank=True)
+  harga=models.IntegerField(null=True, blank=True)
+  dana=models.IntegerField(null=True, blank=True)
+  persentase_item=models.FloatField(null=True, blank=True)
+  persentase_kumulatif_item=models.FloatField(null=True, blank=True)
+  persentase_dana=models.FloatField(null=True, blank=True)
+  persentase_kumulatif_dana=models.FloatField(null=True, blank=True)
+  prioritas = models.CharField(
+        max_length=20,
+        choices=Prioritas.choices,
+        null=True,
+        blank=True
+    )
+  updated = models.DateTimeField(auto_now=True)
+  created= models.DateTimeField(auto_now_add=True)
+  
+  class Meta:
+    constraints = [
+        models.UniqueConstraint(fields=['atk', 'tahun'], name='unique_atk_tahun_abc'),
+    ]
+    ordering=['-updated', '-created']
+    
+  def __str__(self):
+    return self.prioritas
+    
+
+
 
 class pengajuanABCCek(models.Model):
   atk=models.CharField(max_length=50)

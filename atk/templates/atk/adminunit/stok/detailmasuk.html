@@ -1,0 +1,64 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header pb-0">
+                  <div class="row">
+                    <div class="col-9">
+                      <h6>Data Pemasukan Stok</h6>
+                    </div> 
+                   {% if editable %}
+                    <div class="col-3">
+                      <!-- Button trigger modal -->
+                        <a href="{% url 'edit-penambahan-stok' stokMasuk.id %}" class="btn btn-sm btn-success">
+                          Edit
+                        </a>
+                        <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteStokMasukModal{{ stokMasuk.id }}">
+                          Hapus
+                        </button>
+                    {% include 'atk/adminunit/stok/hapusmasukmodal.html' %}
+                  </div>
+                   {% endif %}
+                   
+                  </div>
+                </div>
+                <div class="card-body px-5 pt-0 pb-2">
+                  <div class="row">     
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-control-label">Alat Tulis Kantor</label>
+                        <div class="form-control">{{ stokMasuk.atk }}</div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                          <label class="form-control-label">Tanggal</label>
+                          <div class="form-control">
+                            {{ stokMasuk.tanggal }}
+                          </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                          <label class="form-control-label">Jumlah Pengeluaran</label>
+                          <div class="form-control">{{ stokMasuk.jumlah }} {{ stokMasuk.atk.satuan }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                          <label class="form-control-label">Keterangan</label>
+                          <div class="form-control">{{ stokMasuk.keterangan }} </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+

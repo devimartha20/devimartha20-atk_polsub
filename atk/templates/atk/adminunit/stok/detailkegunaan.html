@@ -1,0 +1,49 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header pb-0">
+                  <div class="row">
+                    <div class="col-9">
+                      <h6>Data Kegunaan</h6>
+                    </div> 
+                    <div class="col-3">
+                      <!-- Button trigger modal -->
+                        <a href="{% url 'edit-guna' kegunaan.id %}" class="btn btn-sm btn-success">
+                          Edit
+                        </a>
+                        <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteGunaModal{{ kegunaan.id }}">
+                          Hapus
+                        </button>
+                    {% include 'atk/adminunit/stok/hapusgunamodal.html' %}
+                  </div>
+                   
+                  </div>
+                </div>
+                <div class="card-body px-5 pt-0 pb-2">
+                  <div class="row">     
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-control-label">Kegunaan</label>
+                        <div class="form-control">{{ kegunaan.kegunaan }}</div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                          <label class="form-control-label">Keterangan</label>
+                          <div class="form-control">
+                            {{ kegunaan.keterangan }}
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+              </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+

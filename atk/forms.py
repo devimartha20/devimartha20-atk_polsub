@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from .models import *
 from django.forms import Form, ModelForm, DateField, widgets
-
+from django.core.exceptions import ValidationError
 
 class loginForm(forms.Form):
     username = forms.CharField(
@@ -75,6 +75,18 @@ class formJadwal(forms.ModelForm):
     YEAR_CHOICES = []
     for r in range(2023, (datetime.datetime.now().year+2)):
         YEAR_CHOICES.append((r,r)) 
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        tahun = cleaned_data.get("tahun")
+        pengajuan_mulai = cleaned_data.get("pengajuan_mulai")
+        pengajuan_selesai = cleaned_data.get("pengajuan_selesai")
+
+        if tahun and pengajuan_mulai and pengajuan_selesai:
+            # if pengajuan_mulai.strftime('%Y') != tahun:
+            #     raise ValidationError('Tanggal pembukaan tidak sesuai dengan periode tahun yang diinput')
+            if pengajuan_selesai <= pengajuan_mulai:
+                raise ValidationError('Range tanggal pembukaan dan Penutupan tidak valid!')
     class Meta:
         model = Jadwal
         fields = '__all__'
@@ -158,7 +170,7 @@ class formStokKeluar(forms.ModelForm):
             'penerima': forms.Select(attrs={"class": "form-control form-control-lg",
                                                  "type": "text",
                                                  }),
-            'kegunaan': forms.TextInput(attrs={"class": "form-control form-control-lg",
+            'guna': forms.Select(attrs={"class": "form-control form-control-lg",
                                                  "type": "text"
                                                  }),
             'keterangan': forms.TextInput(attrs={"class": "form-control form-control-lg",
@@ -167,7 +179,17 @@ class formStokKeluar(forms.ModelForm):
             'tanggal': forms.DateInput(attrs={"class": "form-control form-control-lg",
                                                  "type": "date"}),
         }
-        
+    def __init__(self, *args, **kwargs):
+        user_id = kwargs.pop('user_id', None)
+        super(formStokKeluar, self).__init__(*args, **kwargs)
+        if user_id is not None:
+            user = User.objects.filter(id=user_id).first()
+            self.fields['atk'].queryset = StokATK.objects.filter(unit=user.unit)
+            self.fields['guna'].queryset = guna.objects.filter(unit=user.unit)
+        else:
+            self.fields['atk'].queryset = StokATK.objects.none()
+            self.fields['guna'].queryset = guna.objects.none()
+    
 class formStokMasuk(forms.ModelForm):
     class Meta:
         model=PenambahanStok
@@ -186,4 +208,30 @@ class formStokMasuk(forms.ModelForm):
                                                  }),
             'tanggal': forms.DateInput(attrs={"class": "form-control form-control-lg",
                                                  "type": "date"}),
+        }
+
+class formGuna(forms.ModelForm):
+    class Meta:
+        model=guna
+        fields = '__all__'
+        exclude = ['unit']
+        widgets = {
+            'kegunaan': forms.TextInput(attrs={"class": "form-control form-control-lg",
+                                                 "type": "text"
+                                                 }),
+            'keterangan': forms.TextInput(attrs={"class": "form-control form-control-lg",
+                                                 "type": "text"
+                                                 }),
+        }
+
+class formPerbaikan(forms.ModelForm):
+    class Meta:
+        model=PerbaikanPengajuan
+        fields='__all__'
+        exclude = ['pengajuan']
+        widgets = {
+            'keterangan': forms.TextInput(attrs={"class": "form-control form-control-lg",
+                                                 "type": "text"
+                                                 }),
+            
         }

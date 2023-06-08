@@ -1,5 +1,4 @@
 {% extends 'main.html' %}
-{% load i18n %}
 
 {% block content %}
 <div class="container-fluid py-4">
@@ -12,9 +11,8 @@
                 </div>
               </div>
               <div class="card-body">
-                <p class="text-uppercase text-sm">Informasi Pengajuan</p>
-                <div class="row">
-                  
+                <p class="text-uppercase text-sm">Informasi Pengajuan {{ pengajuan.unit.unit }} </p>
+                <div class="row">     
                   <div class="col-md-6">
                     <div class="form-group">
                       <label class="form-control-label">Nomor Surat</label>
@@ -61,12 +59,12 @@
                       <div class="form-control">{{ pengajuan.jadwal.tahun }} </div>
                     </div>
                   </div>
-                  <div class="col-md-4">
+                  {% comment %} <div class="col-md-4">
                     <div class="form-group">
                       <label for="example-text-input" class="form-control-label">Hasil</label>
                       <div class="form-control">{{ pengajuan.hasil }} </div>
                     </div>
-                  </div>
+                  </div> {% endcomment %}
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="example-text-input" class="form-control-label">Dibuat</label>
@@ -100,7 +98,6 @@
                             <th>Jumlah</th>
                             <th>Satuan</th>
                             <th>Keterangan</th>
-                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -111,7 +108,6 @@
                             <td>{{ isi.jumlah }}</td>
                             <td>{{ isi.atk.satuan }}</td>
                             <td>{{isi.keterangan }}</td>
-                            <td>aksi</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -122,7 +118,6 @@
                             <th>Jumlah</th>
                             <th>Satuan</th>
                             <th>Keterangan</th>
-                            <th>Aksi</th>
                         </tr>
                     </tfoot>
                 </table>

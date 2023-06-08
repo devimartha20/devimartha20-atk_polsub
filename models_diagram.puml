@@ -1,0 +1,428 @@
+@startuml 
+class "admin.LogEntry <Administrasi>" as admin.LogEntry #f4d6f1 {
+    entri pencatatan
+    --
+    - id (AutoField)
+    + action_time (DateTimeField)
+    ~ user (ForeignKey)
+    ~ content_type (ForeignKey)
+    + object_id (TextField)
+    + object_repr (CharField)
+    + action_flag (PositiveSmallIntegerField)
+    + change_message (TextField)
+    --
+}
+admin.LogEntry -- atk.User
+admin.LogEntry -- contenttypes.ContentType
+
+
+class "auth.Permission <Autentikasi dan Otorisasi>" as auth.Permission #e8f4d6 {
+    hak akses
+    --
+    - id (AutoField)
+    + name (CharField)
+    ~ content_type (ForeignKey)
+    + codename (CharField)
+    --
+}
+auth.Permission -- contenttypes.ContentType
+
+
+class "auth.Group <Autentikasi dan Otorisasi>" as auth.Group #e8f4d6 {
+    grup
+    --
+    - id (AutoField)
+    + name (CharField)
+    # permissions (ManyToManyField)
+    --
+}
+auth.Group *--* auth.Permission
+
+
+class "contenttypes.ContentType <Jenis Konten>" as contenttypes.ContentType #d6f4de {
+    jenis isi
+    --
+    - id (AutoField)
+    + app_label (CharField)
+    + model (CharField)
+    --
+}
+
+
+class "sessions.Session <Sesi>" as sessions.Session #f4e1d6 {
+    sesi
+    --
+    + session_key (CharField)
+    + session_data (TextField)
+    + expire_date (DateTimeField)
+    --
+}
+
+
+class "django_plotly_dash.StatelessApp <Django Plotly Dash>" as django_plotly_dash.StatelessApp #f4d6de {
+    stateless app
+    --
+    - id (AutoField)
+    + app_name (CharField)
+    + slug (SlugField)
+    --
+}
+
+
+class "django_plotly_dash.DashApp <Django Plotly Dash>" as django_plotly_dash.DashApp #f4d6de {
+    dash app
+    --
+    - id (AutoField)
+    ~ stateless_app (ForeignKey)
+    + instance_name (CharField)
+    + slug (SlugField)
+    + base_state (TextField)
+    + creation (DateTimeField)
+    + update (DateTimeField)
+    + save_on_change (BooleanField)
+    --
+}
+django_plotly_dash.DashApp -- django_plotly_dash.StatelessApp
+
+
+class "atk.KategoriUnit <Atk>" as atk.KategoriUnit #ecd6f4 {
+    kategori unit
+    --
+    + id (BigAutoField)
+    + KategoriUnit (CharField)
+    + updated (DateTimeField)
+    + created (DateTimeField)
+    --
+}
+
+
+class "atk.Unit <Atk>" as atk.Unit #ecd6f4 {
+    unit
+    --
+    + id (BigAutoField)
+    + unit (CharField)
+    ~ kategori (ForeignKey)
+    + updated (DateTimeField)
+    + created (DateTimeField)
+    --
+}
+atk.Unit -- atk.KategoriUnit
+
+
+class "atk.User <Atk>" as atk.User #ecd6f4 {
+    pengguna
+    --
+    + id (BigAutoField)
+    + password (CharField)
+    + last_login (DateTimeField)
+    + is_superuser (BooleanField)
+    + username (CharField)
+    + first_name (CharField)
+    + last_name (CharField)
+    + email (EmailField)
+    + is_staff (BooleanField)
+    + is_active (BooleanField)
+    + date_joined (DateTimeField)
+    + is_admin (BooleanField)
+    + is_wadir (BooleanField)
+    + is_pimpinanunit (BooleanField)
+    + is_adminunit (BooleanField)
+    ~ unit (ForeignKey)
+    # groups (ManyToManyField)
+    # user_permissions (ManyToManyField)
+    --
+}
+atk.User -- atk.Unit
+atk.User *--* auth.Group
+atk.User *--* auth.Permission
+
+
+class "atk.Jadwal <Atk>" as atk.Jadwal #ecd6f4 {
+    jadwal
+    --
+    + id (BigAutoField)
+    + tahun (IntegerField)
+    + pengajuan_mulai (DateField)
+    + pengajuan_selesai (DateField)
+    + status (CharField)
+    + keterangan (TextField)
+    + updated (DateTimeField)
+    + created (DateTimeField)
+    --
+}
+
+
+class "atk.pengumpulanPengajuan <Atk>" as atk.pengumpulanPengajuan #ecd6f4 {
+    pengumpulan pengajuan
+    --
+    + id (BigAutoField)
+    ~ jadwal (ForeignKey)
+    ~ unit (ForeignKey)
+    + status (CharField)
+    + tanggalPengumpulan (DateField)
+    + updated (DateTimeField)
+    + created (DateTimeField)
+    --
+}
+atk.pengumpulanPengajuan -- atk.Jadwal
+atk.pengumpulanPengajuan -- atk.Unit
+
+
+class "atk.KategoriATK <Atk>" as atk.KategoriATK #ecd6f4 {
+    kategori atk
+    --
+    + id (BigAutoField)
+    + KategoriATK (CharField)
+    + updated (DateTimeField)
+    + created (DateTimeField)
+    --
+}
+
+
+class "atk.SatuanATK <Atk>" as atk.SatuanATK #ecd6f4 {
+    satuan atk
+    --
+    + id (BigAutoField)
+    + satuan (CharField)
+    + updated (DateTimeField)
+    + created (DateTimeField)
+    --
+}
+
+
+class "atk.Barang_ATK <Atk>" as atk.Barang_ATK #ecd6f4 {
+    barang_atk
+    --
+    + id (BigAutoField)
+    + atk (CharField)
+    + keterangan (TextField)
+    ~ kategori (ForeignKey)
+    ~ satuan (ForeignKey)
+    + jumlah_per_satuan (IntegerField)
+    + updated (DateTimeField)
+    + created (DateTimeField)
+    --
+}
+atk.Barang_ATK -- atk.KategoriATK
+atk.Barang_ATK -- atk.SatuanATK
+
+
+class "atk.Harga <Atk>" as atk.Harga #ecd6f4 {
+    harga
+    --
+    + id (BigAutoField)
+    + harga (IntegerField)
+    ~ atk (ForeignKey)
+    + periode_mulai (DateField)
+    + periode_selesai (DateField)
+    + updated (DateTimeField)
+    + created (DateTimeField)
+    --
+}
+atk.Harga -- atk.Barang_ATK
+
+
+class "atk.Pengajuan <Atk>" as atk.Pengajuan #ecd6f4 {
+    pengajuan
+    --
+    + id (BigAutoField)
+    ~ jadwal (ForeignKey)
+    ~ unit (ForeignKey)
+    + no_surat (CharField)
+    + keterangan (TextField)
+    + progress (CharField)
+    + perbaikan (IntegerField)
+    + is_terlambat (BooleanField)
+    + is_aktif (BooleanField)
+    + tanggal_konfirmasi (DateTimeField)
+    + updated (DateTimeField)
+    + created (DateTimeField)
+    --
+}
+atk.Pengajuan -- atk.Jadwal
+atk.Pengajuan -- atk.Unit
+
+
+class "atk.total_pengajuan <Atk>" as atk.total_pengajuan #ecd6f4 {
+    total_pengajuan
+    --
+    + id (BigAutoField)
+    ~ jadwal (ForeignKey)
+    ~ atk (ForeignKey)
+    + jumlah (IntegerField)
+    + rekomendasi (IntegerField)
+    ~ harga (ForeignKey)
+    + total_dana (IntegerField)
+    + updated (DateTimeField)
+    + created (DateTimeField)
+    --
+}
+atk.total_pengajuan -- atk.Jadwal
+atk.total_pengajuan -- atk.Barang_ATK
+atk.total_pengajuan -- atk.Harga
+
+
+class "atk.Isi_pengajuan <Atk>" as atk.Isi_pengajuan #ecd6f4 {
+    isi_pengajuan
+    --
+    + id (BigAutoField)
+    ~ pengajuan (ForeignKey)
+    ~ atk (ForeignKey)
+    + jumlah (IntegerField)
+    + keterangan (TextField)
+    + updated (DateTimeField)
+    + created (DateTimeField)
+    --
+}
+atk.Isi_pengajuan -- atk.Pengajuan
+atk.Isi_pengajuan -- atk.Barang_ATK
+
+
+class "atk.PerbaikanPengajuan <Atk>" as atk.PerbaikanPengajuan #ecd6f4 {
+    perbaikan pengajuan
+    --
+    + id (BigAutoField)
+    ~ pengajuan (ForeignKey)
+    + keterangan (TextField)
+    + updated (DateTimeField)
+    + created (DateTimeField)
+    --
+}
+atk.PerbaikanPengajuan -- atk.Pengajuan
+
+
+class "atk.guna <Atk>" as atk.guna #ecd6f4 {
+    guna
+    --
+    + id (BigAutoField)
+    + kegunaan (CharField)
+    + keterangan (TextField)
+    ~ unit (ForeignKey)
+    + updated (DateTimeField)
+    + created (DateTimeField)
+    --
+}
+atk.guna -- atk.Unit
+
+
+class "atk.StokATK <Atk>" as atk.StokATK #ecd6f4 {
+    stok atk
+    --
+    + id (BigAutoField)
+    ~ atk (ForeignKey)
+    + jumlah (IntegerField)
+    + jml_masuk (IntegerField)
+    + jml_keluar (IntegerField)
+    ~ unit (ForeignKey)
+    + updated (DateTimeField)
+    + created (DateTimeField)
+    --
+}
+atk.StokATK -- atk.Barang_ATK
+atk.StokATK -- atk.Unit
+
+
+class "atk.PenggunaanStok <Atk>" as atk.PenggunaanStok #ecd6f4 {
+    penggunaan stok
+    --
+    + id (BigAutoField)
+    ~ atk (ForeignKey)
+    + jumlah (IntegerField)
+    ~ unit (ForeignKey)
+    + penerima (CharField)
+    ~ guna (ForeignKey)
+    + keterangan (CharField)
+    + tanggal (DateField)
+    + updated (DateTimeField)
+    + created (DateTimeField)
+    --
+}
+atk.PenggunaanStok -- atk.StokATK
+atk.PenggunaanStok -- atk.Unit
+atk.PenggunaanStok -- atk.guna
+
+
+class "atk.PenambahanStok <Atk>" as atk.PenambahanStok #ecd6f4 {
+    penambahan stok
+    --
+    + id (BigAutoField)
+    ~ atk (ForeignKey)
+    + jumlah (IntegerField)
+    + tanggal (DateField)
+    ~ unit (ForeignKey)
+    + keterangan (CharField)
+    + updated (DateTimeField)
+    + created (DateTimeField)
+    --
+}
+atk.PenambahanStok -- atk.Barang_ATK
+atk.PenambahanStok -- atk.Unit
+
+
+class "atk.abc_analysis_model <Atk>" as atk.abc_analysis_model #ecd6f4 {
+    abc_analysis_model
+    --
+    + id (BigAutoField)
+    ~ atk (ForeignKey)
+    ~ unit (ForeignKey)
+    + tahun (IntegerField)
+    + jumlah (IntegerField)
+    + harga (IntegerField)
+    + dana (IntegerField)
+    + persentase_item (FloatField)
+    + persentase_kumulatif_item (FloatField)
+    + persentase_dana (FloatField)
+    + persentase_kumulatif_dana (FloatField)
+    + prioritas (CharField)
+    + updated (DateTimeField)
+    + created (DateTimeField)
+    --
+}
+atk.abc_analysis_model -- atk.Barang_ATK
+atk.abc_analysis_model -- atk.Unit
+
+
+class "atk.abc_analysis_model_more <Atk>" as atk.abc_analysis_model_more #ecd6f4 {
+    abc_analysis_model_more
+    --
+    + id (BigAutoField)
+    --
+}
+
+
+class "atk.abc_analysis_model_general <Atk>" as atk.abc_analysis_model_general #ecd6f4 {
+    abc_analysis_model_general
+    --
+    + id (BigAutoField)
+    ~ atk (ForeignKey)
+    + tahun (IntegerField)
+    + jumlah (IntegerField)
+    + harga (IntegerField)
+    + dana (IntegerField)
+    + persentase_item (FloatField)
+    + persentase_kumulatif_item (FloatField)
+    + persentase_dana (FloatField)
+    + persentase_kumulatif_dana (FloatField)
+    + prioritas (CharField)
+    + updated (DateTimeField)
+    + created (DateTimeField)
+    --
+}
+atk.abc_analysis_model_general -- atk.Barang_ATK
+
+
+class "atk.pengajuanABCCek <Atk>" as atk.pengajuanABCCek #ecd6f4 {
+    pengajuan abc cek
+    --
+    + id (BigAutoField)
+    + atk (CharField)
+    + jumlah (IntegerField)
+    + harga (IntegerField)
+    + total_harga (IntegerField)
+    + updated (DateTimeField)
+    + created (DateTimeField)
+    --
+}
+
+
+@enduml

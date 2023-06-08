@@ -1,0 +1,268 @@
+{% extends 'main.html' %}
+
+{% block content %}
+{% load static %}
+<div class="container-fluid py-4">
+
+    {% comment %} KARTU INFORMASI SINGKAT {% endcomment %}
+    <div class="row">
+       {% comment %} KARTU {% endcomment %}
+      <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+        <div class="card">
+          <div class="card-body p-3">
+            {% comment %} KONTEN KARTU {% endcomment %}
+            <div class="row">
+              <div class="col-8">
+                <div class="numbers">
+                  <p class="text-sm mb-0 text-uppercase font-weight-bold">ATK Keluar Terbaru</p>
+                  <h5 class="font-weight-bolder">
+                    {{ atk_keluar_terbaru.atk }} <br>
+                    Jml Keluar: {{ atk_keluar_terbaru.jumlah }} {{ atk_keluar_terbaru.atk.atk.satuan }}
+                  </h5>
+                  <p class="mb-0">
+                    {% comment %} <span class="text-success text-sm font-weight-bolder">{{ atk_keluar_terbaru.jumlah }}</span> {% endcomment %}
+                    Tanggal Keluar: {{ atk_keluar_terbaru.tanggal }}
+                  </p>
+                </div>
+              </div>
+              <div class="col-4 text-end">
+                <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
+                  <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+            {% comment %} END KONTEN KARTU {% endcomment %}
+          </div>
+        </div>
+      </div>
+      {% comment %} END KARTU {% endcomment %}
+      <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+        <div class="card">
+          <div class="card-body p-3">
+            <div class="row">
+              <div class="col-8">
+                <div class="numbers">
+                  <p class="text-sm mb-0 text-uppercase font-weight-bold">ATK Keluar Terbanyak</p>
+                  <h5 class="font-weight-bolder">
+                    {{ atk_keluar_terbanyak.atk }} <br>
+                    Jml Keluar: {{ atk_keluar_terbanyak.jml_keluar }} {{ atk_keluar_terbanyak.atk.satuan }}
+                  </h5>
+                  <p class="mb-0">
+                    {% comment %} <span class="text-success text-sm font-weight-bolder">+3%</span> {% endcomment %}
+                      {% comment %} {{ atk_keluar_terbanyak.tanggal }} {% endcomment %}
+                      Terakhir Update: {{ atk_keluar_terbanyak.updated }}
+                  </p>
+                </div>
+              </div>
+              <div class="col-4 text-end">
+                <div class="icon icon-shape bg-gradient-danger shadow-danger text-center rounded-circle">
+                  <i class="ni ni-world text-lg opacity-10" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+        <div class="card">
+          <div class="card-body p-3">
+            <div class="row">
+              <div class="col-8">
+                <div class="numbers">
+                  <p class="text-sm mb-0 text-uppercase font-weight-bold">ATK Hampir Habis</p>
+                  <h5 class="font-weight-bolder">
+                    {{ atk_hampir_habis.atk }} <br>
+                    Sisa Stok: {{ atk_hampir_habis.jumlah }} {{ atk_hampir_habis.atk.satuan }}
+                  </h5>
+                  <p class="mb-0">
+                    {% comment %} <span class="text-danger text-sm font-weight-bolder">-2%</span>{% endcomment %}
+                    Terakhir Update: {{ atk_hampir_habis.updated }}
+                  </p>
+                </div>
+              </div>
+              <div class="col-4 text-end">
+                <div class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
+                  <i class="ni ni-paper-diploma text-lg opacity-10" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-sm-6">
+        <div class="card">
+          <div class="card-body p-3">
+            <div class="row">
+              <div class="col-8">
+                <div class="numbers">
+                  <p class="text-sm mb-0 text-uppercase font-weight-bold">ATK Masuk Terbaru</p>
+                  <h5 class="font-weight-bolder">
+                    {{ atk_masuk_terbaru.atk }} <br>
+                    Jml Masuk: {{ atk_masuk_terbaru.jumlah }} {{ atk_masuk_terbaru.atk.atk.satuan }}
+                  </h5>
+                  <p class="mb-0">
+                    {% comment %} <span class="text-success text-sm font-weight-bolder">+5%</span> than last month {% endcomment %}
+                    Tanggal Masuk: {{ atk_masuk_terbaru.tanggal }}
+                  </p>
+                </div>
+              </div>
+              <div class="col-4 text-end">
+                <div class="icon icon-shape bg-gradient-warning shadow-warning text-center rounded-circle">
+                  <i class="ni ni-cart text-lg opacity-10" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> 
+    </div>
+    <div class="row mt-4">
+      <div class="col-lg-5 mb-lg-0 mb-4">
+        <div class="card z-index-2 h-100">
+          <div class="card-header pb-0 pt-3 bg-transparent">
+            <h6 class="text-capitalize">Grafik Sisa Stok</h6>
+            {% comment %} <form method='GET' action="">
+              <div class="input-group mb-3">
+                <select class="form-select" name='atk' aria-label="Default select example" onchange='this.form.submit()'>
+                  {% for atk in atk_list %}
+                    <option value="{{ atk.id }}" 
+                    {% if atk.id == qatk.atk.id %}
+                      selected
+                    {% endif %}>{{ atk.atk }}</option>
+                  {% endfor %}           
+                </select>
+              </div>
+              
+            </form> {% endcomment %}
+          </div>
+          <div class="card-body p-3">
+            <div class="chart">
+              {{ pie_chart|safe }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <div class="card z-index-2 h-100">
+          <div class="card-header pb-0 pt-3 bg-transparent">
+            <h6 class="text-capitalize">Grafik Aktivitas Kegunaan ATK</h6>
+          </div>
+          <div class="card-body p-3">
+            <div class="chart">
+              {{ bar_chart|safe }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-lg-9 mb-lg-0 mb-4">
+        <div class="card ">
+          <div class="card-header pb-0 p-3">
+            <div class="d-flex justify-content-between">
+              <h6 class="mb-2">Aktivitas Pengeluaran Stok</h6>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table align-items-center ">
+              <tbody>
+                {% for p in aktivitas_pengeluaran %}
+                <tr>
+                  <td class="w-30">
+                    <div class="d-flex px-2 py-1 align-items-center">
+                      <div>
+                        {% comment %} <img src="{% static 'images/icons/flags/US.png' %}" alt="Country flag"> {% endcomment %}
+                      </div>
+                      <div class="ms-4">
+                        <p class="text-xs font-weight-bold mb-0">ATK:</p>
+                        <h6 class="text-sm mb-0">{{ p.atk }}</h6>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="text-center">
+                      <p class="text-xs font-weight-bold mb-0">Jumlah:</p>
+                      <h6 class="text-sm mb-0">{{ p.jumlah }} {{ p.atk.atk.satuan }}</h6>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="text-center">
+                      <p class="text-xs font-weight-bold mb-0">Tanggal:</p>
+                      <h6 class="text-sm mb-0">{{p.tanggal}}</h6>
+                    </div>
+                  </td>
+                  <td class="align-middle text-sm">
+                    <div class="col text-center">
+                      <p class="text-xs font-weight-bold mb-0">Kegunaan:</p>
+                      <h6 class="text-sm mb-0">{{ p.guna }}</h6>
+                    </div>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3">
+        <div class="card">
+          <div class="card-header pb-0 p-3">
+            <h6 class="mb-0">Sisa Stok</h6>
+          </div>
+          <div class="card-body p-3">
+            <ul class="list-group">
+              {% for s in sisa_stok %}
+              <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
+                <div class="d-flex align-items-center">
+                  <div class="icon icon-shape icon-sm me-3 bg-gradient-dark shadow text-center">
+                    <i class="ni ni-mobile-button text-white opacity-10"></i>
+                  </div>
+                  <div class="d-flex flex-column">
+                    <h6 class="mb-1 text-dark text-sm">{{s.atk}}</h6>
+                    <span class="text-xs">{{s.jumlah}} {{  s.atk.satuan  }}<span class="font-weight-bold"> tersisa</span></span>
+                  </div>
+                </div>
+                {% comment %} <div class="d-flex">
+                  <button class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark icon-move-right my-auto"><i class="ni ni-bold-right" aria-hidden="true"></i></button>
+                </div> {% endcomment %}
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="footer pt-3  ">
+      <div class="container-fluid">
+        <div class="row align-items-center justify-content-lg-between">
+          <div class="col-lg-6 mb-lg-0 mb-4">
+            <div class="copyright text-center text-sm text-muted text-lg-start">
+              © <script>
+                document.write(new Date().getFullYear())
+              </script>,
+              made with <i class="fa fa-heart"></i> by
+              <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Creative Tim</a>
+              for a better web.
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+              <li class="nav-item">
+                <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank">Creative Tim</a>
+              </li>
+              <li class="nav-item">
+                <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted" target="_blank">About Us</a>
+              </li>
+              <li class="nav-item">
+                <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>
+              </li>
+              <li class="nav-item">
+                <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted" target="_blank">License</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+</div>
+{% endblock content %}

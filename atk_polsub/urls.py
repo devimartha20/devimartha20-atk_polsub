@@ -21,6 +21,6 @@ from django.http import HttpResponse
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('atk.urls')),
-    
+    path('django_plotly_dash/', include('django_plotly_dash.urls')),
     # path('', hi)
 ]

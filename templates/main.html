@@ -140,9 +140,11 @@
         {% else %}
           <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
           <script>
+            var m = "{{ msg }}";
             Swal.fire({
               icon: 'error',
-              title: 'Terjadi kesalahan1',
+              title: 'Terjadi kesalahan!',
+              text : m
             })
           </script>
         {% endif %}

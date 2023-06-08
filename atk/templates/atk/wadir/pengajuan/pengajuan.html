@@ -7,66 +7,6 @@
     <div class="row">
       <div class="col-lg-8">
         <div class="row">
-          {% comment %} <div class="col-xl-6 mb-xl-0 mb-4">
-            <div class="card bg-transparent shadow-xl">
-              <div class="overflow-hidden position-relative border-radius-xl" style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/card-visa.jpg');">
-                <span class="mask bg-gradient-dark"></span>
-                <div class="card-body position-relative z-index-1 p-3">
-                  <i class="fas fa-wifi text-white p-2"></i>
-                  <h5 class="text-white mt-4 mb-5 pb-2">4562&nbsp;&nbsp;&nbsp;1122&nbsp;&nbsp;&nbsp;4594&nbsp;&nbsp;&nbsp;7852</h5>
-                  <div class="d-flex">
-                    <div class="d-flex">
-                      <div class="me-4">
-                        <p class="text-white text-sm opacity-8 mb-0">Card Holder</p>
-                        <h6 class="text-white mb-0">Jack Peterson</h6>
-                      </div>
-                      <div>
-                        <p class="text-white text-sm opacity-8 mb-0">Expires</p>
-                        <h6 class="text-white mb-0">11/22</h6>
-                      </div>
-                    </div>
-                    <div class="ms-auto w-20 d-flex align-items-end justify-content-end">
-                      <img class="w-60 mt-2" src="../assets/img/logos/mastercard.png" alt="logo">
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-6">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="card">
-                  <div class="card-header mx-4 p-3 text-center">
-                    <div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
-                      <i class="fas fa-landmark opacity-10"></i>
-                    </div>
-                  </div>
-                  <div class="card-body pt-0 p-3 text-center">
-                    <h6 class="text-center mb-0">Salary</h6>
-                    <span class="text-xs">Belong Interactive</span>
-                    <hr class="horizontal dark my-3">
-                    <h5 class="mb-0">+$2000</h5>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6 mt-md-0 mt-4">
-                <div class="card">
-                  <div class="card-header mx-4 p-3 text-center">
-                    <div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
-                      <i class="fab fa-paypal opacity-10"></i>
-                    </div>
-                  </div>
-                  <div class="card-body pt-0 p-3 text-center">
-                    <h6 class="text-center mb-0">Paypal</h6>
-                    <span class="text-xs">Freelance Payment</span>
-                    <hr class="horizontal dark my-3">
-                    <h5 class="mb-0">$455.00</h5>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> {% endcomment %}
           <div class="col-md-12 mb-lg-0 mb-4">
             <div class="card mt-4">
               <div class="card-header pb-0 p-3">
@@ -74,10 +14,11 @@
                   <div class="col-6 d-flex align-items-center">
                     <h6 class="mb-0">Periode Pengajuan</h6>
                   </div>
+                    {{ msg }}
                   {% if jadwalSekarang is not None %}
                   <div class="col-6 text-end">
-                    <button class="btn bg-success mb-0 text-light-emphasis" data-bs-toggle="modal" data-bs-target="#editJadwalModal"><i class="fas fa-pencil"></i>&nbsp;Edit Jadwal</button>
-                    {% comment %} <button class="btn bg-danger mb-0 text-light-emphasis" data-bs-toggle="modal" data-bs-target="#hapusJadwalModal"><i class="fas fa-trash"></i>&nbsp;Hapus Jadwal</button>{% endcomment %}
+                    <button class="btn bg-success mb-0 text-light" data-bs-toggle="modal" data-bs-target="#editJadwalModal"><i class="fas fa-pencil"></i>&nbsp;Edit Jadwal</button>
+                    <a class="btn bg-primary mb-0 text-light" href="{% url 'total-pengajuan' jadwalSekarang.id %}"><i class="fas fa-eye"></i>&nbsp;Lihat Total Pengajuan</a>
                   </div> 
                   {% else %}
                   <div class="col-6 text-end">
@@ -109,35 +50,27 @@
           <div class="card-header pb-0 p-3">
             <div class="row">
               <div class="col-6 d-flex align-items-center">
-                <h6 class="mb-0">Perlu Ditinjau</h6>
+                <h6 class="mb-0">Pengajuan Terbaru</h6>
               </div>
               <div class="col-6 text-end">
-                <button class="btn btn-outline-primary btn-sm mb-0">Lihat Semua</button>
+                <button class="btn btn-outline-primary btn-sm mb-0"  data-bs-toggle="modal" data-bs-target="#listPengajuanModal">Lihat Semua</button>
               </div>
+              {% include 'atk/wadir/pengajuan/list_pengajuanmodal.html' %}
             </div>
           </div>
           <div class="card-body p-3 pb-0">
             <ul class="list-group">
-              <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                <div class="d-flex flex-column">
-                  <h6 class="mb-1 text-dark font-weight-bold text-sm">March, 01, 2020</h6>
-                  <span class="text-xs">#MS-415646</span>
-                </div>
-                <div class="d-flex align-items-center text-sm">
-                  $180
-                  <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
-                </div>
-              </li>
-              <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                <div class="d-flex flex-column">
-                  <h6 class="text-dark mb-1 font-weight-bold text-sm">February, 10, 2021</h6>
-                  <span class="text-xs">#RV-126749</span>
-                </div>
-                <div class="d-flex align-items-center text-sm">
-                  $250
-                  <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
-                </div>
-              </li>
+              {% for pengajuanTerbaru in pengajuanTerbaru %}
+                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
+                  <div class="d-flex flex-column">
+                    <h6 class="mb-1 text-dark font-weight-bold text-sm">{{ pengajuanTerbaru.unit }}</h6>
+                    <span class="text-xs">{{ pengajuanTerbaru.no_surat }}</span>
+                  </div>
+                  <div class="d-flex align-items-center text-sm">
+                    <a class="btn btn-link text-dark text-sm mb-0 px-0 ms-4" href="{% url 'detail-pengajuan' pengajuanTerbaru.id %}">Detail</a>
+                  </div>
+                </li>
+              {% endfor %}
             </ul>
           </div>
         </div>
@@ -153,46 +86,19 @@
           </div>
           <div class="card-body pt-4 p-3">
             <ul class="list-group">
-              <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
-                <div class="d-flex flex-column">
-                  <h6 class="mb-3 text-sm">Oliver Liam</h6>
-                  <span class="mb-2 text-xs">Company Name: <span class="text-dark font-weight-bold ms-sm-2">Viking Burrito</span></span>
-                  <span class="mb-2 text-xs">Email Address: <span class="text-dark ms-sm-2 font-weight-bold">oliver@burrito.com</span></span>
-                  <span class="text-xs">VAT Number: <span class="text-dark ms-sm-2 font-weight-bold">FRB1235476</span></span>
-                </div>
-                <div class="ms-auto text-end">
-                  <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i class="far fa-trash-alt me-2"></i>Delete</a>
-                  <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
-                </div>
-              </li>
-              <li class="list-group-item border-0 d-flex p-4 mb-2 mt-3 bg-gray-100 border-radius-lg">
-                <div class="d-flex flex-column">
-                  <h6 class="mb-3 text-sm">Lucas Harper</h6>
-                  <span class="mb-2 text-xs">Company Name: <span class="text-dark font-weight-bold ms-sm-2">Stone Tech Zone</span></span>
-                  <span class="mb-2 text-xs">Email Address: <span class="text-dark ms-sm-2 font-weight-bold">lucas@stone-tech.com</span></span>
-                  <span class="text-xs">VAT Number: <span class="text-dark ms-sm-2 font-weight-bold">FRB1235476</span></span>
-                </div>
-                <div class="ms-auto text-end">
-                  <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i class="far fa-trash-alt me-2"></i>Delete</a>
-                  <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
-                </div>
-              </li>
-              <li class="list-group-item border-0 d-flex p-4 mb-2 mt-3 bg-gray-100 border-radius-lg">
-                <div class="d-flex flex-column">
-                  <h6 class="mb-3 text-sm">Ethan James</h6>
-                  <span class="mb-2 text-xs">Company Name: <span class="text-dark font-weight-bold ms-sm-2">Fiber Notion</span></span>
-                  <span class="mb-2 text-xs">Email Address: <span class="text-dark ms-sm-2 font-weight-bold">ethan@fiber.com</span></span>
-                  <span class="text-xs">VAT Number: <span class="text-dark ms-sm-2 font-weight-bold">FRB1235476</span></span>
-                </div>
-                <div class="ms-auto text-end">
-                  <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i class="far fa-trash-alt me-2"></i>Delete</a>
-                  <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
+              {% for jadwal in jadwal %}
+                <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
+                  <div class="d-flex flex-column">
+                    <h6 class="mb-3 text-sm">Periode: {{jadwal.tahun }}</h6>
+                    <span class="mb-2 text-xs">Jumlah Pengajuan: <span class="text-dark font-weight-bold ms-sm-2">{{ jadwal.pengajuan.count }}</span></span>
+                    <span class="mb-2 text-xs">Total Dana: <span class="text-dark ms-sm-2 font-weight-bold">total dana</span></span>
+                    <span class="text-xs">Keterangan: <span class="text-dark ms-sm-2 font-weight-bold">{{ jadwal.keterangan }}</span></span>
+                  </div>
+                  <div class="ms-auto text-end">
+                    <button class="btn btn-link text-info text-gradient px-3 mb-0"><i class="far fa-info-alt me-2"></i>Detail</button>
+                  </div>
+                </li>
+              {% endfor %}
       {% comment %} <div class="col-md-5 mt-4">
         <div class="card h-100 mb-4">
           <div class="card-header pb-0 px-3">

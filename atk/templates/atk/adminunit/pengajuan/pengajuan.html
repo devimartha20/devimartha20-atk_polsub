@@ -71,12 +71,28 @@
             <ul class="list-group">
               <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
                 <div class="d-flex flex-column">
-                  <h6 class="mb-1 text-dark font-weight-bold text-sm">{{ jadwal.pengajuan_mulai }}</h6>
-                  <span class="text-xs">#MS-415646</span>
-                </div>
-                <div class="d-flex align-items-center text-sm">
-                  $180
-                  <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
+                  <h6 class="mb-1 text-dark font-weight-bold text-sm">
+                    {% if pengajuan is None %}
+                      Pengajuan Belum Dibuat Pada Tahun Ini
+                    {% elif pengajuan.progress == 'D' %}
+                      Pengajuan Dalam Perancangan
+                    {% elif pengajuan.progress == 'P' %}
+                      Pengajuan Dalam Perbaikan
+                    {% elif pengajuan.progress == 'K' %}
+                     Pengajuan Menunggu Konfirmasi Pimpinan Unit
+                    {% elif pengajuan.progress == 'A' %}
+                      Pengajuan Telah Diajukan
+                    {% endif %}
+                  </h6>
+                  <span class="text-xs">
+                    {% if jadwal is None %}
+                    Jadwal pengajuan belum dibuat pada tahun ini
+                    {% elif pengajuan is None %}
+                    Segera buat rancangan pengajuan dan kirim sebelum {{ jadwal.pengajuan_selesai }}
+                    {% else %}
+                    Dibuat: {{ pengajuan.created }}
+                    {% endif %}
+                  </span>
                 </div>
               </li>
             </ul>
@@ -92,79 +108,25 @@
           </div>
           <div class="card-body pt-4 p-3">
             <ul class="list-group">
-              <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
-                <div class="d-flex flex-column">
-                  <h6 class="mb-3 text-sm">Oliver Liam</h6>
-                  <span class="mb-2 text-xs">Company Name: <span class="text-dark font-weight-bold ms-sm-2">Viking Burrito</span></span>
-                  <span class="mb-2 text-xs">Email Address: <span class="text-dark ms-sm-2 font-weight-bold">oliver@burrito.com</span></span>
-                  <span class="text-xs">VAT Number: <span class="text-dark ms-sm-2 font-weight-bold">FRB1235476</span></span>
-                </div>
-                <div class="ms-auto text-end">
-                  <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i class="far fa-trash-alt me-2"></i>Delete</a>
-                  <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
-                </div>
-              </li>
-              <li class="list-group-item border-0 d-flex p-4 mb-2 mt-3 bg-gray-100 border-radius-lg">
-                <div class="d-flex flex-column">
-                  <h6 class="mb-3 text-sm">Lucas Harper</h6>
-                  <span class="mb-2 text-xs">Company Name: <span class="text-dark font-weight-bold ms-sm-2">Stone Tech Zone</span></span>
-                  <span class="mb-2 text-xs">Email Address: <span class="text-dark ms-sm-2 font-weight-bold">lucas@stone-tech.com</span></span>
-                  <span class="text-xs">VAT Number: <span class="text-dark ms-sm-2 font-weight-bold">FRB1235476</span></span>
-                </div>
-                <div class="ms-auto text-end">
-                  <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i class="far fa-trash-alt me-2"></i>Delete</a>
-                  <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
-                </div>
-              </li>
-              <li class="list-group-item border-0 d-flex p-4 mb-2 mt-3 bg-gray-100 border-radius-lg">
-                <div class="d-flex flex-column">
-                  <h6 class="mb-3 text-sm">Ethan James</h6>
-                  <span class="mb-2 text-xs">Company Name: <span class="text-dark font-weight-bold ms-sm-2">Fiber Notion</span></span>
-                  <span class="mb-2 text-xs">Email Address: <span class="text-dark ms-sm-2 font-weight-bold">ethan@fiber.com</span></span>
-                  <span class="text-xs">VAT Number: <span class="text-dark ms-sm-2 font-weight-bold">FRB1235476</span></span>
-                </div>
-                <div class="ms-auto text-end">
-                  <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i class="far fa-trash-alt me-2"></i>Delete</a>
-                  <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
-                </div>
-              </li>
+            {% for riwayat in riwayat %}
+            <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
+              <div class="d-flex flex-column">
+                <h6 class="mb-3 text-sm">Periode: {{ pengajuan.jadwal.tahun }} </h6>
+                <span class="mb-2 text-xs">Nomor Surat: <span class="text-dark font-weight-bold ms-sm-2">{{ pengajuan.no_surat }}</span></span>
+                <span class="mb-2 text-xs">Tanggal Dibuat: <span class="text-dark ms-sm-2 font-weight-bold">{{ pengajuan.created }}</span></span>
+                <span class="text-xs">Tanggal Diajukan: <span class="text-dark ms-sm-2 font-weight-bold">{{ pengajuan.tanggal_konfirmasi }} </span></span>
+              </div>
+              <div class="ms-auto text-end">
+                <a class="btn btn-link text-dark px-3 mb-0" href="{% url 'detail-pengajuan' pengajuan.id %}"><i class="fas fa-eye"></i> Detail</a>
+              </div>
+            </li>
+            {% endfor %}
             </ul>
           </div>
         </div>
       </div>
     </div>
-    <footer class="footer pt-3  ">
-      <div class="container-fluid">
-        <div class="row align-items-center justify-content-lg-between">
-          <div class="col-lg-6 mb-lg-0 mb-4">
-            <div class="copyright text-center text-sm text-muted text-lg-start">
-              © <script>
-                document.write(new Date().getFullYear())
-              </script>,
-              made with <i class="fa fa-heart"></i> by
-              <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Creative Tim</a>
-              for a better web.
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-              <li class="nav-item">
-                <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank">Creative Tim</a>
-              </li>
-              <li class="nav-item">
-                <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted" target="_blank">About Us</a>
-              </li>
-              <li class="nav-item">
-                <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>
-              </li>
-              <li class="nav-item">
-                <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted" target="_blank">License</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </footer>
+ 
 </div>
 
 {% endblock content %}
