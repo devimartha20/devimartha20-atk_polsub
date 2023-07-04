@@ -3,9 +3,11 @@ from . import views
 from django.http import HttpResponse
 
 
+
 urlpatterns = [
     
     path('forecast/', views.forecast, name='forecast'),
+    path('mail/', views.kirim_email, name='email'),
     path('forecastUnit/<str:pk>', views.forecastUnit, name='forecast-unit'),
     #AUTHENTICATION
     path('login/', views.loginUser, name='login'),
@@ -70,6 +72,8 @@ urlpatterns = [
     # METODE
     # ABC Analysis
     path('abc/<str:scope>', views.lihat_analisis_unit, name='abc'),
+    
+    path('abccek', views.atk_abc_analysis_cek, name='abc-cek'),
     
     path('import', views.importcsv, name='import-csv'),
     

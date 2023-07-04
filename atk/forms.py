@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.db.models import *
 from .models import *
 from django.forms import Form, ModelForm, DateField, widgets
 from django.core.exceptions import ValidationError
@@ -77,14 +78,14 @@ class formJadwal(forms.ModelForm):
         YEAR_CHOICES.append((r,r)) 
     
     def clean(self):
-        cleaned_data = super().clean()
+        cleaned_data = super(formJadwal, self).clean()
         tahun = cleaned_data.get("tahun")
         pengajuan_mulai = cleaned_data.get("pengajuan_mulai")
         pengajuan_selesai = cleaned_data.get("pengajuan_selesai")
 
         if tahun and pengajuan_mulai and pengajuan_selesai:
-            # if pengajuan_mulai.strftime('%Y') != tahun:
-            #     raise ValidationError('Tanggal pembukaan tidak sesuai dengan periode tahun yang diinput')
+            if int(pengajuan_mulai.strftime('%Y')) != tahun:
+                raise ValidationError('Tanggal pembukaan tidak sesuai dengan periode tahun yang diinput')
             if pengajuan_selesai <= pengajuan_mulai:
                 raise ValidationError('Range tanggal pembukaan dan Penutupan tidak valid!')
     class Meta:
@@ -108,6 +109,8 @@ class formJadwal(forms.ModelForm):
         input_formats = {
             'pengajuan_mulai': ['%d/%m/%Y']
         }
+        
+    
         
 class formPengumpulanPengajuan(forms.ModelForm):
     class Meta:
@@ -143,6 +146,23 @@ class formIsiPengajuan(forms.ModelForm):
             }
         )
     )
+    def clean(self):
+        cleaned_data = super(formIsiPengajuan, self).clean()
+        keterangan = cleaned_data.get("keterangan")
+        atk = cleaned_data.get("atk")
+        jumlah = cleaned_data.get("jumlah")
+        atk_instance = Barang_ATK.objects.get(atk=atk)
+        atk_exist = Isi_pengajuan.objects.filter(pengajuan=self.id_pengajuan, atk=atk_instance)
+        if atk and jumlah and keterangan:
+            if int(jumlah) < 0:
+                raise ValidationError('Jumlah harus lebih dari 0!')
+            # if atk_exist is not None:
+            #     raise ValidationError('ATK yang sama telah diinput')
+            
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop("request", None)
+        self.id_pengajuan = kwargs.pop("id_pengajuan", None)
+        super(formIsiPengajuan, self).__init__(*args, **kwargs)
     
     
     class Meta:
@@ -179,8 +199,32 @@ class formStokKeluar(forms.ModelForm):
             'tanggal': forms.DateInput(attrs={"class": "form-control form-control-lg",
                                                  "type": "date"}),
         }
+        
+    def clean(self):
+        cleaned_data = super(formStokKeluar, self).clean()
+        
+        tahun = datetime.datetime.now().year
+        
+        atk = cleaned_data.get("atk")
+        jumlah = cleaned_data.get("jumlah")
+        tanggal = cleaned_data.get("tanggal")
+        atk_instance = Barang_ATK.objects.get(atk=atk)
+        max_jumlah = StokATK.objects.filter(unit=self.request.user.unit, atk=atk_instance).first()
+        print(atk, max_jumlah)
+        print(type(tanggal.strftime('%Y')), type(tahun))
+        if tanggal and jumlah:
+            if jumlah > max_jumlah.jumlah:
+                print('error jumlah')
+                raise ValidationError('Jumlah tidak boleh melebihi stok tersisa')
+            if int(tanggal.strftime('%Y')) != tahun:
+                print('error tahun')
+                print(tanggal.strftime('%Y'), tahun)
+                raise ValidationError(f'Anda hanya dapat mencatat stok untuk tahun {tahun}')
+                
+            
     def __init__(self, *args, **kwargs):
-        user_id = kwargs.pop('user_id', None)
+        self.request = kwargs.pop("request", None)
+        user_id = self.request.user.id
         super(formStokKeluar, self).__init__(*args, **kwargs)
         if user_id is not None:
             user = User.objects.filter(id=user_id).first()
@@ -233,5 +277,25 @@ class formPerbaikan(forms.ModelForm):
             'keterangan': forms.TextInput(attrs={"class": "form-control form-control-lg",
                                                  "type": "text"
                                                  }),
+            
+        }
+        
+class atkForm(forms.ModelForm):
+    class Meta:
+        model=Barang_ATK
+        fields='__all__'
+        exclude= ['status', 'satuan']
+        widgets = {
+            'atk':forms.TextInput(attrs={"class": "form-control form-control-lg",
+                                                 "type": "text"
+                                                 }),
+           ' keterangan':forms.TextInput(attrs={"class": "form-control form-control-lg",
+                                                 "type": "text"
+                                                 }),
+            'kategori':forms.Select(attrs={"class": "form-control form-control-lg",
+                                                 "type": "text"}),
+            'jumlah_per_satuan': forms.NumberInput(attrs={"class": "form-control form-control-lg",
+                                                 "type": "number"}),
+            
             
         }

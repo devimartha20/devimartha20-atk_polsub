@@ -22,7 +22,7 @@
                   </div> 
                   {% else %}
                   <div class="col-6 text-end">
-                    <button class="btn bg-primary mb-0" data-bs-toggle="modal" data-bs-target="#jadwalModal"><i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Jadwal</button>
+                    <button class="btn bg-primary mb-0 text-light" data-bs-toggle="modal" data-bs-target="#jadwalModal"><i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Jadwal</button>
                   </div>
                   {% endif %}
                 </div>
@@ -77,7 +77,9 @@
       </div> 
     </div> 
     {% include 'atk/wadir/jadwal/addJadwalmodal.html' %}
-    {% include 'atk/wadir/jadwal/edithapusjadwalmodal.html' %}
+    {% if jadwalSekarang is not None %}
+      {% include 'atk/wadir/jadwal/edithapusjadwalmodal.html' %}
+    {% endif %}
     <div class="row">
       <div class="col-md-12 mt-4">
         <div class="card">

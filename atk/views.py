@@ -9,6 +9,9 @@ import csv
 from decimal import *
 import math
 
+from django.core.mail import send_mail
+from django.conf import settings
+
 from django.contrib import messages
 from .forms import *
 from .models import *
@@ -17,7 +20,10 @@ import datetime
 from abc_analysis import *
 import pandas as pd
 import numpy as np
+
+from statsmodels.tsa.stattools import adfuller
 from statsmodels.tsa.seasonal import seasonal_decompose
+
 import sktime
 from sktime import datasets
 from sktime.forecasting.naive import NaiveForecaster
@@ -35,6 +41,18 @@ import plotly.graph_objs as go
 
 # Create your views here.
 
+def kirim_email(request):
+    message = "cek email"
+    email = request.user.email
+    name = 'ATK Polsub'
+    send_mail(
+        name, #subject
+        message, #message
+        'settings.EMAIL_HOST_USER', #sender
+        [email], #receiver
+        fail_silently=False
+    )
+    return HttpResponse('email terkirim')
 
 
 # AUTHENTICATION
@@ -108,7 +126,7 @@ def dashboard(request):
         
         
         fig_bar = px.bar(x=guna_list, y=jumlah_list, color=atk_keluar_list).update_layout(
-            xaxis_title="Kegunaan", yaxis_title="Jumlah Stok Keluar (Dalam satuan masing2 ATK)")
+           )
         bar_chart = fig_bar.to_html
         
         context = { 'pie_chart': pie_chart,
@@ -192,7 +210,7 @@ def kelolaPengajuan(request, error_messages=''):
         context = {'jadwal':jadwal,
                    'pengajuanSekarang': pengajuanSekarang,
                    'pengajuanTerbaru':pengajuanTerbaru, 
-                   'jadwalForm': addjadwalForm, 
+                   'addjadwalForm': addjadwalForm, 
                    'editjadwalForm': editjadwalForm,
                    'unit': unit, 
                    'jadwalSekarang':jadwalSekarang,
@@ -352,9 +370,9 @@ def deletePengajuan(request, pk):
 login_required(login_url='login')
 def addIsiPengajuan(request, pk):
     if request.user.is_adminunit:
-        isiPengajuanForm = formIsiPengajuan(request.POST)
+        id = int(pk)
+        isiPengajuanForm = formIsiPengajuan(request.POST, request=request, id_pengajuan=id)
         if isiPengajuanForm.is_valid():
-            id = int(pk)
             pengajuan = Pengajuan.objects.get(id=id)
             isiPengajuan = isiPengajuanForm.save(commit=False)
             isiPengajuan.pengajuan = pengajuan
@@ -480,7 +498,7 @@ def stok(request):
         # else: 
         #     line_graph_penggunaan = 'Data tidak cukup untuk menampilkan grafik'
         
-        stokKeluarForm = formStokKeluar(user_id=request.user.id)
+        stokKeluarForm = formStokKeluar(request=request)
         stokMasukForm = formStokMasuk()
         gunaForm=formGuna()
         context = {'stok': stok, 'stokMasuk': stokMasuk, 'stokKeluar': stokKeluar,
@@ -563,14 +581,14 @@ def detailGuna(request, pk):
 @login_required(login_url='login')
 def addPenggunaanStok(request):
     if request.user.is_adminunit:
-        stokKeluarForm = formStokKeluar(request.POST or None, user_id=request.user.id)
+        stokKeluarForm = formStokKeluar(request.POST or None, request=request)
         if stokKeluarForm.is_valid():
             
             atk=stokKeluarForm.data.get('atk')
             jumlah=stokKeluarForm.cleaned_data.get('jumlah')
             
             stok = StokATK.objects.filter(id=atk).first()
-            print(atk, request.user.unit)
+            print(atk, request.user.unit, stok)
             stok.jumlah = stok.jumlah-jumlah
             if stok.jml_keluar is None:
                 stok.jml_keluar = jumlah
@@ -584,6 +602,7 @@ def addPenggunaanStok(request):
             messages.success(request, "Data berhasil ditambahkan!")
             return redirect('stok')
         else:
+            print(stokKeluarForm.errors)
             messages.error(request, 'Terjadi kesalahan!')
             return redirect('stok')
     else:
@@ -597,7 +616,7 @@ def editPenggunaanStok(request, pk):
         stokKeluar = PenggunaanStok.objects.get(id=id)
         # print(stokKeluar.atk)
         
-        stokKeluarForm = formStokKeluar(request.POST or None, instance=stokKeluar, user_id=request.user.id)
+        stokKeluarForm = formStokKeluar(request.POST or None, instance=stokKeluar, request=request)
         if request.method == 'POST':
             
             # print(stokKeluar.atk, stokKeluar.atk.id)      
@@ -898,6 +917,109 @@ def detailPengajuan(request, pk):
     
 # METODE
 # ABC analisis
+def atk_abc_analysis_cek(request): 
+
+    total_penggunaan = pengajuanABCCek.objects.all()
+    dana = []
+    id = []
+    for i in total_penggunaan:
+        i.dana = i.jumlah * i.harga
+        i.save(update_fields=['dana'])
+        dana.append(i.dana)
+        id.append(i.id)
+    try:
+        abc = abc_analysis(dana)
+        
+    except ValueError:
+        abc = None
+    except:
+        abc = None  
+        
+    if abc is not None:
+        for a in abc['Aind']:
+            id_hasil = id[a]
+            hasil = pengajuanABCCek.objects.filter(id=id_hasil).first()
+            print(hasil)
+            hasil.prioritas = 'A'
+            hasil.save(update_fields=['prioritas'])
+        for b in abc['Bind']:
+            id_hasil = id[b]
+            hasil = pengajuanABCCek.objects.filter(id=id_hasil).first()
+            hasil.prioritas = 'B'
+            hasil.save(update_fields=['prioritas'])
+        for c in abc['Cind']:
+            id_hasil = id[c]
+            hasil = pengajuanABCCek.objects.filter(id=id_hasil).first()
+            hasil.prioritas = 'C'
+            hasil.save(update_fields=['prioritas'])
+       
+    hasil = pengajuanABCCek.objects.all().order_by('-dana')
+    total_dana = hasil.aggregate(Sum('dana'))
+    total_item = hasil.aggregate(Count('atk'))
+    id_before = None
+    for i in hasil:
+        i.persentase_item = 1/total_item['atk__count']
+        i.persentase_dana = i.dana/total_dana['dana__sum']
+        i.save(update_fields=['persentase_item', 'persentase_dana'])
+        if id_before is None:
+            i.persentase_kumulatif_dana = i.persentase_dana
+            i.persentase_kumulatif_item = i.persentase_item
+            i.save(update_fields=['persentase_kumulatif_dana', 'persentase_kumulatif_item'])
+        else: 
+            before = pengajuanABCCek.objects.filter(id=id_before).first()
+            i.persentase_kumulatif_dana = i.persentase_dana + before.persentase_kumulatif_dana
+            i.persentase_kumulatif_item = i.persentase_item + before.persentase_kumulatif_item
+            i.save(update_fields=['persentase_kumulatif_dana', 'persentase_kumulatif_item'])
+
+        id_before = i.id
+        
+    hasil_abc = pengajuanABCCek.objects.all().order_by('-dana')
+    print(abc)
+    fig = go.Figure()
+    
+    trace_0 = go.Scatter(
+        x=[hasil_abc.persentase_kumulatif_item for hasil_abc in hasil_abc],
+        y=[hasil_abc.persentase_kumulatif_dana for hasil_abc in hasil_abc],
+        mode='markers+lines',
+    )
+    fig.add_trace(trace_0)
+    
+    
+    # 80% Volume
+    dana80 = hasil_abc.filter(persentase_kumulatif_dana__gte=0.8)
+    perc_item80 = dana80.aggregate(Min('persentase_kumulatif_item'))
+    perc_dana80 = dana80.aggregate(Min('persentase_kumulatif_dana'))
+
+    # # 20% SKU
+    item20 = hasil_abc.filter(persentase_kumulatif_item__gte=0.2)
+    perc_item20 = item20.aggregate(Min('persentase_kumulatif_item'))
+    perc_dana20 = item20.aggregate(Min('persentase_kumulatif_dana'))
+
+    # 5% SKU
+    item5 = hasil_abc.filter(persentase_kumulatif_item__gte=0.05)
+    perc_item5 = item5.aggregate(Min('persentase_kumulatif_item'))
+    perc_dana5 = item5.aggregate(Min('persentase_kumulatif_dana'))
+  
+    
+    # 5% SKU
+    fig.add_hline(y=perc_dana5['persentase_kumulatif_dana__min'], line_width=1, line_dash="dash", line_color="red")
+    fig.add_vline(x=perc_item5['persentase_kumulatif_item__min'], line_width=1, line_dash="dash", line_color="red")
+    
+    # # 80% Volume
+    fig.add_hline(y=perc_dana80['persentase_kumulatif_dana__min'], line_width=1, line_dash="dash", line_color="green")
+    fig.add_vline(x=perc_item80['persentase_kumulatif_item__min'], line_width=1, line_dash="dash", line_color="green")
+    
+    # # 20% SKU
+    fig.add_hline(y=perc_dana20['persentase_kumulatif_dana__min'], line_width=1, line_dash="dash", line_color="blue")
+    fig.add_vline(x=perc_item20['persentase_kumulatif_item__min'], line_width=1, line_dash="dash", line_color="blue")
+    
+    
+    
+    print(fig)
+    chart = fig.to_html
+    context = {'hasil_abc':hasil_abc, 'abc': abc, 'chart': chart}
+    return render(request, 'atk/abc.html', context)
+
 @login_required(login_url='login')
 def atk_abc_analysis(request, scope): 
     tahun = datetime.datetime.now().year
@@ -929,6 +1051,7 @@ def atk_abc_analysis(request, scope):
         abc_analysis_model.objects.filter(unit=request.user.unit, tahun=tahun).delete()
     elif scope == 'general':
         abc_analysis_model_general.objects.filter(tahun=tahun).delete()
+    
     try:
         abc = abc_analysis(list_total_harga)
     except ValueError:
@@ -1078,17 +1201,22 @@ def lihat_analisis_unit(request, scope):
   
     
     # 5% SKU
-    fig.add_hline(y=perc_dana5['persentase_kumulatif_dana__min'], line_width=1, line_dash="dash", line_color="red")
+    fig.add_hline(y=perc_dana5['persentase_kumulatif_dana__min'], line_width=1, line_dash="dash", line_color="red", annotation_text = "PIORITAS TINGGI")
     fig.add_vline(x=perc_item5['persentase_kumulatif_item__min'], line_width=1, line_dash="dash", line_color="red")
     
     # # 80% Volume
-    fig.add_hline(y=perc_dana80['persentase_kumulatif_dana__min'], line_width=1, line_dash="dash", line_color="green")
+    fig.add_hline(y=perc_dana80['persentase_kumulatif_dana__min'], line_width=1, line_dash="dash", line_color="green",  annotation_text = "PRIORITAS RENDAH")
     fig.add_vline(x=perc_item80['persentase_kumulatif_item__min'], line_width=1, line_dash="dash", line_color="green")
     
     # # 20% SKU
-    fig.add_hline(y=perc_dana20['persentase_kumulatif_dana__min'], line_width=1, line_dash="dash", line_color="blue")
+    fig.add_hline(y=perc_dana20['persentase_kumulatif_dana__min'], line_width=1, line_dash="dash", line_color="blue", annotation_text = "PRIORITAS SEDANG")
     fig.add_vline(x=perc_item20['persentase_kumulatif_item__min'], line_width=1, line_dash="dash", line_color="blue")
     
+    fig.update_layout(
+    xaxis_title="Kumulatif Item", yaxis_title="Kumulatif Dana")
+    
+    fig.layout.xaxis.tickformat = ',.0%'
+    fig.layout.yaxis.tickformat = ',.0%'
     
     
     print(fig)
@@ -1102,43 +1230,110 @@ def lihat_analisis_unit(request, scope):
 def forecastUnit(request, pk):
     # id atk yang akan diprediksi
     id_atk = int(pk)
+    atk = Barang_ATK.objects.filter(id=id_atk).first()
     stok = StokATK.objects.filter(atk=id_atk).first()
+    
     # Cari atk beserta jumlah kegunaannya 
-    stokKeluar = PenggunaanStok.objects.filter(atk=stok.id).values('tanggal__year').annotate(jumlah=Sum('jumlah')).order_by()
+    stokKeluar = PenggunaanStok.objects.filter(atk=stok.id, unit=request.user.unit).values('tanggal__year').annotate(jumlah=Sum('jumlah')).order_by()
     print(stokKeluar)
     
-    times = [stokKeluar['tanggal__year'] for stokKeluar in stokKeluar]
-    values = [stokKeluar['jumlah'] for stokKeluar in stokKeluar]
+    temp_times = [stokKeluar['tanggal__year'] for stokKeluar in stokKeluar]
+    # temp_values = [stokKeluar['jumlah'] for stokKeluar in stokKeluar]
+    
+    times = []
+    values = []
+    
+    for i in range(temp_times[0], temp_times[-1]+1):
+        times.append(i)
+     
+    for i in times:
+        permintaan = 0
+        for s in stokKeluar:
+            if s['tanggal__year'] == i:
+                permintaan = s['jumlah']
+        values.append(permintaan)
+        
+    print(values)
+    print(times)
     
     times_size = len(times)
+    
+    
     # validasi jumlah ketersediaan data
     if times_size < 0:
         context = {
             'msg':"Data pada ATK belum siap untuk diprediksi"
         }
-    elif times_size < 2:
-        context = {
-            'msg':"Data pada ATK belum siap untuk diprediksi"
-        }
+    elif times_size <= 3:
+         forecaster_stok = ExponentialSmoothing(optimized=True) 
     else:
-        train_size = int(math.ceil(0.7 * times_size))
-        test_size = int(math.ceil(0.3 * times_size))
-        
+        train_size = int(math.ceil(0.8 * times_size))
+        test_size = int(math.ceil(0.2 * times_size))
+
         # ubah tipe data value yg akan diprediksi ke pandas series
         values_array = np.array(values)
         ser = pd.Series(values_array)
 
-        
         train, test = temporal_train_test_split(ser, test_size=test_size)
         print(train, test)
         
-        
         # ! BUAT DECISION PEMILIHAN METODE PREDIKSI
+        # check if data is constant
+        if max(values) == min(values):
+            forecaster_stok = ExponentialSmoothing(optimized=True) 
+        else:
+            # check stationarity in data with some degree of variability.
+            check_stat = adfuller(values)
+            print('ADF Statistic: %f ' % check_stat[0])
+            print('p-value: %f ' % check_stat[1])
+            print('Critical Values:')
+            for key, value in check_stat[4].items():
+                print('\t%s: %.3f' % (key, value))
         
-        # fit data latih
-        forecaster_stok = NaiveForecaster(strategy='mean', sp=times_size//2)
+            has_trend = False
+            has_season = False
+            has_resid = False
+            # jika data tidak stasioner
+            print('Data tidak stasioner')
+            
+            # DECOMPOSE
+            # additive decompose
+            add_dec = seasonal_decompose(ser, model='additive', period=2)
+            print(add_dec.seasonal, add_dec.trend, add_dec.resid, add_dec.observed)
+            # Check if the data has a clear trend
+            trend = add_dec.trend
+            if trend.is_monotonic_increasing or trend.is_monotonic_decreasing:
+                print("The data has a trend.")
+                has_trend = True
+            else:
+                print("The data does not have a clear trend.")
+
+            # Check if the data has significant seasonality
+            seasonality = add_dec.seasonal
+            if seasonality.var() != 0:
+                print("The data has seasonality.")
+                has_season = True
+            else:
+                print("The data does not have significant seasonality.")
+                
+            residual = add_dec.resid
+            if residual.sum() != 0:
+                has_resid = True
+        
+            if has_trend and has_season:
+                # holt winter exponential smoothing
+                forecaster_stok = ExponentialSmoothing(trend="add", seasonal="add", optimized=True, sp=2)
+            elif has_trend: 
+                # double exponential smoothing
+                forecaster_stok = ExponentialSmoothing(trend="add", optimized=True)
+            elif has_season:
+                # season with no trend
+                forecaster_stok = ExponentialSmoothing(seasonal="add", optimized=True, sp=2)
+            else:
+                forecaster_stok = ExponentialSmoothing(trend="add", damped_trend=True, optimized=True)
+                
+                
         forecaster_stok.fit(train)
-        # tentukan jumlah data yang akan di prediksi
         jml_tahun_pred = 2
         fh = np.arange(1,len(test) + 1 + jml_tahun_pred)
         fh2 = np.arange(1,len(test) + 1)
@@ -1147,13 +1342,12 @@ def forecastUnit(request, pk):
         pred = forecaster_stok.predict(fh=fh)
         # prediksi akurasi
         pred2 = forecaster_stok.predict(fh=fh2)
-        print(pred)
         # cek akurasi
-        mape=mean_absolute_percentage_error(test, pred2, symmetric=False)
+        mape=mean_absolute_percentage_error(test, pred2, symmetric=True)
         smape=mean_absolute_percentage_error(test, pred2, symmetric=True)
-        
-        print(f'mape: {mape}, smape: {smape}')
     
+        print()
+        print(f"MAPE: {mape}, SMAPE: {smape}")
         # ubah semua type hasil ke list
         train_list, test_list, pred_list = train.to_list(), test.to_list(), pred.to_list()
         print(train_list, test_list, pred_list, sep='\n')
@@ -1162,7 +1356,6 @@ def forecastUnit(request, pk):
         x_train_list = times[:train_size+1]
         x_test_list = times[-test_size:]
         x_pred_list = times[-test_size:] + [*range(times[-1]+1, times[-1]+jml_tahun_pred)]
-        
         
         # diagram
         fig = go.Figure()
@@ -1193,13 +1386,19 @@ def forecastUnit(request, pk):
         
         fig.update_traces(hovertemplate=None)
         fig.update_layout(hovermode="x unified")
-        
+        fig.update_layout(
+        xaxis_title="Tahun", yaxis_title="Jumlah Kegunaan")
         chart = fig.to_html
         
         context = {
             'chart': chart,
             'mape': mape,
+            'mape_persen': (1-mape),
             'smape': smape,
+            'smape_persen': (1-smape),
+            'atk':atk,
+            'pred':round(pred_list.pop()),
+            'test':test_list.pop(),
         }
     return render(request, 'atk/forecast_unit.html', context)
 

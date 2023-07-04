@@ -9,6 +9,18 @@
               <h6 class="text-capitalize">Peramalan Kegunaan {{ atk }} </h6>
             </div>
             <div class="card-body p-3">
+              <div>
+                <ul>
+                  <li>Nama ATK: {{atk.atk}}</li>
+                  <li>Penggunaan Tahun Ini: {{ test }} {{atk.satuan}} </li>
+                  <li>Prediksi Penggunaan Tahun Depan: {{ pred }} {{atk.satuan}}</li>
+                </ul>
+                <ul>
+                  <li>Tingkat Keakurasian</li>
+                  <li>MAPE: {{mape}} ({% widthratio mape_persen 1 100 %}%)</li>
+                  <li>SMAPE: {{ smape }} ({% widthratio smape_persen 1 100 %}%)</li>
+                </ul>
+              </div>
               <div class="chart">
                 {{ chart|safe }}
               </div>

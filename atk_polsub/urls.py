@@ -18,6 +18,10 @@ from django.contrib import admin
 from django.urls import path, include
 from django.http import HttpResponse
 
+admin.site.site_header = 'ATK Polsub'                    # default: "Django Administration"
+admin.site.index_title = 'ATK Polsub'                 # default: "Site administration"
+admin.site.site_title = 'ATK Polsub' # default: "Django site admin"
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('atk.urls')),

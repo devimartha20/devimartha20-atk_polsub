@@ -3,8 +3,8 @@ from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 import datetime
 from django.utils import timezone
-# Create your models here.
 
+# Create your models here.
 class KategoriUnit(models.Model):
     KategoriUnit= models.CharField(max_length=200)
     updated = models.DateTimeField(auto_now=True)
@@ -110,6 +110,7 @@ class Barang_ATK(models.Model):
   kategori=models.ForeignKey(KategoriATK, on_delete=models.SET_NULL, null=True)
   satuan=models.ForeignKey(SatuanATK, on_delete=models.SET_NULL, null=True)
   jumlah_per_satuan=models.IntegerField(default=1)
+  status=models.BooleanField(default=True)
   updated = models.DateTimeField(auto_now=True)
   created= models.DateTimeField(auto_now_add=True)
     
@@ -131,6 +132,10 @@ class Harga(models.Model):
         models.UniqueConstraint(fields=['atk','periode_mulai', 'periode_selesai'], name='unique_periode_harga'),
     ]
     ordering=['-updated', '-created']
+    
+  def __str__(self):
+      obj = str(str(self.atk.atk)+" : Rp"+str(self.harga)+" | Periode : "+str(self.periode_mulai)+"-"+str(self.periode_selesai))
+      return obj
     
 class Pengajuan(models.Model):
   class ProgressPengajuan(models.TextChoices):
@@ -229,7 +234,7 @@ class Isi_pengajuan(models.Model):
   pengajuan=models.ForeignKey(Pengajuan, on_delete=models.CASCADE)
   atk=models.ForeignKey(Barang_ATK, on_delete=models.SET_NULL, null=True)
   jumlah=models.IntegerField()
-  rekomendasi=models.FloatField
+  rekomendasi=models.FloatField(null=True)
   # rekomendasi=models.ForeignKey(hasil_prediksi_unit, on_delete=models.SET_NULL, null=True)
   keterangan=models.TextField(max_length=200)
   updated = models.DateTimeField(auto_now=True)
@@ -392,10 +397,27 @@ class abc_analysis_model_general(models.Model):
 
 
 class pengajuanABCCek(models.Model):
+  
+  class Prioritas(models.TextChoices):
+      TINGGI = "A", _("Tinggi")  
+      SEDANG = "B", _("Sedang")
+      RENDAH = "C", _("Rendah")
+      
   atk=models.CharField(max_length=50)
   jumlah=models.IntegerField()
   harga=models.IntegerField()
   total_harga=models.IntegerField()
+  dana=models.IntegerField(null=True, blank=True)
+  persentase_item=models.FloatField(null=True, blank=True)
+  persentase_kumulatif_item=models.FloatField(null=True, blank=True)
+  persentase_dana=models.FloatField(null=True, blank=True)
+  persentase_kumulatif_dana=models.FloatField(null=True, blank=True)
+  prioritas = models.CharField(
+        max_length=20,
+        choices=Prioritas.choices,
+        null=True,
+        blank=True
+    )
   updated = models.DateTimeField(auto_now=True)
   created= models.DateTimeField(auto_now_add=True)
   
