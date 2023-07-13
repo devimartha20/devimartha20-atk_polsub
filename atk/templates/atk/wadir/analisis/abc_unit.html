@@ -21,18 +21,8 @@
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header pb-0">
-                  {% if request.user.is_wadir %}
-                  <div class="row">
-                    <div class="col-9">
-                      <!-- Button trigger modal -->
-                      <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#listunitmodal">
-                        Lihat Analisis Unit
-                      </button>
-
-                  {% endif %}
-                  
+                  {% comment %} {{ abc }} {% endcomment %}
                 </div>
-                {% include 'atk/wadir/analisis/list_unitmodal.html' %}
                 <div class="card-body px-5 pt-0 pb-2">
                     <div class="table-responsive p-0">
                         <table class="table align-items-center mb-0" id ="tabelstok">
@@ -85,7 +75,7 @@
                                     </h6>
                                   </td>
                                   <td>
-                                    <a class="mb-0 text-sm" href="{% url 'forecast-unit' hasil.atk.id %}">Lihat Prediksi</a>
+                                    <a class="mb-0 text-sm" href="{% url 'cek-prediksi-unit' unit.id hasil.atk.id %}">Lihat Prediksi</a>
                                   </td>
                                 </tr>
                                 {% comment %} {% include 'atk/adminunit/pengajuan/editdeleteisimodal.html' %} {% endcomment %}

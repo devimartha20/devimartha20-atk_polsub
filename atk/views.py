@@ -39,6 +39,8 @@ import plotly.io as pio
 # import plotly
 import plotly.graph_objs as go
 
+import xlwt
+
 # Create your views here.
 
 def kirim_email(request):
@@ -97,6 +99,14 @@ def dashboard(request):
     elif request.user.is_adminunit or request.user.is_pimpinanunit:
         tahun = datetime.datetime.now().year
         
+        # untuk di notifikasi
+        jadwal = Jadwal.objects.filter(tahun=tahun)[:1].first()
+        
+        pengajuan = Pengajuan.objects.filter(
+            unit= request.user.unit,
+            jadwal=jadwal
+        ).first()
+        
         aktivitas_pengeluaran = PenggunaanStok.objects.filter(unit=request.user.unit, tanggal__year=tahun).order_by('-tanggal')[:5]
         sisa_stok = StokATK.objects.filter(unit=request.user.unit).order_by('-updated')[:5]
         
@@ -110,24 +120,26 @@ def dashboard(request):
         atk_list = [StokATK.objects.filter(id=i['atk']).first() for i in list_id_atk]
         print(atk_list)
         stok = StokATK.objects.filter(unit=request.user.unit)
+        
         list_nama_atk = [stok.atk.atk for stok in stok]
         list_jumlah = [stok.jumlah for stok in stok] 
-       
-    #    VALIDASI DATA SEBELUM DIPROSES CHART
-       
-        fig_pie = px.pie(values=list_jumlah, names=list_nama_atk)
-        pie_chart = fig_pie.to_html
         
         penggunaan_with_kegunaan = penggunaan.exclude(guna__isnull=True)
-        
         guna_list = [pwk.guna.kegunaan for pwk in penggunaan_with_kegunaan]
         atk_keluar_list= [pwk.atk.atk.atk for pwk in penggunaan_with_kegunaan]
         jumlah_list= [pwk.jumlah for pwk in penggunaan_with_kegunaan]
-        
-        
-        fig_bar = px.bar(x=guna_list, y=jumlah_list, color=atk_keluar_list).update_layout(
-           )
-        bar_chart = fig_bar.to_html
+       
+        pie_chart = 'Data tidak cukup untuk menampilkan grafik sisa stok'
+        bar_chart = 'Data tidak cukup untuk menampilkan grafik kegunaan ATK'
+    #    VALIDASI DATA SEBELUM DIPROSES CHART
+        if list_jumlah != [] and list_nama_atk != [] and guna_list != [] and jumlah_list != [] and atk_keluar_list != []:
+            fig_pie = px.pie(values=list_jumlah, names=list_nama_atk)
+            pie_chart = fig_pie.to_html
+
+            fig_bar = px.bar(x=guna_list, y=jumlah_list, color=atk_keluar_list).update_layout(
+            )
+            bar_chart = fig_bar.to_html
+
         
         context = { 'pie_chart': pie_chart,
                    'bar_chart': bar_chart,
@@ -137,8 +149,13 @@ def dashboard(request):
                    'atk_masuk_terbaru': atk_masuk_terbaru,
                    'aktivitas_pengeluaran': aktivitas_pengeluaran,
                    'sisa_stok': sisa_stok,
+                   
+                #    untuk notifikasi
+                   'jadwal': jadwal,
+                   'pengajuan': pengajuan,
                    }
         return render(request, 'atk/dashboardunit.html', context)
+    
     elif request.user.is_wadir:
         tahun = datetime.datetime.now().year
         penggunaan = PenggunaanStok.objects.filter(tanggal__year=tahun)
@@ -227,10 +244,34 @@ def addJadwal(request):
         if jadwalForm.is_valid():
             jadwal = jadwalForm.save()
             periode = jadwal.tahun
+            
+            # kirim email
+            subject = 'Jadwal Pengajuan Barang Habis Pakai'
+            message = f"Wakil Direktur II telah mengatur Jadwal Pengajuan Barang Habis Pakai dimulai pada {request.POST.get('pengajuan_mulai')} dan ditutup pada tanggal {request.POST.get('pengajuan_selesai')}"
+            email = User.objects.filter(Q(is_adminunit=True) | Q(is_pimpinanunit=True))
+            receiver = [e.email for e in email]
+            print(receiver)
+            
+            kirim_email = send_mail(
+                subject, #subject
+                message, #message
+                'settings.EMAIL_HOST_USER', #sender
+                receiver, #receiver
+                fail_silently=True
+            )
+            print(kirim_email)
+            
             messages.success(request, f'Jadwal Pengajuan Periode {periode} Berhasil Dibuat!')
             return redirect('kelola-pengajuan')
         else:
-            messages.error(request, f'Pengisian form tidak valid!')
+            error_msg = dict(jadwalForm.errors)
+            em = ''
+            for e in error_msg['__all__']:
+                if em != '':
+                    em = em + ', ' + e
+                else:
+                    em = e
+            messages.error(request, em)
             return redirect('kelola-pengajuan')
     else:
         raise Http404
@@ -244,11 +285,35 @@ def editJadwal(request, pk):
         jadwalForm = formJadwal(request.POST or None, instance=instance)
         if jadwalForm.is_valid():
             jadwalForm = jadwalForm.save()
+            
+            # kirim email
+            subject = 'Perubahan Jadwal Pengajuan Barang Habis Pakai'
+            message = f"Wakil Direktur II telah merubah Jadwal Pengajuan Barang Habis Pakai dimulai pada {request.POST.get('pengajuan_mulai')} dan ditutup pada tanggal {request.POST.get('pengajuan_selesai')}"
+            email = User.objects.filter(Q(is_adminunit=True) | Q(is_pimpinanunit=True))
+            receiver = [e.email for e in email]
+            print(receiver)
+            
+            kirim_email = send_mail(
+                subject, #subject
+                message, #message
+                'settings.EMAIL_HOST_USER', #sender
+                receiver, #receiver
+                fail_silently=True
+            )
+            print(kirim_email)
+            
             messages.success(request, f'Jadwal Pengajuan Berhasil Diubah!')
             return redirect('kelola-pengajuan')
         else:
-            messages.error(request, f'Input form tidak valid!')
-        return redirect('kelola-pengajuan')
+            error_msg = dict(jadwalForm.errors)
+            em = ''
+            for e in error_msg['__all__']:
+                if em != '':
+                    em = em + ', ' + e
+                else:
+                    em = e
+            messages.error(request, em)
+            return redirect('kelola-pengajuan')
     else:
         raise Http404
     
@@ -310,6 +375,8 @@ def addPengajuan(request):
             jadwal=jadwal
         ).first()
         
+        revisi = PerbaikanPengajuan.objects.filter(pengajuan=pengajuan).first()
+        
         if request.method == 'POST':
             pengajuan = Pengajuan.objects.create(
                 jadwal=jadwal,
@@ -330,7 +397,8 @@ def addPengajuan(request):
         context = {'isiPengajuanForm': isiPengajuanForm,
                    'pengajuan': pengajuan,
                    'isi_pengajuan': isiPengajuan,
-                   'atk': atk
+                   'atk': atk,
+                   'revisi':revisi
                    }
         return render(request, 'atk/adminunit/pengajuan/addPengajuan.html', context)
     else:
@@ -350,6 +418,7 @@ def editPengajuan(request, pk):
             return redirect('add-pengajuan')
         else:
             messages.error(request, 'Terjadi kesalahan!')
+            return redirect('add-pengajuan')
     else:
         raise Http404
 
@@ -366,6 +435,132 @@ def deletePengajuan(request, pk):
             messages.error(request, 'Terjadi kesalahan!')
     else:
         raise Http404
+
+def hasil_ramal(request, atk, scope):
+    id_atk = int(atk)
+    atk = Barang_ATK.objects.filter(id=id_atk).first()
+    stok = StokATK.objects.filter(atk=id_atk).first()
+    
+    # Cari atk beserta jumlah kegunaannya 
+    if scope == "unit":
+        stokKeluar = PenggunaanStok.objects.filter(atk=stok.id, unit=request.user.unit).values('tanggal__year').annotate(jumlah=Sum('jumlah')).order_by()
+    elif scope == "general":
+        stokKeluar = PenggunaanStok.objects.filter(atk=stok.id).values('tanggal__year').annotate(jumlah=Sum('jumlah')).order_by()
+    print(stokKeluar)
+    
+    temp_times = [stokKeluar['tanggal__year'] for stokKeluar in stokKeluar]
+    # temp_values = [stokKeluar['jumlah'] for stokKeluar in stokKeluar]
+    
+    times = []
+    values = []
+    
+    if temp_times != []:
+        for i in range(temp_times[0], temp_times[-1]+1):
+            times.append(i)
+        
+        for i in times:
+            permintaan = 0
+            for s in stokKeluar:
+                if s['tanggal__year'] == i:
+                    permintaan = s['jumlah']
+            values.append(permintaan)
+            
+        print(values)
+        print(times)
+        
+        times_size = len(times)
+         
+        # validasi jumlah ketersediaan data
+        if times_size <= 0:
+            return 0
+        elif times_size <= 3:
+            forecaster_stok = ExponentialSmoothing(optimized=True) 
+        else:
+            train_size = int(math.ceil(0.8 * times_size))
+            test_size = int(math.ceil(0.2 * times_size))
+
+            # ubah tipe data value yg akan diprediksi ke pandas series
+            values_array = np.array(values)
+            ser = pd.Series(values_array)
+
+            train, test = temporal_train_test_split(ser, test_size=test_size)
+            print(train, test)
+            
+            # ! BUAT DECISION PEMILIHAN METODE PREDIKSI
+            # check if data is constant
+            if max(values) == min(values):
+                forecaster_stok = ExponentialSmoothing(optimized=True) 
+            else:
+                # check stationarity in data with some degree of variability.
+                check_stat = adfuller(values)
+                print('ADF Statistic: %f ' % check_stat[0])
+                print('p-value: %f ' % check_stat[1])
+                print('Critical Values:')
+                for key, value in check_stat[4].items():
+                    print('\t%s: %.3f' % (key, value))
+            
+                has_trend = False
+                has_season = False
+                has_resid = False
+                # jika data tidak stasioner
+                print('Data tidak stasioner')
+                
+                # DECOMPOSE
+                # additive decompose
+                add_dec = seasonal_decompose(ser, model='additive', period=2)
+                print(add_dec.seasonal, add_dec.trend, add_dec.resid, add_dec.observed)
+                # Check if the data has a clear trend
+                trend = add_dec.trend
+                if trend.is_monotonic_increasing or trend.is_monotonic_decreasing:
+                    print("The data has a trend.")
+                    has_trend = True
+                else:
+                    print("The data does not have a clear trend.")
+
+                # Check if the data has significant seasonality
+                seasonality = add_dec.seasonal
+                if seasonality.var() != 0:
+                    print("The data has seasonality.")
+                    has_season = True
+                else:
+                    print("The data does not have significant seasonality.")
+                    
+                residual = add_dec.resid
+                if residual.sum() != 0:
+                    has_resid = True
+            
+                if has_trend and has_season:
+                    # holt winter exponential smoothing
+                    forecaster_stok = ExponentialSmoothing(trend="add", seasonal="add", optimized=True, sp=2)
+                elif has_trend: 
+                    # double exponential smoothing
+                    forecaster_stok = ExponentialSmoothing(trend="add", optimized=True)
+                elif has_season:
+                    # season with no trend
+                    forecaster_stok = ExponentialSmoothing(seasonal="add", optimized=True, sp=2)
+                else:
+                    forecaster_stok = ExponentialSmoothing(trend="add", damped_trend=True, optimized=True)
+                    
+                    
+            forecaster_stok.fit(train)
+            jml_tahun_pred = 2
+            fh = np.arange(1,len(test) + 1 + jml_tahun_pred)
+            fh2 = np.arange(1,len(test) + 1)
+            
+            # prediksi
+            pred = forecaster_stok.predict(fh=fh)
+            # prediksi akurasi
+            pred2 = forecaster_stok.predict(fh=fh2)
+            # cek akurasi
+            mape=mean_absolute_percentage_error(test, pred2, symmetric=True)
+            smape=mean_absolute_percentage_error(test, pred2, symmetric=True)
+        
+            pred_list = pred.to_list()
+            rekomendasi = round(pred_list.pop())
+            return rekomendasi
+    
+    return 0
+    
     
 login_required(login_url='login')
 def addIsiPengajuan(request, pk):
@@ -375,12 +570,28 @@ def addIsiPengajuan(request, pk):
         if isiPengajuanForm.is_valid():
             pengajuan = Pengajuan.objects.get(id=id)
             isiPengajuan = isiPengajuanForm.save(commit=False)
+            
+            # isi rekomendasi berdasarkan prediksi
+            id_atk = request.POST.get("atk")
+            rek = hasil_ramal(request, id_atk, 'unit')
+            print(rek)
+            
+            
+            isiPengajuan.rekomendasi = rek
             isiPengajuan.pengajuan = pengajuan
             save = isiPengajuan.save()
+            
             messages.success(request, "Data berhasil ditambahkan!")
             return redirect('add-pengajuan')
         else:
-            messages.error(request, 'Terjadi kesalahan!')
+            error_msg = dict(isiPengajuanForm.errors)
+            em = ''
+            for e in error_msg['__all__']:
+                if em != '':
+                    em = em + ', ' + e
+                else:
+                    em = e
+            messages.error(request, em)
             return redirect('add-pengajuan')
     else:
         raise Http404
@@ -428,7 +639,31 @@ def deleteIsiPengajuan(request, pk):
 def ajukan(request, pk):
     if request.user.is_adminunit:
         id = int(pk)
-        pengajuan = Pengajuan.objects.filter(id=id).update(progress='K', is_aktif=False)
+        pengajuan = Pengajuan.objects.filter(id=id).first()
+        jml_isi = Isi_pengajuan.objects.filter(pengajuan=pengajuan).count()
+        
+        if jml_isi <= 0:
+            messages.error(request, 'Isi pengajuan dengan minimal satu ATK') 
+            return redirect('add-pengajuan')
+        
+        Pengajuan.objects.filter(id=id).update(progress='K', is_aktif=False)
+        
+        unit = request.user.unit
+        pimpinan = User.objects.filter(is_pimpinanunit=True, unit=unit).first()
+        
+        # kirim email
+        subject = 'Konfirmasi Rancangan Pengajuan Barang Habis Pakai'
+        message = "Administrator unit telah mengirim rancangan pengajuan, segera lakukan konfirmasi"
+        email = pimpinan.email
+        
+        kirim_email = send_mail(
+            subject, #subject
+            message, #message
+            'settings.EMAIL_HOST_USER', #sender
+            [email], #receiver
+            fail_silently=True
+        )
+        print(kirim_email)
         messages.success(request, f'Pengajuan berhasil dikirim!')
         return redirect('pengajuan')
     else:
@@ -438,9 +673,133 @@ def ajukan(request, pk):
 @login_required(login_url='login')
 def stok(request):
     if request.user.is_adminunit:
+        
         stok = StokATK.objects.filter(
-            unit = request.user.unit
-        )
+                unit = request.user.unit
+            )
+        tahun = datetime.datetime.now().year
+        
+        atkMasukAwal = {}
+        atkKeluarAwal = {}
+        atkAwal = {}
+        atkMasuk = {}
+        atkKeluar= {}
+        atkAkhir = {}
+        
+        if request.GET.get('start') != None and request.GET.get('end') != None:
+            if datetime.datetime.strptime(request.GET.get('start'), "%Y-%m-%d") <= datetime.datetime.strptime(request.GET.get('end'), "%Y-%m-%d"):
+                print(datetime.datetime.strptime(request.GET.get('start'), "%Y-%m-%d"))
+                start = request.GET.get('start')
+                end = request.GET.get('end')
+                for s in stok:
+                    # stok awal
+                    atkMasukAwal[s.atk_id] = int(0 
+                                                if PenambahanStok.objects.filter(Q(unit=request.user.unit) &
+                                                            Q(tanggal__lte=start) &
+                                                            Q(atk_id=s.atk_id)
+                                                            ).aggregate(Sum('jumlah'))['jumlah__sum'] is None 
+                                                else 
+                                                PenambahanStok.objects.filter(Q(unit=request.user.unit) &
+                                                            Q(tanggal__lte=start) &
+                                                            Q(atk_id=s.atk_id)
+                                                            ).aggregate(Sum('jumlah'))['jumlah__sum'])
+                    
+                    atkKeluarAwal[s.atk_id] = int(0 if PenggunaanStok.objects.filter(Q(unit=request.user.unit) &
+                                                            Q(tanggal__lte=start) &
+                                                            Q(atk_id=s.atk_id)
+                                                            ).aggregate(Sum('jumlah'))['jumlah__sum'] is None
+                                                else
+                                                PenggunaanStok.objects.filter(Q(unit=request.user.unit) &
+                                                            Q(tanggal__lte=start) &
+                                                            Q(atk_id=s.atk_id)
+                                                            ).aggregate(Sum('jumlah'))['jumlah__sum']
+                                                )
+                    atkAwal[s.atk_id] = atkMasukAwal[s.atk_id] - atkKeluarAwal[s.atk_id]
+                    # stok masuk
+                    atkMasuk[s.atk_id] = int(0 if PenambahanStok.objects.filter(Q(unit=request.user.unit) &
+                                                            Q(tanggal__gte=start) &
+                                                            Q(tanggal__lte=end) &
+                                                            Q(atk_id=s.atk_id)
+                                                            ).aggregate(Sum('jumlah'))['jumlah__sum'] is None
+                                            else
+                                            PenambahanStok.objects.filter(Q(unit=request.user.unit) &
+                                                            Q(tanggal__gte=start) &
+                                                            Q(tanggal__lte=end) &
+                                                            Q(atk_id=s.atk_id)
+                                                            ).aggregate(Sum('jumlah'))['jumlah__sum']
+                                            )
+                    # stok keluar
+                    atkKeluar[s.atk_id] = int(0 if PenggunaanStok.objects.filter(Q(unit=request.user.unit) &
+                                                            Q(tanggal__gte=start) &
+                                                            Q(tanggal__lte=end) &
+                                                            Q(atk_id=s.atk_id)
+                                                            ).aggregate(Sum('jumlah'))['jumlah__sum'] is None
+                                            else
+                                            PenggunaanStok.objects.filter(Q(unit=request.user.unit) &
+                                                            Q(tanggal__gte=start) &
+                                                            Q(tanggal__lte=end) &
+                                                            Q(atk_id=s.atk_id)
+                                                            ).aggregate(Sum('jumlah'))['jumlah__sum']
+                                            )
+                    # stok akhir
+                    atkAkhir[s.atk_id] = atkAwal[s.atk_id] + atkMasuk[s.atk_id] - atkKeluar[s.atk_id]
+            else:
+                messages.error(request, 'Range tanggal awal dan tanggal akhir tidak valid')
+                return redirect('stok')
+        else:
+            for s in stok:
+                # stok awal
+                atkMasukAwal[s.atk_id] = int(0
+                                            if PenambahanStok.objects.filter(Q(unit=request.user.unit) &
+                                                        Q(tanggal__year=tahun-1) &
+                                                        Q(atk_id=s.atk_id)
+                                                        ).aggregate(Sum('jumlah'))['jumlah__sum'] is None
+                                            else
+                                            PenambahanStok.objects.filter(Q(unit=request.user.unit) &
+                                                        Q(tanggal__year=tahun-1) &
+                                                        Q(atk_id=s.atk_id)
+                                                        ).aggregate(Sum('jumlah'))['jumlah__sum'] 
+                                            )
+                atkKeluarAwal[s.atk_id] = int(0
+                                            if PenggunaanStok.objects.filter(Q(unit=request.user.unit) &
+                                                        Q(tanggal__year=tahun-1) &
+                                                        Q(atk_id=s.atk_id)
+                                                        ).aggregate(Sum('jumlah'))['jumlah__sum'] is None
+                                            else
+                                            PenggunaanStok.objects.filter(Q(unit=request.user.unit) &
+                                                        Q(tanggal__year=tahun-1) &
+                                                        Q(atk_id=s.atk_id)
+                                                        ).aggregate(Sum('jumlah'))['jumlah__sum']
+                                            )
+                atkAwal[s.atk_id] = atkMasukAwal[s.atk_id] - atkKeluarAwal[s.atk_id]
+                # stok masuk
+                atkMasuk[s.atk_id] = int(0
+                                        if  PenambahanStok.objects.filter(Q(unit=request.user.unit) &
+                                                        Q(tanggal__year=tahun) &
+                                                        Q(atk_id=s.atk_id)
+                                                        ).aggregate(Sum('jumlah'))['jumlah__sum'] is None
+                                        else
+                                        PenambahanStok.objects.filter(Q(unit=request.user.unit) &
+                                                        Q(tanggal__year=tahun) &
+                                                        Q(atk_id=s.atk_id)
+                                                        ).aggregate(Sum('jumlah'))['jumlah__sum']
+                                        )
+                # stok keluar
+                atkKeluar[s.atk_id] = int(0 if PenggunaanStok.objects.filter(Q(unit=request.user.unit) &
+                                                        Q(tanggal__year=tahun) &
+                                                        Q(atk_id=s.atk_id)
+                                                        ).aggregate(Sum('jumlah'))['jumlah__sum'] is None
+                                          else
+                                          PenggunaanStok.objects.filter(Q(unit=request.user.unit) &
+                                                        Q(tanggal__year=tahun) &
+                                                        Q(atk_id=s.atk_id)
+                                                        ).aggregate(Sum('jumlah'))['jumlah__sum'] 
+                                          )
+                # stok akhir
+                atkAkhir[s.atk_id] = atkAwal[s.atk_id] + atkMasuk[s.atk_id] - atkKeluar[s.atk_id]
+        
+        
+        print(atkAwal, atkMasuk, atkKeluar, atkAkhir)
         kegunaan = guna.objects.filter(unit=request.user.unit)
         
         stokMasuk = PenambahanStok.objects.filter(unit=request.user.unit, tanggal__year=datetime.datetime.now().year)[:10]
@@ -502,6 +861,11 @@ def stok(request):
         stokMasukForm = formStokMasuk()
         gunaForm=formGuna()
         context = {'stok': stok, 'stokMasuk': stokMasuk, 'stokKeluar': stokKeluar,
+                    'atkAwal' : atkAwal,
+                    'atkMasuk' : atkMasuk,
+                    'atkKeluar': atkKeluar,
+                    'atkAkhir' : atkAkhir,
+                   
                    'stokMasukAll': stokMasukAll, 'stokKeluarAll': stokKeluarAll,
                    'stokKeluarForm': stokKeluarForm, 'stokMasukForm': stokMasukForm,
                    'total_masuk': total_masuk, 'total_keluar': total_keluar,
@@ -524,7 +888,14 @@ def addGuna(request):
             messages.success(request, 'Data berhasil disimpan!')
             return redirect('stok')
         else:
-            messages.error(request, 'Terjadi kesalahan!')
+            error_msg = dict(gunaForm.errors)
+            em = ''
+            for e in error_msg['__all__']:
+                if em != '':
+                    em = em + ', ' + e
+                else:
+                    em = e
+            messages.error(request, em)
             return redirect('stok')
     else:
         raise Http404
@@ -602,8 +973,15 @@ def addPenggunaanStok(request):
             messages.success(request, "Data berhasil ditambahkan!")
             return redirect('stok')
         else:
-            print(stokKeluarForm.errors)
-            messages.error(request, 'Terjadi kesalahan!')
+            print(dict(stokKeluarForm.errors))
+            error_msg = dict(stokKeluarForm.errors)
+            em = ''
+            for e in error_msg['__all__']:
+                if em != '':
+                    em = em + ', ' + e
+                else:
+                    em = e
+            messages.error(request, em)
             return redirect('stok')
     else:
         raise Http404
@@ -641,7 +1019,14 @@ def editPenggunaanStok(request, pk):
                 messages.success(request, "Data berhasil diubah!")
                 return redirect('stok')
             else:
-                messages.error(request, 'Terjadi kesalahan!')
+                error_msg = dict(stokKeluarForm.errors)
+                em = ''
+                for e in error_msg['__all__']:
+                    if em != '':
+                        em = em + ', ' + e
+                    else:
+                        em = e
+                messages.error(request, em)
                 return redirect('stok')
         context = {'stokKeluarForm': stokKeluarForm}
         return render(request, 'atk/adminunit/stok/editstokkeluar.html', context)
@@ -754,7 +1139,14 @@ def editPenambahanStok(request, pk):
                 messages.success(request, "Data berhasil diubah!")
                 return redirect('stok')
             else:
-                messages.error(request, 'Terjadi kesalahan!')
+                error_msg = dict(stokMasukForm.errors)
+                em = ''
+                for e in error_msg['__all__']:
+                    if em != '':
+                        em = em + ', ' + e
+                    else:
+                        em = e
+                messages.error(request, em)
                 return redirect('stok')
         context = {'stokMasukForm': stokMasukForm}
         return render(request, 'atk/adminunit/stok/editstokmasuk.html', context)
@@ -856,6 +1248,23 @@ def addPerbaikan(request, pk):
                 progress = 'P'
             )
             
+            unit = request.user.unit
+            admin_unit = User.objects.filter(is_adminunit=True, unit=unit).first()
+            
+            # kirim email
+            subject = 'Perintah Revisi Rancangan Pengajuan'
+            message = f"Pimpinan unit memerintahkan revisi rancangan pengajuan dengan keterangan : {request.POST.get('keterangan')}"
+            email = admin_unit.email
+            
+            kirim_email = send_mail(
+                subject, #subject
+                message, #message
+                'settings.EMAIL_HOST_USER', #sender
+                [email], #receiver
+                fail_silently=True
+            )
+            print(kirim_email)
+            
             messages.success(request, f"Perbaikan untuk pengajuan nomor surat {pengajuan.first().no_surat} berhasil dikirim!")
             return redirect('tinjau-pengajuan')
         else:
@@ -877,7 +1286,25 @@ def kirimPengajuan(request, pk):
         
         isi_pengajuan = Isi_pengajuan.objects.filter(pengajuan=pengajuan.first())
         
+        unit = request.user.unit
+        wadir = User.objects.filter(is_wadir=True).first()
+        
+        # kirim email
+        subject = f'Pengajuan Barang Habis Pakai Unit {unit}'
+        message = f"Unit {unit} telah melakukan pengajuan barang habis pakai"
+        email = wadir.email
+        
+        kirim_email = send_mail(
+            subject, #subject
+            message, #message
+            'settings.EMAIL_HOST_USER', #sender
+            [email], #receiver
+            fail_silently=True
+        )
+        print(kirim_email)
+        
         for isi in isi_pengajuan:
+            rek = hasil_ramal(request, isi.atk.id, 'general')
             total = total_pengajuan.objects.filter(jadwal=pengajuan.first().jadwal, atk=isi.atk).first()
             harga = Harga.objects.filter(atk=isi.atk).first() #jgn lupa filter periode harga
             if total is None:
@@ -885,13 +1312,15 @@ def kirimPengajuan(request, pk):
                     jadwal=pengajuan.first().jadwal,
                     atk=isi.atk,
                     jumlah=isi.jumlah,
+                    rekomendasi = rek,
                     harga= harga,
                     total_dana=harga.harga * (isi.jumlah)
                 )
             else:
+                total.rekomendasi = rek
                 total.jumlah += isi.jumlah
                 total.total_dana = total.jumlah * harga.harga
-                total.save(update_fields=['jumlah', 'total_dana'])
+                total.save(update_fields=['jumlah', 'total_dana', 'rekomendasi'])
         
         messages.success(request, f"Pengajuan dengan nomor surat {pengajuan.first().no_surat} berhasil dikirim!")
         return redirect('tinjau-pengajuan')
@@ -986,34 +1415,38 @@ def atk_abc_analysis_cek(request):
     
     
     # 80% Volume
-    dana80 = hasil_abc.filter(persentase_kumulatif_dana__gte=0.8)
-    perc_item80 = dana80.aggregate(Min('persentase_kumulatif_item'))
-    perc_dana80 = dana80.aggregate(Min('persentase_kumulatif_dana'))
+    dana80 = hasil_abc.filter(prioritas='C')
+    perc_item80 = dana80.aggregate(Max('persentase_kumulatif_item'))
+    perc_dana80 = dana80.aggregate(Max('persentase_kumulatif_dana'))
 
     # # 20% SKU
-    item20 = hasil_abc.filter(persentase_kumulatif_item__gte=0.2)
-    perc_item20 = item20.aggregate(Min('persentase_kumulatif_item'))
-    perc_dana20 = item20.aggregate(Min('persentase_kumulatif_dana'))
+    item20 = hasil_abc.filter(prioritas='B')
+    perc_item20 = item20.aggregate(Max('persentase_kumulatif_item'))
+    perc_dana20 = item20.aggregate(Max('persentase_kumulatif_dana'))
 
     # 5% SKU
-    item5 = hasil_abc.filter(persentase_kumulatif_item__gte=0.05)
-    perc_item5 = item5.aggregate(Min('persentase_kumulatif_item'))
-    perc_dana5 = item5.aggregate(Min('persentase_kumulatif_dana'))
+    item5 = hasil_abc.filter(prioritas='A')
+    perc_item5 = item5.aggregate(Max('persentase_kumulatif_item'))
+    perc_dana5 = item5.aggregate(Max('persentase_kumulatif_dana'))
   
     
     # 5% SKU
-    fig.add_hline(y=perc_dana5['persentase_kumulatif_dana__min'], line_width=1, line_dash="dash", line_color="red")
-    fig.add_vline(x=perc_item5['persentase_kumulatif_item__min'], line_width=1, line_dash="dash", line_color="red")
+    fig.add_hline(y=perc_dana5['persentase_kumulatif_dana__max'], line_width=1, line_dash="dash", line_color="red", annotation_text="PRIORITAS TINGGI")
+    fig.add_vline(x=perc_item5['persentase_kumulatif_item__max'], line_width=1, line_dash="dash", line_color="red")
     
     # # 80% Volume
-    fig.add_hline(y=perc_dana80['persentase_kumulatif_dana__min'], line_width=1, line_dash="dash", line_color="green")
-    fig.add_vline(x=perc_item80['persentase_kumulatif_item__min'], line_width=1, line_dash="dash", line_color="green")
+    fig.add_hline(y=perc_dana80['persentase_kumulatif_dana__max'], line_width=1, line_dash="dash", line_color="green", annotation_text="PRIORITAS RENDAH")
+    fig.add_vline(x=perc_item80['persentase_kumulatif_item__max'], line_width=1, line_dash="dash", line_color="green")
     
     # # 20% SKU
-    fig.add_hline(y=perc_dana20['persentase_kumulatif_dana__min'], line_width=1, line_dash="dash", line_color="blue")
-    fig.add_vline(x=perc_item20['persentase_kumulatif_item__min'], line_width=1, line_dash="dash", line_color="blue")
+    fig.add_hline(y=perc_dana20['persentase_kumulatif_dana__max'], line_width=1, line_dash="dash", line_color="blue", annotation_text="PRIORITAS SEDANG")
+    fig.add_vline(x=perc_item20['persentase_kumulatif_item__max'], line_width=1, line_dash="dash", line_color="blue")
     
+    fig.update_layout(
+    xaxis_title="Kumulatif Item", yaxis_title="Kumulatif Dana")
     
+    fig.layout.xaxis.tickformat = ',.0%'
+    fig.layout.yaxis.tickformat = ',.0%'
     
     print(fig)
     chart = fig.to_html
@@ -1161,80 +1594,81 @@ def atk_abc_analysis(request, scope):
     return(abc)
 
 @login_required(login_url='login')
-def lihat_analisis_unit(request, scope):  
-    if request.user.is_adminunit or request.user.is_pimpinanunit:
-        scope = 'unit'
-    abc = atk_abc_analysis(request, scope)
+def check_abc_unit(request, unit):
+    if request.user.is_wadir:
+        tahun = datetime.datetime.now().year
+        id_unit = int(unit)
+        unit = Unit.objects.filter(id=id_unit).first()
+        
+        hasil_abc = abc_analysis_model.objects.filter(unit=unit, tahun=tahun).order_by('-dana')
+        
+        print(hasil_abc)
+        if hasil_abc.count() == 0:
+            context = {'hasil_abc':hasil_abc, 'unit': unit}
+            return render(request, 'atk/wadir/analisis/abc_unit.html', context)
+        
+        fig = go.Figure()
+        
+        trace_0 = go.Scatter(
+            x=[hasil_abc.persentase_kumulatif_item for hasil_abc in hasil_abc],
+            y=[hasil_abc.persentase_kumulatif_dana for hasil_abc in hasil_abc],
+            mode='markers+lines',
+        )
+        fig.add_trace(trace_0)
+        
+        # 80% Volume
+        dana80 = hasil_abc.filter(prioritas='C')
+        perc_item80 = dana80.aggregate(Max('persentase_kumulatif_item'))
+        perc_dana80 = dana80.aggregate(Max('persentase_kumulatif_dana'))
 
-    tahun = datetime.datetime.now().year
-    if scope == 'unit':
-        hasil_abc = abc_analysis_model.objects.filter(unit=request.user.unit, tahun=tahun).order_by('-dana')
-    elif scope == 'general':
-        hasil_abc = abc_analysis_model_general.objects.filter(tahun=tahun).order_by('-dana')
-    
-    
-    print(abc)
-    
-    fig = go.Figure()
-    
-    trace_0 = go.Scatter(
-        x=[hasil_abc.persentase_kumulatif_item for hasil_abc in hasil_abc],
-        y=[hasil_abc.persentase_kumulatif_dana for hasil_abc in hasil_abc],
-        mode='markers+lines',
-    )
-    fig.add_trace(trace_0)
-    
-    # 80% Volume
-    dana80 = hasil_abc.filter(persentase_kumulatif_dana__gte=0.8)
-    perc_item80 = dana80.aggregate(Min('persentase_kumulatif_item'))
-    perc_dana80 = dana80.aggregate(Min('persentase_kumulatif_dana'))
+        # # 20% SKU
+        item20 = hasil_abc.filter(prioritas='B')
+        perc_item20 = item20.aggregate(Max('persentase_kumulatif_item'))
+        perc_dana20 = item20.aggregate(Max('persentase_kumulatif_dana'))
 
-    # # 20% SKU
-    item20 = hasil_abc.filter(persentase_kumulatif_item__gte=0.2)
-    perc_item20 = item20.aggregate(Min('persentase_kumulatif_item'))
-    perc_dana20 = item20.aggregate(Min('persentase_kumulatif_dana'))
+        # 5% SKU
+        item5 = hasil_abc.filter(prioritas='A')
+        perc_item5 = item5.aggregate(Max('persentase_kumulatif_item'))
+        perc_dana5 = item5.aggregate(Max('persentase_kumulatif_dana'))
+    
+        
+        # 5% SKU
+        fig.add_hline(y=perc_dana5['persentase_kumulatif_dana__max'], line_width=1, line_dash="dash", line_color="red", annotation_text = "PIORITAS TINGGI")
+        fig.add_vline(x=perc_item5['persentase_kumulatif_item__max'], line_width=1, line_dash="dash", line_color="red")
+        
+        # # 80% Volume
+        fig.add_hline(y=perc_dana80['persentase_kumulatif_dana__max'], line_width=1, line_dash="dash", line_color="green",  annotation_text = "PRIORITAS RENDAH")
+        fig.add_vline(x=perc_item80['persentase_kumulatif_item__max'], line_width=1, line_dash="dash", line_color="green")
+        
+        # # 20% SKU
+        fig.add_hline(y=perc_dana20['persentase_kumulatif_dana__max'], line_width=1, line_dash="dash", line_color="blue", annotation_text = "PRIORITAS SEDANG")
+        fig.add_vline(x=perc_item20['persentase_kumulatif_item__max'], line_width=1, line_dash="dash", line_color="blue")
+        
+        fig.update_layout(
+        xaxis_title="Kumulatif Item", yaxis_title="Kumulatif Dana")
+        
+        fig.layout.xaxis.tickformat = ',.0%'
+        fig.layout.yaxis.tickformat = ',.0%'
+        
+        
+        print(fig)
+        chart = fig.to_html
+        context = {'hasil_abc':hasil_abc, 'chart': chart, 'unit': unit}
+        return render(request, 'atk/wadir/analisis/abc_unit.html', context)
+    else:
+        return Http404
 
-    # 5% SKU
-    item5 = hasil_abc.filter(persentase_kumulatif_item__gte=0.05)
-    perc_item5 = item5.aggregate(Min('persentase_kumulatif_item'))
-    perc_dana5 = item5.aggregate(Min('persentase_kumulatif_dana'))
-  
-    
-    # 5% SKU
-    fig.add_hline(y=perc_dana5['persentase_kumulatif_dana__min'], line_width=1, line_dash="dash", line_color="red", annotation_text = "PIORITAS TINGGI")
-    fig.add_vline(x=perc_item5['persentase_kumulatif_item__min'], line_width=1, line_dash="dash", line_color="red")
-    
-    # # 80% Volume
-    fig.add_hline(y=perc_dana80['persentase_kumulatif_dana__min'], line_width=1, line_dash="dash", line_color="green",  annotation_text = "PRIORITAS RENDAH")
-    fig.add_vline(x=perc_item80['persentase_kumulatif_item__min'], line_width=1, line_dash="dash", line_color="green")
-    
-    # # 20% SKU
-    fig.add_hline(y=perc_dana20['persentase_kumulatif_dana__min'], line_width=1, line_dash="dash", line_color="blue", annotation_text = "PRIORITAS SEDANG")
-    fig.add_vline(x=perc_item20['persentase_kumulatif_item__min'], line_width=1, line_dash="dash", line_color="blue")
-    
-    fig.update_layout(
-    xaxis_title="Kumulatif Item", yaxis_title="Kumulatif Dana")
-    
-    fig.layout.xaxis.tickformat = ',.0%'
-    fig.layout.yaxis.tickformat = ',.0%'
-    
-    
-    print(fig)
-    chart = fig.to_html
-    context = {'hasil_abc':hasil_abc, 'abc': abc, 'chart': chart}
-    return render(request, 'atk/metode/abc_analysis.html', context)
-
-
-# Peramalan
 @login_required(login_url='login')
-def forecastUnit(request, pk):
+def cek_prediksi_unit(request, unit, atk):
     # id atk yang akan diprediksi
-    id_atk = int(pk)
+    id_atk = int(atk)
+    id_unit = int(unit)
     atk = Barang_ATK.objects.filter(id=id_atk).first()
+    unit = Unit.objects.filter(id=id_unit).first()
     stok = StokATK.objects.filter(atk=id_atk).first()
     
     # Cari atk beserta jumlah kegunaannya 
-    stokKeluar = PenggunaanStok.objects.filter(atk=stok.id, unit=request.user.unit).values('tanggal__year').annotate(jumlah=Sum('jumlah')).order_by()
+    stokKeluar = PenggunaanStok.objects.filter(atk=stok.id, unit=unit).values('tanggal__year').annotate(jumlah=Sum('jumlah')).order_by()
     print(stokKeluar)
     
     temp_times = [stokKeluar['tanggal__year'] for stokKeluar in stokKeluar]
@@ -1262,10 +1696,297 @@ def forecastUnit(request, pk):
     # validasi jumlah ketersediaan data
     if times_size < 0:
         context = {
+            'pred':None,
+            'msg':"Data pada ATK belum siap untuk diprediksi"
+        }
+        return render(request, 'atk/forecast_unit.html', context)
+    elif times_size <= 2:
+        context = {
+            'pred':None,
+            'msg':"Data pada ATK belum siap untuk diprediksi"
+        }
+        return render(request, 'atk/forecast_unit.html', context)
+    else:
+        train_size = int(math.ceil(0.8 * times_size))
+        test_size = int(math.ceil(0.2 * times_size))
+
+        # ubah tipe data value yg akan diprediksi ke pandas series
+        values_array = np.array(values)
+        ser = pd.Series(values_array)
+
+        train, test = temporal_train_test_split(ser, test_size=test_size)
+        print(train, test)
+        
+        # ! BUAT DECISION PEMILIHAN METODE PREDIKSI
+        # check if data is constant
+        if max(values) == min(values):
+            forecaster_stok = ExponentialSmoothing(optimized=True) 
+        else:
+            # check stationarity in data with some degree of variability.
+            check_stat = adfuller(values)
+            print('ADF Statistic: %f ' % check_stat[0])
+            print('p-value: %f ' % check_stat[1])
+            print('Critical Values:')
+            for key, value in check_stat[4].items():
+                print('\t%s: %.3f' % (key, value))
+        
+            has_trend = False
+            has_season = False
+            has_resid = False
+            # jika data tidak stasioner
+            print('Data tidak stasioner')
+            
+            # DECOMPOSE
+            # additive decompose
+            add_dec = seasonal_decompose(ser, model='additive', period=2)
+            print(add_dec.seasonal, add_dec.trend, add_dec.resid, add_dec.observed)
+            # Check if the data has a clear trend
+            trend = add_dec.trend
+            if trend.is_monotonic_increasing or trend.is_monotonic_decreasing:
+                print("The data has a trend.")
+                has_trend = True
+            else:
+                print("The data does not have a clear trend.")
+
+            # Check if the data has significant seasonality
+            seasonality = add_dec.seasonal
+            if seasonality.var() != 0:
+                print("The data has seasonality.")
+                has_season = True
+            else:
+                print("The data does not have significant seasonality.")
+                
+            residual = add_dec.resid
+            if residual.sum() != 0:
+                has_resid = True
+        
+            if has_trend and has_season:
+                # holt winter exponential smoothing
+                forecaster_stok = ExponentialSmoothing(trend="add", seasonal="add", optimized=True, sp=2)
+            elif has_trend: 
+                # double exponential smoothing
+                forecaster_stok = ExponentialSmoothing(trend="add", optimized=True)
+            elif has_season:
+                # season with no trend
+                forecaster_stok = ExponentialSmoothing(seasonal="add", optimized=True, sp=2)
+            else:
+                forecaster_stok = ExponentialSmoothing(trend="add", damped_trend=True, optimized=True)
+
+        forecaster_stok.fit(train)
+        jml_tahun_pred = 2
+        fh = np.arange(1,len(test) + 1 + jml_tahun_pred)
+        fh2 = np.arange(1,len(test) + 1)
+        
+        # prediksi
+        pred = forecaster_stok.predict(fh=fh)
+        # prediksi akurasi
+        pred2 = forecaster_stok.predict(fh=fh2)
+        # cek akurasi
+        mape=mean_absolute_percentage_error(test, pred2, symmetric=True)
+        smape=mean_absolute_percentage_error(test, pred2, symmetric=True)
+
+        print()
+        print(f"MAPE: {mape}, SMAPE: {smape}")
+        # ubah semua type hasil ke list
+        train_list, test_list, pred_list = train.to_list(), test.to_list(), pred.to_list()
+        print(train_list, test_list, pred_list, sep='\n')
+        
+        # cari nilai x pada diagram untuk 3 diagram garis (test, train, pred)
+        x_train_list = times[:train_size+1]
+        x_test_list = times[-test_size:]
+        x_pred_list = times[-test_size:] + [*range(times[-1]+1, times[-1]+jml_tahun_pred)]
+        
+        # diagram
+        fig = go.Figure()
+        trace_train = go.Scatter(
+            x=x_train_list,
+            y=train_list + test_list[:1],
+            mode='markers+lines',
+            name='Data Latih',
+            showlegend=True,
+        )
+        trace_test = go.Scatter(
+            x=x_test_list,
+            y=test_list,
+            mode='markers+lines',
+            name='Data Uji',
+            showlegend=True,
+        )
+        trace_pred = go.Scatter(
+            x=x_pred_list,
+            y=pred_list,
+            mode='markers+lines',
+            name='Hasil Prediksi',
+            showlegend=True,
+        )
+        fig.add_trace(trace_train)
+        fig.add_trace(trace_test)
+        fig.add_trace(trace_pred)
+        
+        fig.update_traces(hovertemplate=None)
+        fig.update_layout(hovermode="x unified")
+        fig.update_layout(
+        xaxis_title="Tahun", yaxis_title="Jumlah Kegunaan")
+        chart = fig.to_html
+        
+        context = {
+            'chart': chart,
+            'mape': mape,
+            'mape_persen': (1-mape),
+            'smape': smape,
+            'smape_persen': (1-smape),
+            'atk':atk,
+            'pred':round(pred_list.pop()),
+            'test':test_list.pop(),
+        }
+        return render(request, 'atk/forecast_unit.html', context)
+
+@login_required(login_url='login')
+def lihat_analisis_unit(request, scope):  
+    if request.user.is_adminunit or request.user.is_pimpinanunit:
+        scope = 'unit'
+    abc = atk_abc_analysis(request, scope)
+
+    tahun = datetime.datetime.now().year
+    if scope == 'unit':
+        hasil_abc = abc_analysis_model.objects.filter(unit=request.user.unit, tahun=tahun).order_by('-dana')
+    elif scope == 'general':
+        hasil_abc = abc_analysis_model_general.objects.filter(tahun=tahun).order_by('-dana')
+    
+    
+    print(abc)
+    print(hasil_abc)
+    
+    if hasil_abc.count() == 0:
+        context = {'pesan': 'Data belum cukup untuk dianalisis'}
+        return render(request, 'atk/metode/abc_analysis.html', context)
+    
+    fig = go.Figure()
+    
+    trace_0 = go.Scatter(
+        x=[hasil_abc.persentase_kumulatif_item for hasil_abc in hasil_abc],
+        y=[hasil_abc.persentase_kumulatif_dana for hasil_abc in hasil_abc],
+        mode='markers+lines',
+    )
+    fig.add_trace(trace_0)
+    
+    # 80% Volume
+    dana80 = hasil_abc.filter(prioritas='C')
+    perc_item80 = dana80.aggregate(Max('persentase_kumulatif_item'))
+    perc_dana80 = dana80.aggregate(Max('persentase_kumulatif_dana'))
+
+    # # 20% SKU
+    item20 = hasil_abc.filter(prioritas='B')
+    perc_item20 = item20.aggregate(Max('persentase_kumulatif_item'))
+    perc_dana20 = item20.aggregate(Max('persentase_kumulatif_dana'))
+
+    # 5% SKU
+    item5 = hasil_abc.filter(prioritas='A')
+    perc_item5 = item5.aggregate(Max('persentase_kumulatif_item'))
+    perc_dana5 = item5.aggregate(Max('persentase_kumulatif_dana'))
+  
+    
+    # 5% SKU
+    fig.add_hline(y=perc_dana5['persentase_kumulatif_dana__max'], line_width=1, line_dash="dash", line_color="red", annotation_text = "PIORITAS TINGGI")
+    fig.add_vline(x=perc_item5['persentase_kumulatif_item__max'], line_width=1, line_dash="dash", line_color="red")
+    
+    # # 80% Volume
+    fig.add_hline(y=perc_dana80['persentase_kumulatif_dana__max'], line_width=1, line_dash="dash", line_color="green",  annotation_text = "PRIORITAS RENDAH")
+    fig.add_vline(x=perc_item80['persentase_kumulatif_item__max'], line_width=1, line_dash="dash", line_color="green")
+    
+    # # 20% SKU
+    fig.add_hline(y=perc_dana20['persentase_kumulatif_dana__max'], line_width=1, line_dash="dash", line_color="blue", annotation_text = "PRIORITAS SEDANG")
+    fig.add_vline(x=perc_item20['persentase_kumulatif_item__max'], line_width=1, line_dash="dash", line_color="blue")
+    
+    fig.update_layout(
+    xaxis_title="Kumulatif Item", yaxis_title="Kumulatif Dana")
+    
+    fig.layout.xaxis.tickformat = ',.0%'
+    fig.layout.yaxis.tickformat = ',.0%'
+    
+    if request.user.is_wadir:
+        unit = Unit.objects.all()
+    else:
+        unit = None
+     
+    print(fig)
+    chart = fig.to_html
+    context = {'hasil_abc':hasil_abc, 'abc': abc, 'chart': chart, 'unit': unit}
+    return render(request, 'atk/metode/abc_analysis.html', context)
+
+
+# Peramalan
+@login_required(login_url='login')
+def forecastUnit(request, pk):
+    # id atk yang akan diprediksi
+    id_atk = int(pk)
+    atk = Barang_ATK.objects.filter(id=id_atk).first()
+    stok = StokATK.objects.filter(atk=id_atk).first()
+    
+    tahun_akhir = datetime.datetime.now().year
+    print(tahun_akhir, type(tahun_akhir))
+    tahun_awal = tahun_akhir if PenggunaanStok.objects.filter(atk=stok.id, unit=request.user.unit).values('tanggal__year').order_by('-tanggal').last()['tanggal__year'] is None else PenggunaanStok.objects.filter(atk=stok.id, unit=request.user.unit).values('tanggal__year').order_by('-tanggal').last()['tanggal__year']
+    print(tahun_awal, type(tahun_awal))
+    
+    list_tahun = [i for i in range(tahun_awal, tahun_akhir+1)]
+    
+    if request.GET.get('start') != None and request.GET.get('end') != None:
+        if request.GET.get('start') < request.GET.get('end'):
+            start = request.GET.get('start')
+            end = request.GET.get('end')
+        # Cari atk beserta jumlah kegunaannya 
+            stokKeluar = PenggunaanStok.objects.filter(Q(atk=stok.id) & Q(unit=request.user.unit) & 
+                                                Q(tanggal__year__gte=start) &
+                                                Q(tanggal__year__lte=end) 
+                                                ).values('tanggal__year').annotate(jumlah=Sum('jumlah')).order_by()
+        else:
+            messages.error(request, 'Range tahun awal dan tahun akhir tidak valid')
+            return redirect('forecast-unit', pk)
+    else:
+        # Cari atk beserta jumlah kegunaannya 
+        stokKeluar = PenggunaanStok.objects.filter(atk=stok.id, unit=request.user.unit).values('tanggal__year').annotate(jumlah=Sum('jumlah')).order_by()
+    
+    print(stokKeluar)
+    
+    temp_times = [stokKeluar['tanggal__year'] for stokKeluar in stokKeluar]
+    # temp_values = [stokKeluar['jumlah'] for stokKeluar in stokKeluar]
+    
+    times = []
+    values = []
+    
+    for i in range(temp_times[0], temp_times[-1]+1):
+        times.append(i)
+     
+    for i in times:
+        permintaan = 0
+        for s in stokKeluar:
+            if s['tanggal__year'] == i:
+                permintaan = s['jumlah']
+        values.append(permintaan)
+        
+    print(values)
+    print(times)
+    
+    times_size = len(times)
+    
+    
+    # validasi jumlah ketersediaan data
+    if times_size < 0:
+        context = {
+            'atk':atk,
+            'tahun_awal': tahun_awal,
+            'tahun_akhir': tahun_akhir,
+            'list_tahun': list_tahun,
             'msg':"Data pada ATK belum siap untuk diprediksi"
         }
     elif times_size <= 3:
-         forecaster_stok = ExponentialSmoothing(optimized=True) 
+       context = {
+           'atk':atk,
+           'tahun_awal': tahun_awal,
+            'tahun_akhir': tahun_akhir,
+           'list_tahun': list_tahun,
+            'msg':"Data pada ATK belum siap untuk diprediksi"
+        }
     else:
         train_size = int(math.ceil(0.8 * times_size))
         test_size = int(math.ceil(0.2 * times_size))
@@ -1391,6 +2112,9 @@ def forecastUnit(request, pk):
         chart = fig.to_html
         
         context = {
+            'tahun_awal': tahun_awal,
+            'tahun_akhir': tahun_akhir,
+            'list_tahun': list_tahun,
             'chart': chart,
             'mape': mape,
             'mape_persen': (1-mape),
@@ -1477,12 +2201,38 @@ def forecast(request):
 
 
 
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename="users.xls"'
 
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('Total Pengajuan') # this will make a sheet named Users Data
 
+    # Sheet header, first row
+    row_num = 0
 
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
 
+    columns = ['Alat Tulis', 'Jumlah Diajukan', 'Satuan', 'Harga Satuan', 'Total Biaya']
 
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], font_style) # at 0 row 0 column 
 
+    # Sheet body, remaining rows
+    font_style = xlwt.XFStyle()
+    
+    tahun = datetime.datetime.now().year
+    jadwal = Jadwal.objects.filter(tahun=tahun)[:1].first()
+
+    rows = total_pengajuan.objects.filter(jadwal=jadwal).values_list('atk', 'jumlah', 'satuan', 'atk__satuan', 'harga__harga', 'total_dana')
+    for row in rows:
+        row_num += 1
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, row[col_num], font_style)
+
+    wb.save(response)
+
+    return response
 
 
 def importcsv(request):

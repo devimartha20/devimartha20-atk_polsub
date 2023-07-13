@@ -46,9 +46,10 @@ INSTALLED_APPS = [
     
     
     'active_link',
+    'channels',
     
     'atk.apps.AtkConfig',
-    'puml_generator',
+    # 'puml_generator',
 ]
 
 JAZZMIN_UI_TWEAKS = {
@@ -128,6 +129,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'atk_polsub.wsgi.application'
+ASGI_APPLICATION = 'atk_polsub.asgi.application'
 
 
 # Database
@@ -192,3 +194,4 @@ AUTH_USER_MODEL = 'atk.User'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+

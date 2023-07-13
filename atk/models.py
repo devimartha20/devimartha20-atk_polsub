@@ -166,6 +166,28 @@ class Pengajuan(models.Model):
     ]
     ordering=['-updated', '-created']
     
+class penerimaan_pengajuan(models.Model):
+  pengajuan = models.ForeignKey(Pengajuan, on_delete=models.CASCADE, null=True, blank=True)
+  tanggal = models.DateField()
+  updated = models.DateTimeField(auto_now=True)
+  created= models.DateTimeField(auto_now_add=True)
+  
+  class Meta:
+    ordering=['-updated', '-created']
+
+class isi_penerimaan(models.Model):
+  penerimaan = models.ForeignKey(penerimaan_pengajuan, on_delete=models.CASCADE, null=True, blank=True)
+  atk = models.ForeignKey(Barang_ATK, on_delete=models.SET_NULL, null=True, blank=True)
+  jumlah=models.IntegerField()
+  keterangan=models.TextField(max_length=200)
+  updated = models.DateTimeField(auto_now=True)
+  created= models.DateTimeField(auto_now_add=True)
+    
+  class Meta:
+    constraints = [
+        models.UniqueConstraint(fields=['atk','penerimaan'], name='unique_atk_penerimaan'),
+    ]
+    ordering=['-updated', '-created']
 # class hasil_prediksi_unit(models.Model):
 #   class metode(models.TextChoices):
 #         EXPONENTIAL_SMOOTHING = "ES", _("EXPONENTIAL_SMOOTHING")
