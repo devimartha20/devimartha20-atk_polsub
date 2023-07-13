@@ -27,6 +27,7 @@
                   {% endif %}
                 </div>
               </div>
+              {% if jadwalSekarang is not None %}
               <div class="card-body p-3">
                 <div class="row">
                   <div class="col-md-6 mb-md-0 mb-4">
@@ -41,6 +42,13 @@
                   </div>
                 </div>
               </div>
+              {% else %}
+              <div class="col-md-12">
+                <div class="card card-body border card-plain border-radius-lg d-flex align-items-center flex-row">
+                    <h6 class="mb-0">Belum ada jadwal yang diatur untuk pengajuan periode tahun ini.</h6>
+                </div>
+            </div>
+              {% endif %}
             </div>
           </div>
         </div>
@@ -59,6 +67,7 @@
             </div>
           </div>
           <div class="card-body p-3 pb-0">
+            
             <ul class="list-group">
               {% for pengajuanTerbaru in pengajuanTerbaru %}
                 <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
@@ -71,6 +80,7 @@
                   </div>
                 </li>
               {% endfor %}
+              
             </ul>
           </div>
         </div>
@@ -87,6 +97,13 @@
             <h6 class="mb-0">Riwayat Pengajuan</h6>
           </div>
           <div class="card-body pt-4 p-3">
+            {% if jadwal is None %}
+                <div class="col-md-12">
+                  <div class="card card-body border card-plain border-radius-lg d-flex align-items-center flex-row">
+                      <h6 class="mb-0">Belum ada jadwal yang diatur untuk pengajuan periode tahun ini.</h6>
+                  </div>
+                </div>
+            {% endif %}
             <ul class="list-group">
               {% for jadwal in jadwal %}
                 <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">

@@ -18,6 +18,8 @@
                         <a class="btn bg-gradient-dark mb-0" href="{% url 'add-pengajuan' %}"><i class="fas fa-plus"></i>&nbsp;&nbsp;Buat Pengajuan</a>
                     {% elif pengajuan is not None and pengajuan.progress == 'D' %}
                         <a class="btn bg-gradient-dark mb-0" href="{% url 'add-pengajuan' %}"><i class="fas fa-plus"></i>&nbsp;&nbsp;Lanjutkan Perancangan Pengajuan</a>
+                      {% elif pengajuan is not None and pengajuan.progress == 'P' %}
+                        <a class="btn bg-gradient-dark mb-0" href="{% url 'add-pengajuan' %}"><i class="fas fa-plus"></i>&nbsp;&nbsp;Lakukan Revisi</a>
                     {% endif %}
                 </div>
                 </div>

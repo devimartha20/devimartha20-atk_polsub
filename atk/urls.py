@@ -64,6 +64,8 @@ urlpatterns = [
     path('addJadwal/', views.addJadwal, name='add-jadwal'),
     path('jadwal/edit/<str:pk>', views.editJadwal, name='edit-jadwal'),
     path('jadwal/delete/<str:pk>', views.deleteJadwal, name='delete-jadwal'),
+    path('cekabcunit/<str:unit>', views.check_abc_unit, name='cek-abc-unit'),
+    path('cekprediksiunit/<str:unit>/<str:atk>', views.cek_prediksi_unit, name='cek-prediksi-unit'),
     
     path('', views.loginUser, name='login'),
     
@@ -74,6 +76,7 @@ urlpatterns = [
     path('abc/<str:scope>', views.lihat_analisis_unit, name='abc'),
     
     path('abccek', views.atk_abc_analysis_cek, name='abc-cek'),
+    
     
     path('import', views.importcsv, name='import-csv'),
     
