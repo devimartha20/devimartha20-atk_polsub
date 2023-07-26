@@ -29,7 +29,9 @@
                 {% include 'atk/adminunit/stok/addstokmasukmodal.html' %}
                 {% include 'atk/adminunit/stok/addstokkeluarmodal.html' %}
                 {% include 'atk/adminunit/stok/kegunaanmodal.html' %}
+
                 {% endif %}
+
 
                 <div class="card-body px-5 pt-0 pb-2">
                   <form id="filters" action="{% url 'stok' %}" method="GET">
@@ -44,7 +46,9 @@
                       </div>
                       <div class="col-sm-1">
                         <label class="form-label"></label>
+
                         <input class="btn btn-sm btn-primary" type="submit" value="Filter">
+
                       </div>
                       <div class="col-sm-1">
                         <label class="form-label"></label>

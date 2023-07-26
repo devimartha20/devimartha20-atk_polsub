@@ -174,6 +174,7 @@ class Pengajuan(models.Model):
     
 class penerimaan_pengajuan(models.Model):
   pengajuan = models.ForeignKey(Pengajuan, on_delete=models.CASCADE, null=True, blank=True, unique=True)
+
   tanggal = models.DateField()
   updated = models.DateTimeField(auto_now=True)
   created= models.DateTimeField(auto_now_add=True)

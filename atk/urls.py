@@ -73,6 +73,7 @@ urlpatterns = [
     path('jadwal/delete/<str:pk>', views.deleteJadwal, name='delete-jadwal'),
     path('cekabcunit/<str:unit>', views.check_abc_unit, name='cek-abc-unit'),
     path('cekprediksiunit/<str:unit>/<str:atk>', views.cek_prediksi_unit, name='cek-prediksi-unit'),
+
     
     path('kelolaatk/', views.kelolaATK, name='kelola-atk'),
     path('addatk/', views.addATK, name='add-atk'),
@@ -83,7 +84,7 @@ urlpatterns = [
     path('pantaupengajuan/', views.pantauPengajuan, name='pantau-pengajuan'),
     path('lihattotalpengajuan/<str:pk>', views.lihatTotalPengajuan, name='lihat-total-pengajuan'),
     path('lihattotalpengajuandisesuikan/<str:pk>', views.lihatTotalPengajuanDisesuaikan, name='lihat-total-pengajuan-disesuaikan'),
-    
+
     path('', views.loginUser, name='login'),
     
     
