@@ -1,0 +1,84 @@
+{% extends 'main.html' %}
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header pb-0">
+                  <div class="row">
+                    <div class="col-9">
+                      <!-- Button trigger modal -->
+                      <a href="{% url 'add-atk' %}" class="btn btn-sm btn-primary">
+                        Tambah ATK
+                      </a>
+                      {% comment %} <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#addStokKeluarModal">
+                        Daftar Satuan ATK
+                      </button>
+                      <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#addStokMasukModal">
+                        Daftar Kategori ATK
+                      </button> {% endcomment %}
+                    </div>
+                  </div>
+                    {% comment %} {% include 'atk/adminunit/pengajuan/addisimodal.html' %} {% endcomment %}
+                </div>
+
+                <div class="card-body px-5 pt-0 pb-2">
+                  <div class="table-responsive p-0">
+                    <table class="table align-items-center mb-0" id ="tabelstok">
+                      <thead class="text-center">
+                        <tr>
+                          <th>No</th>
+                          <th>Alat Tulis</th>
+                          <th>Spesifikasi</th>
+                          <th>Satuan</th>
+                          <th>Isi per Satuan</th>
+                          <th>Harga</th>
+                          <th>Referensi</th>
+                          <th>Gambar</th>
+                          <th>Aksi</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for a in atk %}
+                            <tr class="text-center">
+                              <td>
+                                  <h6 class="mb-0 text-sm">{{  forloop.counter }}</h6>
+                              </td>
+                              <td>
+                                    <h6 class="mb-0 text-sm">{{ a.atk }}</h6>
+                              </td>
+                              <td>
+                                <h6 class="mb-0 text-sm">{{ a.spesifikasi|default_if_none:'-' }}</h6>
+                            </td>
+                              <td>
+                                <h6 class="mb-0 text-sm">{{ a.satuan }}</h6>
+                              </td>
+                              <td>
+                                <h6 class="mb-0 text-sm">{{ a.jumlah_per_satuan }}</h6>
+                              </td>
+                              <td>
+                                <h6 class="mb-0 text-sm">{{ a.harga }}</h6>
+                              </td>
+                              <td>
+                                <a href="{{ a.link|default_if_none:'/'  }}" target="_blank" class="mb-0 text-sm">{{ a.link|default_if_none:'-' }}</a>
+                              </td>
+                              <td>
+                                <h6 class="mb-0 text-sm">{{ a.img }}</h6>
+                              </td>
+                              <td>
+                                <a class="btn btn-sm btn-warning" href="{% url 'edit-atk' a.id %}">Edit</a>
+                                <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteATK{{ a.id }}">Hapus</button>
+                              </td>
+                            </tr>
+                            {% include 'atk/bagumum/atk/hapusatkmodal.html' %}
+                            {% comment %} {% include 'atk/adminunit/pengajuan/editdeleteisimodal.html' %} {% endcomment %}
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

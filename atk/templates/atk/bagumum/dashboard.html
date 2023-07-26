@@ -1,0 +1,235 @@
+{% extends 'main.html' %}
+
+{% block content %}
+{% load static %}
+<div class="container-fluid py-4">
+
+    {% comment %} KARTU INFORMASI SINGKAT {% endcomment %}
+    <div class="row">
+       {% comment %} KARTU {% endcomment %}
+
+       <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+        <div class="card">
+          <div class="card-body p-3">
+            <div class="row">
+              <div class="col-8">
+                <div class="numbers">
+                  <p class="text-sm mb-0 text-uppercase font-weight-bold">ATK Terpakai Terbanyak</p>
+                  <h5 class="font-weight-bolder">
+                    {{ atk_keluar_terbanyak.atk__atk }} <br>
+                    Total Keluar: {{ atk_keluar_terbanyak.sum }} {{ atk_keluar_terbanyak.atk__satuan__satuan }}
+                  </h5>
+                  <p class="mb-0">
+                    {% comment %} <span class="text-success text-sm font-weight-bolder">+3%</span> {% endcomment %}
+                      {% comment %} {{ atk_keluar_terbanyak.tanggal }} {% endcomment %}
+                      Terakhir Update: {{ atk_keluar_terbanyak.updated }}
+                  </p>
+                </div>
+              </div>
+              <div class="col-4 text-end">
+                <div class="icon icon-shape bg-gradient-danger shadow-danger text-center rounded-circle">
+                  <i class="ni ni-world text-lg opacity-10" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+        <div class="card">
+          <div class="card-body p-3">
+            {% comment %} KONTEN KARTU {% endcomment %}
+            <div class="row">
+              <div class="col-8">
+                <div class="numbers">
+                  <p class="text-sm mb-0 text-uppercase font-weight-bold">ATK Tersisa Tersedikit</p>
+                  <h5 class="font-weight-bolder">
+                    {{ atk_sisa_tersedikit.atk__atk }} <br>
+                    Total Tersisa: {{ atk_sisa_tersedikit.sum }} {{ atk_sisa_tersedikit.atk__satuan__satuan }}
+                  </h5>
+                  <p class="mb-0">
+                    {% comment %} <span class="text-success text-sm font-weight-bolder">{{ atk_keluar_terbaru.jumlah }}</span> {% endcomment %}
+                    Terakhir Update: {{ atk_sisa_tersedikit.updated }}
+                  </p>
+                </div>
+              </div>
+              <div class="col-4 text-end">
+                <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
+                  <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+            {% comment %} END KONTEN KARTU {% endcomment %}
+          </div>
+        </div>
+      </div>
+      {% comment %} END KARTU {% endcomment %}
+      
+      <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+        <div class="card">
+          <div class="card-body p-3">
+            <div class="row">
+              <div class="col-8">
+                <div class="numbers">
+                  <p class="text-sm mb-0 text-uppercase font-weight-bold">Unit Pencatatan Tersering</p>
+                  <h5 class="font-weight-bolder">
+                    {{ unit_pencatatan_tersering.unit__unit }} <br>
+                  </h5>
+                  <p class="mb-0">
+                    {% comment %} <span class="text-danger text-sm font-weight-bolder">-2%</span>{% endcomment %}
+                   Jumlah Pencatatan: {{ unit_pencatatan_tersering.id_count }} pencatatan keluar
+                  </p>
+                </div>
+              </div>
+              <div class="col-4 text-end">
+                <div class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
+                  <i class="ni ni-paper-diploma text-lg opacity-10" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-sm-6">
+        <div class="card">
+          <div class="card-body p-3">
+            <div class="row">
+              <div class="col-8">
+                <div class="numbers">
+                  <p class="text-sm mb-0 text-uppercase font-weight-bold">Unit Pencatatan Terjarang</p>
+                  <h5 class="font-weight-bolder">
+                    {{ unit_pencatatan_terjarang.unit__unit }} <br>
+                    </h5>
+                    <p class="mb-0">
+                    {% comment %} <span class="text-danger text-sm font-weight-bolder">-2%</span>{% endcomment %}
+                    Jumlah Pencatatan: {{ unit_pencatatan_terjarang.id_count }} pencatatan keluar
+                  </p>
+                </div>
+              </div>
+              <div class="col-4 text-end">
+                <div class="icon icon-shape bg-gradient-warning shadow-warning text-center rounded-circle">
+                  <i class="ni ni-cart text-lg opacity-10" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> 
+    </div>
+    <div class="row mt-4">
+      {% comment %} <div class="col-lg-5 mb-lg-0 mb-4">
+        <div class="card z-index-2 h-100">
+          <div class="card-header pb-0 pt-3 bg-transparent">
+            <h6 class="text-capitalize">Grafik Sisa Stok</h6>
+
+          </div>
+          <div class="card-body p-3">
+            <div class="chart">
+              {{ pie_chart|safe }}
+            </div>
+          </div>
+        </div>
+      </div> {% endcomment %}
+      <div class="col-lg-12">
+        <div class="card z-index-2 h-100">
+          <div class="card-header pb-0 pt-3 bg-transparent">
+            <h6 class="text-capitalize">Grafik Aktivitas Kegunaan ATK</h6>
+          </div>
+          <div class="card-body p-3">
+            <div class="chart">
+              {{ bar_chart|safe }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-lg-12 mb-lg-0 mb-4">
+        <div class="card ">
+          <div class="card-header pb-0 p-3">
+            <div class="d-flex justify-content-between">
+              <h6 class="mb-2">Aktivitas Pengeluaran Stok</h6>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table align-items-center ">
+              <tbody>
+                {% for p in aktivitas_pengeluaran_stok %}
+                <tr>
+                  <td class="w-30">
+                    <div class="d-flex px-2 py-1 align-items-center">
+                      <div>
+                        {% comment %} <img src="{% static 'images/icons/flags/US.png' %}" alt="Country flag"> {% endcomment %}
+                      </div>
+                      <div class="ms-4">
+                        <p class="text-xs font-weight-bold mb-0">ATK:</p>
+                        <h6 class="text-sm mb-0">{{ p.atk }}</h6>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="text-center">
+                      <p class="text-xs font-weight-bold mb-0">Jumlah:</p>
+                      <h6 class="text-sm mb-0">{{ p.jumlah }} {{ p.atk.atk.satuan }}</h6>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="text-center">
+                      <p class="text-xs font-weight-bold mb-0">Tanggal:</p>
+                      <h6 class="text-sm mb-0">{{p.tanggal}}</h6>
+                    </div>
+                  </td>
+                  <td class="align-middle text-sm">
+                    <div class="col text-center">
+                      <p class="text-xs font-weight-bold mb-0">Kegunaan:</p>
+                      <h6 class="text-sm mb-0">{{ p.guna }}</h6>
+                    </div>
+                  </td>
+                  <td class="align-middle text-sm">
+                    <div class="col text-center">
+                      <p class="text-xs font-weight-bold mb-0">unit:</p>
+                      <h6 class="text-sm mb-0">{{ p.unit }}</h6>
+                    </div>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="footer pt-3  ">
+      <div class="container-fluid">
+        <div class="row align-items-center justify-content-lg-between">
+          <div class="col-lg-6 mb-lg-0 mb-4">
+            <div class="copyright text-center text-sm text-muted text-lg-start">
+              © <script>
+                document.write(new Date().getFullYear())
+              </script>,
+              made with <i class="fa fa-heart"></i> by
+              <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Creative Tim</a>
+              for a better web.
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+              <li class="nav-item">
+                <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank">Creative Tim</a>
+              </li>
+              <li class="nav-item">
+                <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted" target="_blank">About Us</a>
+              </li>
+              <li class="nav-item">
+                <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>
+              </li>
+              <li class="nav-item">
+                <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted" target="_blank">License</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+</div>
+{% endblock content %}

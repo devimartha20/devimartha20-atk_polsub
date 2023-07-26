@@ -1,0 +1,80 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header pb-0">
+                 Total Pengajuan
+                </div>
+                <div class="card-body px-5 pt-0 pb-2">
+                    <div class="table-responsive p-0">
+                        <table class="table align-items-center mb-0" id ="tabelstok">
+                          <thead class="text-center">
+                            <tr>
+                              <th>No</th>
+                              <th>Alat Tulis</th>
+                              <th>Jumlah Diajukan</th>
+                               <th>Rekomendasi</th>
+                              <th>Satuan</th> 
+                              <th>Harga</th>
+                              <th>Total Biaya</th>
+                            <th>Prioritas</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for total in totalPengajuan %}
+                                <tr class="text-center">
+                                  <td>
+                                      <h6 class="mb-0 text-sm">{{  forloop.counter }}</h6>
+                                  </td>
+                                  <td>
+                                        <h6 class="mb-0 text-sm">{{ total.atk }}</h6>
+                                  </td>
+                                  <td>
+                                    <h6 class="mb-0 text-sm">{{ total.jumlah }}</h6>
+                                  </td>
+                                  <td>
+                                    <h6 class="mb-0 text-sm">{{ total.rekomendasi|floatformat }}</h6>
+                                  </td>
+                                  <td>
+                                    <h6 class="mb-0 text-sm">{{ total.atk.satuan }}</h6>
+                                  </td>
+                                  <td>
+                                    <h6 class="mb-0 text-sm">{{ total.harga }} </h6>
+                                  </td>
+                                  <td>
+                                    <h6 class="mb-0 text-sm">{{ total.total_dana }}</h6>
+                                  </td>
+                                  <td>
+                                    <h6 class="mb-0 text-sm">
+                                      {% if total.prioritas == 'A' %}
+                                      Tinggi
+                                      {% elif total.prioritas == 'B' %}
+                                      Sedang
+                                      {% elif total.prioritas == 'C' %}
+                                      Rendah
+                                      {% endif %}
+                                    </h6>
+                                  </td>
+                                </tr>
+                                {% comment %} {% include 'atk/adminunit/pengajuan/editdeleteisimodal.html' %} {% endcomment %}
+                            {% endfor %}
+                          </tbody>
+                          <tfoot>
+                            <tr class="text-center align-content-center align-items-center">
+                              <td colspan="6" class="text-center align-content-center align-items-center" ><strong>Total Biaya Keseluruhan:</strong></td>
+                              <td id="totalPrice" class="text-center align-content-center align-items-center"><strong>{{ anggaran }}</strong></td>
+                            </tr>
+                          </tfoot>
+                        </table>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

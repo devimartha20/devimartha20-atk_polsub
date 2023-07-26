@@ -113,13 +113,13 @@
             {% for riwayat in riwayat %}
             <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
               <div class="d-flex flex-column">
-                <h6 class="mb-3 text-sm">Periode: {{ pengajuan.jadwal.tahun }} </h6>
-                <span class="mb-2 text-xs">Nomor Surat: <span class="text-dark font-weight-bold ms-sm-2">{{ pengajuan.no_surat }}</span></span>
-                <span class="mb-2 text-xs">Tanggal Dibuat: <span class="text-dark ms-sm-2 font-weight-bold">{{ pengajuan.created }}</span></span>
-                <span class="text-xs">Tanggal Diajukan: <span class="text-dark ms-sm-2 font-weight-bold">{{ pengajuan.tanggal_konfirmasi }} </span></span>
+                <h6 class="mb-3 text-sm">Periode: {{ riwayat.jadwal.tahun }} </h6>
+                <span class="mb-2 text-xs">Nomor Surat: <span class="text-dark font-weight-bold ms-sm-2">{{ riwayat.no_surat }}</span></span>
+                <span class="mb-2 text-xs">Tanggal Dibuat: <span class="text-dark ms-sm-2 font-weight-bold">{{ riwayat.created }}</span></span>
+                <span class="text-xs">Tanggal Diajukan: <span class="text-dark ms-sm-2 font-weight-bold">{{ riwayat.tanggal_konfirmasi }} </span></span>
               </div>
               <div class="ms-auto text-end">
-                <a class="btn btn-link text-dark px-3 mb-0" href="{% url 'detail-pengajuan' pengajuan.id %}"><i class="fas fa-eye"></i> Detail</a>
+                <a class="btn btn-link text-dark px-3 mb-0" href="{% url 'detail-pengajuan' riwayat.id %}"><i class="fas fa-eye"></i> Detail</a>
               </div>
             </li>
             {% endfor %}

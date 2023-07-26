@@ -1,0 +1,126 @@
+{% extends 'main.html' %}
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+              <div class="card-header pb-0">
+                <div class="d-flex align-items-center">
+                  <p class="mb-0">Detail Pengajuan</p>
+                </div>
+              </div>
+              <div class="card-body">
+                <p class="text-uppercase text-sm">Informasi Pengajuan {{ pengajuan.unit.unit }} </p>
+                <div class="row">     
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="form-control-label">Nomor Surat</label>
+                      <div class="form-control">{{ pengajuan.no_surat }} </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-control-label">Tanggal Diajukan</label>
+                        <div class="form-control">{{ pengajuan.tanggal_konfirmasi }} </div>
+                      </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-control-label">Tanggal Diterima</label>
+                        <div class="form-control">{{ penerimaan.tanggal }} </div>
+                      </div>
+                  </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-control-label">Unit</label>
+                        <div class="form-control">{{ pengajuan.unit.unit }} </div>
+                      </div>
+                </div>
+                <hr class="horizontal dark">
+                <p class="text-uppercase text-sm">Informasi Lainnya</p>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="form-control-label">Periode</div>
+                      <div class="form-control">{{ pengajuan.jadwal.tahun }} </div>
+                    </div>
+                  </div>
+                  {% comment %} <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="example-text-input" class="form-control-label">Hasil</label>
+                      <div class="form-control">{{ pengajuan.hasil }} </div>
+                    </div>
+                  </div> {% endcomment %}
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="example-text-input" class="form-control-label">Dibuat</label>
+                      <div class="form-control">{{ pengajuan.created }} </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="example-text-input" class="form-control-label">Keterangan</label>
+                      <div class="form-control">{{ pengajuan.keterangan }} </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      <div class="col-12">
+        <div class="card mb-4">
+          <div class="card-header pb-0">
+            <h6>Detail Penerimaan</h6>
+          </div>
+          <div class="card-body px-5 pt-0 pb-2">
+            <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0" id="tabelpengajuan">
+                    <thead class="text-center">
+                      <tr>
+                        <th>No</th>
+                        <th>Alat Tulis</th>
+                        <th>Jumlah Diajukan</th>
+                        <th>Jumlah Diterima</th>
+                        <th>Satuan</th>
+                        {% comment %} <th>Aksi</th> {% endcomment %}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for i in isi_penerimaan %}
+                          <tr class="text-center">
+                            <td>
+                                <h6 class="mb-0 text-sm">{{  forloop.counter }}</h6>
+                            </td>
+                            <td>
+                              <h6 class="mb-0 text-sm">{{ i.atk }}</h6>
+                            </td>
+                            <td>
+                              <h6 class="mb-0 text-sm">{{  jumlah_diajukan|get_item:i.atk.id }}</h6>
+                            </td>
+                            <td>
+                              <h6 class="mb-0 text-sm">{{ i.jumlah }}</h6>
+                            </td>
+                            <td>
+                              <h6 class="mb-0 text-sm">{{  i.atk.satuan }}</h6>
+                            </td>
+                            {% comment %} <td>
+                             <button type="button" class="btn btn-sm btn-danger" onclick="remove()">Hapus</button>
+                            </td> {% endcomment %}
+                          </tr>
+                      {% endfor %}
+                      {% comment %} <div id="newInput">
+                
+                      </div> {% endcomment %}
+                 </tbody>
+                </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+{% endblock content %}

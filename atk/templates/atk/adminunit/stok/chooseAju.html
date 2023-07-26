@@ -1,0 +1,52 @@
+{% extends 'main.html' %}
+
+{% block content %}
+{% load static %}
+<div class="container-fluid py-4">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+            <div class="card-header">
+                Daftar Pengajuan
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                  {% if pengajuan|length == 0 %}
+                  <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
+                    Tidak ada data pengajuan untuk pencatatan penerimaan
+                  </li>
+                  {% else %}   
+                  {% for p in pengajuan %}
+                    <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
+                      <div class="d-flex flex-column">
+                        <h6 class="mb-3 text-sm">Periode: {{ p.jadwal.tahun }} </h6>
+                        <span class="mb-2 text-xs">Nomor Surat: <span class="text-dark font-weight-bold ms-sm-2">{{ p.no_surat }}</span></span>
+                        <span class="mb-2 text-xs">Tanggal Dibuat: <span class="text-dark ms-sm-2 font-weight-bold">{{ p.created }}</span></span>
+                        <span class="text-xs">Tanggal Diajukan: <span class="text-dark ms-sm-2 font-weight-bold">{{ p.tanggal_konfirmasi }} </span></span>
+                      </div>
+                      {% if has_penerimaan|length != 0 %}
+
+                          {% if has_penerimaan|get_item:p.id %}
+                          <div class="ms-auto text-end">
+                            <a class="btn btn-link text-dark px-3 mb-0" href="{% url 'detail-penerimaan' p.id %}"><i class="fas fa-eye"></i> Lihat Penerimaan</a>
+                          </div>
+                          {% else %}
+                          <div class="ms-auto text-end">
+                            <a class="btn btn-link text-dark px-3 mb-0" href="{% url 'add-penerimaan' p.id %}"><i class="fas fa-pencil"></i> Catat Penerimaan</a>
+                          </div>
+                          {% endif %}
+                      {% endif %} 
+                    </li>
+                    
+                    {% endfor %} 
+                  {% endif %}
+                    
+            </div>
+            <div class="card-footer">
+              <a class="btn btn-sm btn-secondary" href="{% url 'stok' %}">Kembali</a>
+            </div>
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock content %}

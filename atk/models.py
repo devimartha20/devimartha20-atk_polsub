@@ -31,6 +31,7 @@ class User(AbstractUser):
     is_admin= models.BooleanField('is admin', default=False)
     is_wadir= models.BooleanField('is wadir', default=False)
     is_pimpinanunit= models.BooleanField('is pimpinan_unit', default=False)
+    is_bagumum = models.BooleanField('is bagumum', default=False)
     is_adminunit= models.BooleanField('is adminunit', default=False)
     unit=models.ForeignKey(Unit, on_delete=models.SET_NULL, null=True, blank=True)
     
@@ -106,10 +107,14 @@ class SatuanATK(models.Model):
 
 class Barang_ATK(models.Model):
   atk=models.CharField(max_length=200, unique=True)
-  keterangan = models.TextField(null=True, blank=True)
+  spesifikasi = models.TextField(null=True, blank=True)
   kategori=models.ForeignKey(KategoriATK, on_delete=models.SET_NULL, null=True)
   satuan=models.ForeignKey(SatuanATK, on_delete=models.SET_NULL, null=True)
   jumlah_per_satuan=models.IntegerField(default=1)
+  link=models.CharField(max_length=200, null=True, blank=True)
+  img=models.ImageField(upload_to='images', null=True, blank=True)  
+  keterangan = models.TextField(null=True, blank=True)
+  harga = models.IntegerField(default=0)
   status=models.BooleanField(default=True)
   updated = models.DateTimeField(auto_now=True)
   created= models.DateTimeField(auto_now_add=True)
@@ -119,23 +124,24 @@ class Barang_ATK(models.Model):
 
   def __str__(self):
     return self.atk
-class Harga(models.Model):
-  harga=models.IntegerField()
-  atk=models.ForeignKey(Barang_ATK, on_delete=models.SET_NULL, null=True, blank=True)
-  periode_mulai=models.DateField()
-  periode_selesai=models.DateField(null=True, blank=True)
-  updated = models.DateTimeField(auto_now=True)
-  created= models.DateTimeField(auto_now_add=True)
+  
+# class Harga(models.Model):
+#   harga=models.IntegerField()
+#   atk=models.ForeignKey(Barang_ATK, on_delete=models.SET_NULL, null=True, blank=True)
+#   periode_mulai=models.DateField()
+#   periode_selesai=models.DateField(null=True, blank=True)
+#   updated = models.DateTimeField(auto_now=True)
+#   created= models.DateTimeField(auto_now_add=True)
 
-  class Meta:
-    constraints = [
-        models.UniqueConstraint(fields=['atk','periode_mulai', 'periode_selesai'], name='unique_periode_harga'),
-    ]
-    ordering=['-updated', '-created']
+  # class Meta:
+  #   constraints = [
+  #       models.UniqueConstraint(fields=['atk','periode_mulai', 'periode_selesai'], name='unique_periode_harga'),
+  #   ]
+  #   ordering=['-updated', '-created']
     
-  def __str__(self):
-      obj = str(str(self.atk.atk)+" : Rp"+str(self.harga)+" | Periode : "+str(self.periode_mulai)+"-"+str(self.periode_selesai))
-      return obj
+  # def __str__(self):
+  #     obj = str(str(self.atk.atk)+" : Rp"+str(self.harga)+" | Periode : "+str(self.periode_mulai)+"-"+str(self.periode_selesai))
+  #     return obj
     
 class Pengajuan(models.Model):
   class ProgressPengajuan(models.TextChoices):
@@ -167,7 +173,7 @@ class Pengajuan(models.Model):
     ordering=['-updated', '-created']
     
 class penerimaan_pengajuan(models.Model):
-  pengajuan = models.ForeignKey(Pengajuan, on_delete=models.CASCADE, null=True, blank=True)
+  pengajuan = models.ForeignKey(Pengajuan, on_delete=models.CASCADE, null=True, blank=True, unique=True)
   tanggal = models.DateField()
   updated = models.DateTimeField(auto_now=True)
   created= models.DateTimeField(auto_now_add=True)
@@ -237,9 +243,9 @@ class total_pengajuan(models.Model):
   jadwal = models.ForeignKey(Jadwal, on_delete=models.CASCADE)
   atk=models.ForeignKey(Barang_ATK, on_delete=models.SET_NULL, null=True)
   jumlah=models.IntegerField()
-  rekomendasi=models.IntegerField(null=True, blank=True)
-  # rekomendasi=models.ForeignKey(hasil_prediksi_general, on_delete=models.SET_NULL, null=True)
-  harga=models.ForeignKey(Harga, on_delete=models.SET_NULL, null=True)
+  rekomendasi=models.FloatField(null=True, blank=True)
+  prioritas=models.CharField(max_length=200, null=True, blank=True)
+  harga=models.IntegerField(null=True, blank=True)
   total_dana=models.IntegerField()
   updated = models.DateTimeField(auto_now=True)
   created= models.DateTimeField(auto_now_add=True)
@@ -250,7 +256,16 @@ class total_pengajuan(models.Model):
     ]
     ordering=['-updated', '-created']
     
+class penyesuaianPengajuan(models.Model):
+  total_pengajuan = models.ForeignKey(total_pengajuan, on_delete=models.CASCADE, unique=True)
+  jumlah=models.IntegerField()
+  harga=models.IntegerField(null=True, blank=True)
+  total_dana=models.IntegerField(null=True, blank=True)
+  updated = models.DateTimeField(auto_now=True)
+  created= models.DateTimeField(auto_now_add=True)
 
+  class Meta:
+    ordering=['-updated', '-created']
 
 class Isi_pengajuan(models.Model):
   pengajuan=models.ForeignKey(Pengajuan, on_delete=models.CASCADE)
@@ -425,7 +440,7 @@ class pengajuanABCCek(models.Model):
       SEDANG = "B", _("Sedang")
       RENDAH = "C", _("Rendah")
       
-  atk=models.CharField(max_length=50)
+  atk=models.CharField(max_length=500)
   jumlah=models.IntegerField()
   harga=models.IntegerField()
   total_harga=models.IntegerField()

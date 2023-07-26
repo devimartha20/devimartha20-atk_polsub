@@ -12,7 +12,7 @@
               {% csrf_token %}
               <div class="mb-3">
                 <label for="atk">Pilih Barang</label>
-                <select name="atk" class="form-select" placeholder="Pilih ATK" id="id_atk">
+                <select name="atk" class="form-select" placeholder="Pilih ATK" id="id_atk" style="pointer-events: none;">
                     {% for atk in atk %}
                         <option value="{{ atk.id }}" {% if atk.id == isi.atk.id %} selected {% endif %} >{{ atk }} </option>
                     {% endfor %}

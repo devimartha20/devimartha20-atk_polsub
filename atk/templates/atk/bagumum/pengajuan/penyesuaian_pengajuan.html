@@ -1,0 +1,133 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+              <div class="card-header pb-0">
+                <a class="btn bg-secondary btn-sm text-light" href="{% url 'total-pengajuan' jadwal.id %}">Kembali</a>
+                <a class="btn bg-info text-light" href="{% url 'unduh-rab-pdf' jadwal.id %}">Unduh RAB (PDF)</a>
+                <a class="btn bg-success text-light" href="{% url 'unduh-data-dukung-pdf' jadwal.id %}">Unduh Data Dukung (PDF)</a>
+              </div>
+                <div class="card-body px-5 pt-0 pb-2">
+                    <div class="table-responsive p-0">
+                      <table id="tabel-penyesuaian" class="table align-items-center mb-0">
+                        <thead class="text-center">
+                          <tr>
+                            <th>No</th>
+                            <th>Alat Tulis</th>
+                            <th>Jumlah Diajukan</th>
+                             <th>Rekomendasi</th>
+                            <th>Satuan</th> 
+                            <th>Harga</th>
+                            <th>Total Biaya</th>
+                          <th>Prioritas</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for total in totalPengajuan %}
+                          <form method="POST" action="">
+                            {% csrf_token %}
+                            <tr class="text-center">
+                              <td>
+                                <h6 class="mb-0 text-sm">{{ forloop.counter }}</h6>
+                              </td>
+                              <td>
+                                <h6 class="mb-0 text-sm">{{ total.total_pengajuan.atk }}</h6>
+                              </td>
+                              <td>
+                                <input type="number" name="jml__{{ total.id }}" class="quantity form-control" value="{{ total.jumlah }}" min='0'>
+                              </td>
+                              <td>
+                                <h6 class="mb-0 text-sm">{{ total.total_pengajuan.rekomendasi|floatformat }}</h6>
+                              </td>
+                              <td>
+                                <h6 class="mb-0 text-sm">{{ total.total_pengajuan.atk.satuan }}</h6>
+                              </td>
+                              <td class="price">{{ total.harga }}</td>
+                              
+                              <td class="total">{{ total.total_dana }}</td>
+                              <td>
+                                <h6 class="mb-0 text-sm">
+                                  {% if total.total_pengajuan.prioritas == 'A' %}
+                                  Tinggi
+                                  {% elif total.total_pengajuan.prioritas == 'B' %}
+                                  Sedang
+                                  {% elif total.total_pengajuan.prioritas == 'C' %}
+                                  Rendah
+                                  {% endif %}
+                                </h6>
+                              </td>
+                            </tr>
+                            {% endfor %}
+                        
+                          <!-- Add more rows as needed -->
+                        </tbody>
+                        <tfoot>
+                          <tr class="text-center align-content-center align-items-center">
+                            <td colspan="6">Total Biaya Keseluruhan:</td>
+                            <td id="totalPrice">{{ anggaran }}</td>
+                            <td>
+                              <button type="submit" value="submit" class="btn btn-sm btn-primary">Simpan</button>
+                            </td>
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </form>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+  // Get a reference to the product table
+  const productTable = document.getElementById('tabel-penyesuaian');
+
+  // Add an event listener to the product table using event delegation
+  productTable.addEventListener('input', function(event) {
+    // Check if the event target is an input field with the 'quantity' class
+    if (event.target.classList.contains('quantity')) {
+      // Get the parent row of the input field
+      const row = event.target.closest('tr');
+
+      // Get the price and total elements within the row
+      const priceElement = row.querySelector('.price');
+      const totalElement = row.querySelector('.total');
+
+      // Get the quantity value
+      const quantityValue = parseInt(event.target.value);
+
+      // Calculate the new total price for the row
+      const price = parseInt(priceElement.textContent);
+      const newTotal = price * quantityValue;
+
+      // Update the total element with the new total
+      totalElement.textContent = newTotal;
+
+      // Update the total price in the footer
+      updateTotalPrice();
+    }
+  });
+
+  // Function to update the total price in the footer
+  function updateTotalPrice() {
+    const totalElements = document.querySelectorAll('.total');
+    let totalPrice = 0;
+
+    // Iterate through all total elements and sum up their values
+    totalElements.forEach(function(element) {
+      totalPrice += parseInt(element.textContent);
+    });
+
+    // Update the total price in the footer
+    document.getElementById('totalPrice').textContent = totalPrice;
+  }
+</script>
+
+
+
+
+{% endblock content %}
