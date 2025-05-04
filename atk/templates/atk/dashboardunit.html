@@ -4,8 +4,99 @@
 {% load static %}
 <div class="container-fluid py-4">
 
-    {% comment %} KARTU INFORMASI SINGKAT {% endcomment %}
-    <div class="row">
+<div class="row">
+
+  <div class="col">
+    {% comment %} KARTU NOTIFIKASI {% endcomment %}
+    {% if jadwal is not None and jadwal.status == 'B' %}
+      <div class="card">
+        <div class="card-body p-3">
+          <div class="row gx-4">
+            <div class="col-auto">
+              <i class="bi bi-exclamation-triangle"></i>
+            </div>
+            <div class="col-auto my-auto">
+              <div class="h-100">
+                <h5 class="mb-1" style="color:red">
+                  JADWAL PENGAJUAN DIBUKA!
+                </h5>
+                <p>
+                  Dibuka: {{ jadwal.pengajuan_mulai }} - Ditutup: {{ jadwal.pengajuan_selesai }}
+                </p>
+                {% if request.user.is_adminunit %}
+                  {% if pengajuan is None %}
+                    <p class="mb-0 font-weight-bold text-sm">
+                      Segera buat rancangan pengajuan dan melakukan pengajuan sebelum akses ditutup
+                    </p>
+                  {% elif pengajuan is not None and pengajuan.progress == 'D' or pengajuan.progress == 'P' %}
+                    <p class="mb-0 font-weight-bold text-sm">
+                      Segera selesaikan rancangan pengajuan dan melakukan pengajuan sebelum akses ditutup
+                    </p>
+                  {% elif pengajuan is not None and pengajuan.progress == 'A' or pengajuan.progress == 'K' %}
+                    <p class="mb-0 font-weight-bold text-sm">
+                      Anda telah melakukan pengajuan
+                    </p>
+                  {% endif %}
+                {% elif request.user.is_pimpinanunit and pengajuan is not None and pengajuan.progress == 'K' %}
+                  <p class="mb-0 font-weight-bold text-sm">
+                    Segera konfirmasi rancangan pengajuan dan melakukan pengajuan sebelum akses ditutup
+                  </p>
+                {% elif pengajuan is not None and pengajuan.progress == 'A' %}
+                  <p class="mb-0 font-weight-bold text-sm">
+                    Anda telah melakukan pengajuan
+                  </p>
+                {% endif %}
+                
+              </div>
+            </div>
+            {% if request.user.is_adminunit %}
+              <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
+                <div class="nav-wrapper position-relative end-0">
+                  <ul class="nav nav-pills nav-fill p-1" role="tablist">
+                    {% if pengajuan is None %}
+                    <li class="nav-item">
+                      <a class="nav-link mb-0 px-0 py-1 active d-flex align-items-center justify-content-center " href="{% url 'add-pengajuan' %}">
+                        <i class="ni ni-app"></i>
+                        <span class="ms-2">Buat Pengajuan</span>
+                      </a>
+                    </li>
+                    {% elif pengajuan is not None and pengajuan.progress == 'D' %}
+                    <li class="nav-item">
+                      <a class="nav-link mb-0 px-0 py-1 active d-flex align-items-center justify-content-center "  href="{% url 'add-pengajuan' %}">
+                        <i class="ni ni-app"></i>
+                        <span class="ms-2">Lanjutkan Rancangan Pengajuan</span>
+                      </a>
+                    </li>
+                    {% endif %}
+                  </ul>
+                </div>
+              </div>
+            {% elif request.user.is_pimpinanunit and pengajuan is not None and pengajuan.progress == 'K' %}
+              <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
+                <div class="nav-wrapper position-relative end-0">
+                  <ul class="nav nav-pills nav-fill p-1" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link mb-0 px-0 py-1 active d-flex align-items-center justify-content-center " href="{% url 'konfir-pengajuan' pengajuan.id %}">
+                        <i class="ni ni-app"></i>
+                        <span class="ms-2">Konfirmasi Pengajuan</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            {% endif %}
+            
+          </div>
+        </div>
+      </div>
+    {% endif %}
+    {% comment %} END KARTU NOTIFIKASI {% endcomment %}
+  </div>
+</div>
+<hr>
+    
+  <div class="row">  
+      {% comment %} KARTU INFORMASI SINGKAT {% endcomment %}
        {% comment %} KARTU {% endcomment %}
       <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
         <div class="card">
@@ -17,7 +108,7 @@
                   <p class="text-sm mb-0 text-uppercase font-weight-bold">ATK Keluar Terbaru</p>
                   <h5 class="font-weight-bolder">
                     {{ atk_keluar_terbaru.atk }} <br>
-                    Jml Keluar: {{ atk_keluar_terbaru.jumlah }} {{ atk_keluar_terbaru.atk.atk.satuan }}
+                    Keluar: {{ atk_keluar_terbaru.jumlah }} {{ atk_keluar_terbaru.atk.atk.satuan }}
                   </h5>
                   <p class="mb-0">
                     {% comment %} <span class="text-success text-sm font-weight-bolder">{{ atk_keluar_terbaru.jumlah }}</span> {% endcomment %}
@@ -36,6 +127,8 @@
         </div>
       </div>
       {% comment %} END KARTU {% endcomment %}
+
+      
       <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
         <div class="card">
           <div class="card-body p-3">
@@ -45,7 +138,7 @@
                   <p class="text-sm mb-0 text-uppercase font-weight-bold">ATK Keluar Terbanyak</p>
                   <h5 class="font-weight-bolder">
                     {{ atk_keluar_terbanyak.atk }} <br>
-                    Jml Keluar: {{ atk_keluar_terbanyak.jml_keluar }} {{ atk_keluar_terbanyak.atk.satuan }}
+                    Keluar: {{ atk_keluar_terbanyak.jml_keluar }} {{ atk_keluar_terbanyak.atk.satuan }}
                   </h5>
                   <p class="mb-0">
                     {% comment %} <span class="text-success text-sm font-weight-bolder">+3%</span> {% endcomment %}

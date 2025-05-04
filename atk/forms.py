@@ -111,6 +111,38 @@ class formJadwal(forms.ModelForm):
         }
         
     
+class formATK(forms.ModelForm):
+    class Meta:
+        model= Barang_ATK
+        fields = '__all__'     
+        exclude = ['status'] 
+        labels = {'atk': 'Nama ATK', 
+                  'spesifikasi': 'Spesifikasi',
+                    'kategori': 'Kategori',
+                  'satuan': 'Satuan',
+                  'jumlah_per_satuan': 'Isi per Satuan',
+                  'harga': 'Harga',
+                  'link': 'Referensi',
+                  'img': 'Gambar',
+                  'keterangan': 'keterangan'
+                  
+                }
+        widgets = {
+            'atk': forms.TextInput(attrs={"class": "form-control form-control-lg",
+                                                 "type": "text", "required":"required"}),
+            'spesifikasi': forms.TextInput(attrs={"class": "form-control form-control-lg",
+                                                 "type": "text", "required":"required"}),
+            'link': forms.TextInput(attrs={"class": "form-control form-control-lg",
+                                                 "type": "text", "required":"required"}),
+            'jumlah_per_satuan': forms.NumberInput(attrs={"class": "form-control form-control-lg",
+                                                 "type": "number", "min": 0 , "required":"required"}),
+            'harga': forms.NumberInput(attrs={"class": "form-control form-control-lg",
+                                                 "type": "number", "min": 0, "required":"required"}),
+            'kategori': forms.Select(attrs={"class": "form-control form-control-lg", "required":"required"}),
+            'satuan': forms.Select(attrs={"class": "form-control form-control-lg","required":"required"}),
+            'keterangan': forms.TextInput(attrs={"class": "form-control form-control-lg",
+                                                 "type": "text"})
+        } 
         
 class formPengumpulanPengajuan(forms.ModelForm):
     class Meta:
@@ -197,7 +229,7 @@ class formStokKeluar(forms.ModelForm):
                                                  "type": "text"
                                                  }),
             'tanggal': forms.DateInput(attrs={"class": "form-control form-control-lg",
-                                                 "type": "date"}),
+                                                 "type": "date", "required":"required"}),
         }
         
     def clean(self):

@@ -17,6 +17,8 @@
             ADMIN UNIT {{request.user.unit}}
           {% elif request.user.is_pimpinanunit %}
             PIMPINAN UNIT {{request.user.unit}}
+          {% elif request.user.is_bagumum %}
+            BAGIAN UMUM 
           {% endif %}
         </h6>
       </nav>

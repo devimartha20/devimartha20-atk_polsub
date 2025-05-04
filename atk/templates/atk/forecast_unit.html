@@ -9,6 +9,38 @@
               <h6 class="text-capitalize">Peramalan Kegunaan {{ atk }} </h6>
             </div>
             <div class="card-body p-3">
+
+              <form id="filters" action="{% url 'forecast-unit' atk.id %}" method="GET">
+
+                <div class="form-group row">
+                  <div class="col-sm-5">
+                    <label class="form-label" for="start">Tahun awal:</label>
+                    <select class="form-control" name="start" required>
+                      {% for i in list_tahun %}
+                      <option value="{{ i }}">{{i}}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                  <div class="col-sm-5">
+                    <label class="form-label" for="end">Tahun akhir:</label>
+                    <select class="form-control" name="end" required>
+                      {% for i in list_tahun %}
+                      <option value="{{ i }}">{{i}}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                  <div class="col-sm-1">
+                    <label class="form-label"></label>
+
+                    <input class="btn btn-sm btn-primary" type="submit" value="Submit">
+                  </div>
+                  <div class="col-sm-1">
+                    <label class="form-label"></label>
+                    <a href="{% url 'stok' %}" class="btn btn-sm btn-secondary">Reset</a>
+
+                  </div>
+                </div>
+                </form>
               <div>
                 <ul>
                   <li>Nama ATK: {{atk.atk}}</li>
@@ -18,11 +50,14 @@
                 <ul>
                   <li>Tingkat Keakurasian</li>
                   <li>MAPE: {{mape}} ({% widthratio mape_persen 1 100 %}%)</li>
-                  <li>SMAPE: {{ smape }} ({% widthratio smape_persen 1 100 %}%)</li>
+                  {% comment %} <li>SMAPE: {{ smape }} ({% widthratio smape_persen 1 100 %}%)</li> {% endcomment %}
                 </ul>
               </div>
               <div class="chart">
                 {{ chart|safe }}
+              </div>
+              <div class="chart">
+                {{ bar_chart|safe }}
               </div>
             </div>
           </div>

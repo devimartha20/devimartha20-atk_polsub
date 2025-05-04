@@ -10,7 +10,7 @@
                     <div class="col-9">
                       <h6>Data Pemasukan Stok</h6>
                     </div> 
-                   {% if editable %}
+                   {% if editable and request.user.is_adminunit %}
                     <div class="col-3">
                       <!-- Button trigger modal -->
                         <a href="{% url 'edit-penambahan-stok' stokMasuk.id %}" class="btn btn-sm btn-success">

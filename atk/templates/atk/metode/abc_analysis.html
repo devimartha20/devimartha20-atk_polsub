@@ -21,8 +21,18 @@
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header pb-0">
-                  {% comment %} {{ abc }} {% endcomment %}
+                  {% if request.user.is_wadir or request.user.is_bagumum %}
+                  <div class="row">
+                    <div class="col-9">
+                      <!-- Button trigger modal -->
+                      <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#listunitmodal">
+                        Lihat Analisis Unit
+                      </button>
+
+                  {% endif %}
+                  
                 </div>
+                {% include 'atk/wadir/analisis/list_unitmodal.html' %}
                 <div class="card-body px-5 pt-0 pb-2">
                     <div class="table-responsive p-0">
                         <table class="table align-items-center mb-0" id ="tabelstok">
@@ -31,9 +41,9 @@
                               <th>No</th>
                               <th>Alat Tulis</th>
                               <th>Jumlah Kegunaan</th>
-                              <th>Penyerapan Dana</th>
-                              <th>(%) Dana</th>
-                              <th>(%) Kumulatif Dana</th>
+                              <th>Value</th>
+                              <th>(%) Value</th>
+                              <th>(%) Kumulatif Value</th>
                               <th>(%) Kumulatif Item</th>
                               <th>Prioritas</th>
                               <th>Prediksi</th>
@@ -75,7 +85,12 @@
                                     </h6>
                                   </td>
                                   <td>
-                                    <a class="mb-0 text-sm" href="{% url 'forecast-unit' hasil.atk.id %}">Lihat Prediksi</a>
+                                    {% if scope == 'unit' %}
+                                      <a class="mb-0 text-sm" href="{% url 'forecast-unit' hasil.atk.id %}">Lihat Prediksi</a>
+                                    {% elif scope == 'general' %}
+                                      <a class="mb-0 text-sm" href="{% url 'forecast-general' hasil.atk.id %}">Lihat Prediksi</a>
+                                    {% endif %}
+                                    
                                   </td>
                                 </tr>
                                 {% comment %} {% include 'atk/adminunit/pengajuan/editdeleteisimodal.html' %} {% endcomment %}

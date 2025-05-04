@@ -1,0 +1,219 @@
+{% extends "main.html" %}
+{% block content %}
+<style>
+    .timeline {
+        border-left: 3px solid #727cf5;
+        border-bottom-right-radius: 4px;
+        border-top-right-radius: 4px;
+        background: rgba(114, 124, 245, 0.09);
+        margin: 0 auto;
+        letter-spacing: 0.2px;
+        position: relative;
+        line-height: 1.4em;
+        font-size: 1.03em;
+        padding: 50px;
+        list-style: none;
+        text-align: left;
+        max-width: 80%;
+    }
+    
+    @media (max-width: 767px) {
+        .timeline {
+            max-width: 98%;
+            padding: 25px;
+        }
+    }
+    
+    .timeline h1 {
+        font-weight: 300;
+        font-size: 1.4em;
+    }
+    
+    .timeline h2,
+    .timeline h3 {
+        font-weight: 600;
+        font-size: 1rem;
+        margin-bottom: 10px;
+    }
+    
+    .timeline .event {
+        border-bottom: 1px dashed #e8ebf1;
+        padding-bottom: 25px;
+        margin-bottom: 25px;
+        position: relative;
+    }
+    
+    @media (max-width: 767px) {
+        .timeline .event {
+            padding-top: 30px;
+        }
+    }
+    
+    .timeline .event:last-of-type {
+        padding-bottom: 0;
+        margin-bottom: 0;
+        border: none;
+    }
+    
+    .timeline .event:before,
+    .timeline .event:after {
+        position: absolute;
+        display: block;
+        top: 0;
+    }
+    
+    .timeline .event:before {
+        left: -207px;
+        content: attr(data-date);
+        text-align: right;
+        font-weight: 100;
+        font-size: 0.9em;
+        min-width: 120px;
+    }
+    
+    @media (max-width: 767px) {
+        .timeline .event:before {
+            left: 0px;
+            text-align: left;
+        }
+    }
+    
+    .timeline .event:after {
+        -webkit-box-shadow: 0 0 0 3px #727cf5;
+        box-shadow: 0 0 0 3px #727cf5;
+        left: -55.8px;
+        background: #fff;
+        border-radius: 50%;
+        height: 9px;
+        width: 9px;
+        content: "";
+        top: 5px;
+    }
+    
+    @media (max-width: 767px) {
+        .timeline .event:after {
+            left: -31.8px;
+        }
+    }
+    
+    .rtl .timeline {
+        border-left: 0;
+        text-align: right;
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
+        border-bottom-left-radius: 4px;
+        border-top-left-radius: 4px;
+        border-right: 3px solid #727cf5;
+    }
+    
+    .rtl .timeline .event::before {
+        left: 0;
+        right: -170px;
+    }
+    
+    .rtl .timeline .event::after {
+        left: 0;
+        right: -55.8px;}
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="card">
+                <div class="card-header">
+                    Timeline Progres Pengajuan ATK Periode {{tahun}}
+                </div>
+                {% if jadwal is None %}
+                <div class="card-body">
+                    <div id="content">
+                        <ul class="timeline">
+                            <li class="event">
+                                <h3 style="color: red;">Belum Ada Jadwal</h3>
+                                <p>Bagian Umum belum mengatur jadwal pengajuan ATK pada periode {{tahun}}</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                {% else %}
+                <div class="card-body">
+                    <h6 class="card-title">Progres Pengajuan</h6>
+                    <div id="content">
+                        <ul class="timeline">
+                            <li class="event" data-date="{{ jadwal.pengajuan_mulai }}">
+                                <h3>Jadwal Pengajuan Telah Diatur</h3>
+                                <p>Bagian Umum telah mengatur jadwal pengajuan yakni dimulai {{ jadwal.pengajuan_mulai }} - {{ jadwal.pengajuan_selesai }}</p>
+                            </li>
+                            {% if pengajuan is not None %}
+                                <li class="event">
+                                    <h3>Perancangan Pengajuan</h3>
+                                    {% for d in pengajuan_d %}
+                                    <ul class="timeline" >
+                                        <li class="event" data-date="{{ d.created }}">
+                                           Unit {{d.unit}} masih dalam tahap perancangan pengajuan
+                                        </li>
+                                    </ul>
+                                    {% empty %}
+                                    Tidak Ada Pengajuan Yang Sedang Dirancang
+                                    {% endfor %}
+                                </li>
+                                <li class="event">
+                                    <h3>Peninjauan Rancangan Pengajuan Oleh Pimpinan Unit</h3>
+                                    {% for k in pengajuan_k %}
+                                    <ul class="timeline" >
+                                        <li class="event" data-date="{{ d.created }}">
+                                           Pengajuan unit {{k.unit}} masih dalam tahap peninjauan pimpinan unit
+                                        </li>
+                                    </ul>
+                                    {% empty %}
+                                    Tidak Ada Pengajuan Dalam Peninjauan
+                                    {% endfor %}
+                                </li>
+                                <li class="event" >
+                                    <h3>Pengajuan Dalam Perbaikan</h3>
+                                    {% for p in pengajuan_p %}
+                                    <ul class="timeline" >
+                                        <li class="event" data-date="{{ p.created }}">
+                                           Pengajuan unit {{p.unit}} masih dalam tahap perbaikan
+                                        </li>
+                                    </ul>
+                                    {% empty %}
+                                    Tidak Ada Pengajuan Dalam Perbaikan
+                                    {% endfor %}
+                                </li>
+                                
+                                <li class="event" >
+                                    <h3>Pengajuan Selesai Diajukan</h3>
+                                    <ul class="timeline" >
+                                    {% for a in pengajuan_a %}
+                                    
+                                        <li class="event" data-date="{{ a.tanggal_konfirmasi }}">
+                                           Bagian Umum telah menerima pengajuan unit {{ a.unit }} </br>
+                                           
+                                           <a href="{% url 'detail-pengajuan' a.id %}"><i class="fa fa-eye"></i> Lihat Pengajuan</a>
+                                        </li>
+                                    {% empty %}
+                                    
+                                    Tidak Ada Pengajuan Yang Selesai Dikumpulkan
+                                    {% endfor %}
+                                    {% if pengajuan_a is not None %}
+                                    <hr>
+                                    <li class="event">
+                                        <a href="{% url 'lihat-total-pengajuan' jadwal.id %}"><i class="fa fa-eye"></i> <strong>Lihat Total Pengajuan</strong></a>
+                                        <a href="{% url 'lihat-total-pengajuan-disesuaikan' jadwal.id %}"><i class="fa fa-eye"></i> <strong>Lihat Total Pengajuan Disesuaikan </strong></a>
+                                     </li>
+                                    </ul>
+                                    {% endif %}
+                                    
+                                </li>
+                            {% endif %}
+                            
+                        </ul>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,26 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+     <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header pb-0">
+          <h6>Formulir ATK</h6>
+        </div>
+        <div class="card-body">
+          <form method="POST" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ atkForm.as_p }}
+            
+        </div>
+        <div class="footer">
+            <a href="{% url 'kelola-atk' %}" class="btn btn-secondary">Kembali</a> 
+            <button type="submit" class="btn btn-primary">Simpan</button> 
+        </div>
+        
+        </form>
+      </div>
+    </div>
+</div>
+{% endblock content %}

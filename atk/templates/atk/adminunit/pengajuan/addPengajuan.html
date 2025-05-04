@@ -93,7 +93,14 @@
                   <div class="form-control">{{ pengajuan.keterangan }} </div>
                 </div>
               </div>
-              
+              {% if pengajuan.progress == 'P' %}
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="example-text-input" class="form-control-label">Revisi</label>
+                  <div class="form-control">{{ revisi.keterangan }} </div>
+                </div>
+              </div>
+              {% endif %}
             </div>
           </div>
         </div>
@@ -126,6 +133,7 @@
                       <th>No</th>
                       <th>Alat Tulis</th>
                       <th>Jumlah</th>
+                      <th>Prediksi</th>
                       <th>Satuan</th>
                       <th>Keterangan</th>
                       <th>Aksi</th>
@@ -142,6 +150,9 @@
                           </td>
                           <td>
                             <h6 class="mb-0 text-sm">{{ isi.jumlah }}</h6>
+                          </td>
+                          <td>
+                            <h6 class="mb-0 text-sm">{{ isi.rekomendasi }}</h6>
                           </td>
                           <td>
                             <h6 class="mb-0 text-sm">{{ isi.atk.satuan }}</h6>

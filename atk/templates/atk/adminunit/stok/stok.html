@@ -8,6 +8,7 @@
             <div class="card mb-4">
                 <div class="card-header pb-0">
                   <div class="row">
+                    {% if request.user.is_adminunit %}
                     <div class="col-9">
                       <!-- Button trigger modal -->
                       <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addStokKeluarModal">
@@ -28,13 +29,40 @@
                 {% include 'atk/adminunit/stok/addstokmasukmodal.html' %}
                 {% include 'atk/adminunit/stok/addstokkeluarmodal.html' %}
                 {% include 'atk/adminunit/stok/kegunaanmodal.html' %}
+
+                {% endif %}
+
+
                 <div class="card-body px-5 pt-0 pb-2">
+                  <form id="filters" action="{% url 'stok' %}" method="GET">
+                    <div class="form-group row">
+                      <div class="col-sm-5">
+                        <label class="form-label" for="start">Tanggal awal:</label>
+                        <input class="form-control" type="date" name="start" required>
+                      </div>
+                      <div class="col-sm-5">
+                        <label class="form-label" for="end">Tanggal akhir:</label>
+                        <input class="form-control" type="date" name="end" required>
+                      </div>
+                      <div class="col-sm-1">
+                        <label class="form-label"></label>
+
+                        <input class="btn btn-sm btn-primary" type="submit" value="Filter">
+
+                      </div>
+                      <div class="col-sm-1">
+                        <label class="form-label"></label>
+                        <a href="{% url 'stok' %}" class="btn btn-sm btn-secondary">Reset</a>
+                      </div>
+                    </div>
+                    </form>
                   <div class="table-responsive p-0">
                     <table class="table align-items-center mb-0" id ="tabelstok">
                       <thead class="text-center">
                         <tr>
                           <th>No</th>
                           <th>Alat Tulis</th>
+                          <th>Stok Awal</th>
                           <th>Stok Masuk</th>
                           <th>Stok Keluar</th>
                           <th>Sisa Stok</th>
@@ -42,25 +70,28 @@
                         </tr>
                       </thead>
                       <tbody>
-                        {% for stok in stok %}
+                        {% for s in stok %}
                             <tr class="text-center">
                               <td>
                                   <h6 class="mb-0 text-sm">{{  forloop.counter }}</h6>
                               </td>
                               <td>
-                                    <h6 class="mb-0 text-sm">{{ stok.atk }}</h6>
+                                    <h6 class="mb-0 text-sm">{{ s.atk }}</h6>
                               </td>
                               <td>
-                                <h6 class="mb-0 text-sm">{{ masuk|get_item:stok.atk.id|default_if_none:0 }}</h6>
+                                <h6 class="mb-0 text-sm">{{ atkAwal|get_item:s.atk_id|default_if_none:0 }}</h6>
                               </td>
                               <td>
-                                <h6 class="mb-0 text-sm">{{ keluar|get_item:stok.atk.id|default_if_none:0 }}</h6>
+                                <h6 class="mb-0 text-sm">{{ atkMasuk|get_item:s.atk_id|default_if_none:0 }}</h6>
                               </td>
                               <td>
-                                <h6 class="mb-0 text-sm">{{ stok.jumlah }}</h6>
+                                <h6 class="mb-0 text-sm">{{ atkKeluar|get_item:s.atk_id|default_if_none:0 }}</h6>
                               </td>
                               <td>
-                                <h6 class="mb-0 text-sm">{{ stok.atk.satuan }}</h6>
+                                <h6 class="mb-0 text-sm">{{ atkAkhir|get_item:s.atk_id|default_if_none:0 }}</h6>
+                              </td>
+                              <td>
+                                <h6 class="mb-0 text-sm">{{ s.atk.satuan }}</h6>
                               </td>
                             </tr>
                             {% comment %} {% include 'atk/adminunit/pengajuan/editdeleteisimodal.html' %} {% endcomment %}

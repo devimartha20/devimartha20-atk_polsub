@@ -7,6 +7,9 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
+          <div class="row">
+            <a type="button" class="btn btn-info" href="{% url 'pilih-pengajuan' %}">Tambah Berdasarkan Pengajuan</a>
+          </div>
           <form method="POST" action="{% url 'add-penambahan-stok' %}">
               {% csrf_token %}
               {{ stokMasukForm.as_p }}

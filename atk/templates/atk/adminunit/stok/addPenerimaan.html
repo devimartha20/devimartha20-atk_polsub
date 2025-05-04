@@ -1,0 +1,83 @@
+{% extends 'main.html' %}
+{% load custom_tags %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                   <h5> Catat Penerimaan </h5>
+                </div>
+
+                <div class="card-body px-5 pt-0 pb-2">
+                  <div>
+                    <table class="table align-items-center mb-0">
+                      <thead class="text-center">
+                        <tr>
+                          <th>No</th>
+                          <th>Alat Tulis</th>
+                          <th>Jumlah Diajukan</th>
+                          <th>Jumlah Diterima</th>
+                          <th>Satuan</th>
+                          {% comment %} <th>Aksi</th> {% endcomment %}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <form action="" method="POST" id="form-penerimaan">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="tanggal">Tanggal Diterima</label>
+                            <input class="form-control" type="date" name="tanggal" required/>
+                          </div>
+                        {% for i in isi_pengajuan %}
+                            <tr class="text-center">
+                              <td>
+                                  <h6 class="mb-0 text-sm">{{  forloop.counter }}</h6>
+                              </td>
+                              <td>
+                                <select class="form-select" name="atk__{{ i.id }}" readonly style="pointer-events: none;">
+                                    {% for a in list_atk %}
+                                        <option value="{{ a.id }}" 
+                                        {% if a.id == i.atk.id %}selected{% endif %}>
+                                            {{ a }}</option>
+                                    {% endfor %}
+                                  </select>
+                              </td>
+                              <td>
+                                <input type="number" class="form-control" value="{{ i.jumlah }}" readonly>
+                              </td>
+                              <td>
+                                <input type="number" class="form-control" value="{{ i.jumlah }}" name='jumlah__{{ i.id }}' min="1" required>
+                              </td>
+                              <td>
+                                <h6 class="mb-0 text-sm">{{  i.atk.satuan }}</h6>
+                              </td>
+                              {% comment %} <td>
+                               <button type="button" class="btn btn-sm btn-danger" onclick="remove()">Hapus</button>
+                              </td> {% endcomment %}
+                            </tr>
+                        {% endfor %}
+                        
+                        
+                        <tr>
+                            <td colspan="5">
+                            <button type="submit" class="btn btn-sm btn-info" >Simpan</button>
+                            </td>
+                        </tr>
+                        {% comment %} <div id="newInput">
+
+                        </div> {% endcomment %}
+                    </form>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+        </div>
+    </div>
+    
+</div>
+
+
+{% endblock content %}
